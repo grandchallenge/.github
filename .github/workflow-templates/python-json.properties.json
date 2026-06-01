@@ -1,0 +1,6 @@
+{
+  "name": "JSON schema checks",
+  "description": "Parse committed JSON artifacts and schemas.",
+  "iconName": "octicon check-circle",
+  "categories": ["Continuous integration"]
+}

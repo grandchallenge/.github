@@ -1,0 +1,24 @@
+name: Cert handoff
+description: Submit a claim for formal or replayable certification.
+title: "[CERT] "
+labels: ["cert-handoff"]
+body:
+  - type: input
+    id: identifier
+    attributes:
+      label: Claim identifier
+      placeholder: MC-UC-WP02-C003
+    validations:
+      required: true
+  - type: input
+    id: upstream
+    attributes:
+      label: Upstream immutable URL
+    validations:
+      required: true
+  - type: textarea
+    id: route
+    attributes:
+      label: Support modality, ledger path, and replay route
+    validations:
+      required: true

@@ -1,0 +1,24 @@
+name: Forge candidate
+description: Submit a sourced mathematical lead for reconnaissance.
+title: "[FORGE] "
+labels: ["forge-candidate"]
+body:
+  - type: input
+    id: identifier
+    attributes:
+      label: Candidate identifier
+      placeholder: MF-UC-0001
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source trail
+    validations:
+      required: true
+  - type: textarea
+    id: status
+    attributes:
+      label: Preliminary status and risk flags
+    validations:
+      required: true

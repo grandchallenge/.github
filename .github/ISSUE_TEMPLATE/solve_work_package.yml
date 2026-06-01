@@ -1,0 +1,24 @@
+name: Solve work package
+description: Propose or track a mathematical work package.
+title: "[SOLVE] "
+labels: ["solve-work-package"]
+body:
+  - type: input
+    id: identifier
+    attributes:
+      label: Work package identifier
+      placeholder: MS-UC-WP02
+    validations:
+      required: true
+  - type: input
+    id: upstream
+    attributes:
+      label: Upstream immutable URL
+    validations:
+      required: true
+  - type: textarea
+    id: target
+    attributes:
+      label: Mathematical target and promotion condition
+    validations:
+      required: true
