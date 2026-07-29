@@ -7,21 +7,65 @@ on:
         required: false
         default: true
         type: boolean
+    secrets:
+      app_id:
+        required: false
+      private_key:
+        required: false
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Report without adding missing issues
+        required: true
+        default: false
+        type: boolean
+  schedule:
+    - cron: "17 8 * * 1"
 
 permissions:
   contents: read
-  issues: write
-  pull-requests: write
 
 jobs:
   reconcile:
     runs-on: ubuntu-latest
     steps:
-      - name: Constitutional boundary
+      - name: Mint Council Clerk token
+        id: app-token
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349
+        with:
+          app-id: ${{ secrets.app_id || secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.private_key || secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+      - name: Reconcile active governed issues
         shell: bash
         env:
-          DRY_RUN: ${{ inputs.dry_run }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          DRY_RUN: ${{ inputs.dry_run || false }}
         run: |
-          echo "dry_run=$DRY_RUN"
-          echo "Project synchronization may reconcile metadata only."
-          echo "It must never change a mathematical claim disposition."
+          set -euo pipefail
+          gh search issues --owner grandchallenge --state open --limit 200 \
+            --json url --jq '.[].url' | sort -u > open-issues.txt
+          gh project item-list 1 --owner grandchallenge --limit 500 \
+            --format json --jq '.items[].content.url' | sort -u > project-items.txt
+          comm -23 open-issues.txt project-items.txt > missing-items.txt
+          if [[ "$DRY_RUN" != "true" ]]; then
+            while IFS= read -r url; do
+              [[ -z "$url" ]] || gh project item-add 1 \
+                --owner grandchallenge --url "$url" >/dev/null
+            done < missing-items.txt
+          fi
+          jq -n \
+            --arg repository "$GITHUB_REPOSITORY" \
+            --arg commit "$GITHUB_SHA" \
+            --arg run_id "$GITHUB_RUN_ID" \
+            --argjson missing "$(wc -l < missing-items.txt)" \
+            --arg dry_run "$DRY_RUN" \
+            '{repository:$repository,commit:$commit,run_id:$run_id,
+              missing_before:$missing,dry_run:($dry_run == "true"),
+              authority_boundary:"metadata-only; never changes claim status"}' \
+            > project-sync-evidence.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: project-sync-evidence
+          path: project-sync-evidence.json
+          if-no-files-found: error
