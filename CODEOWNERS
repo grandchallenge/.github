@@ -1,0 +1,7 @@
+* @grandchallenge/amanuensis
+
+/.github/ISSUE_TEMPLATE/ @grandchallenge/amanuensis @grandchallenge/the-council
+/.github/workflows/ @grandchallenge/security @grandchallenge/amanuensis
+/profile/ @grandchallenge/community-maintainers @grandchallenge/amanuensis
+/SECURITY.md @grandchallenge/security
+/SUPPORT.md @grandchallenge/community-maintainers

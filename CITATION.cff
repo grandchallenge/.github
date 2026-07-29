@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: Cite the exact repository release and artifact digest used.
+title: Grand Challenge Labs governance and community health
+type: software
+authors:
+  - name: Grand Challenge Labs Council
+repository-code: https://github.com/grandchallenge/.github
+license: MIT

@@ -1,0 +1,35 @@
+name: Cert handoff
+description: Submit an exact-revision evidence handoff to MATHCERT.
+title: "[CERT] "
+labels: ["type:claim-handoff", "pillar:cert"]
+body:
+  - type: input
+    id: stable_id
+    attributes: {label: Stable handoff ID, placeholder: CERT-HANDOFF-YYYY-NNN}
+    validations: {required: true}
+  - type: input
+    id: upstream
+    attributes:
+      label: Immutable upstream commit
+      description: A full 40-character commit SHA.
+    validations: {required: true}
+  - type: textarea
+    id: boundary
+    attributes: {label: Claim boundary}
+    validations: {required: true}
+  - type: textarea
+    id: evidence
+    attributes: {label: Replay and evidence route}
+    validations: {required: true}
+  - type: dropdown
+    id: state
+    attributes:
+      label: Current state
+      options: [candidate, submitted, review-blocked]
+    validations: {required: true}
+  - type: textarea
+    id: promotion
+    attributes:
+      label: Finite promotion condition
+      description: Name the checked artifact and permitted disposition.
+    validations: {required: true}

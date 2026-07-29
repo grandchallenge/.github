@@ -1,0 +1,29 @@
+name: Forge candidate
+description: Register a candidate reconstruction or discovery.
+title: "[FORGE] "
+labels: ["type:work-package", "pillar:forge"]
+body:
+  - type: input
+    id: stable_id
+    attributes: {label: Stable candidate ID, placeholder: FORGE-YYYY-NNN}
+    validations: {required: true}
+  - type: input
+    id: upstream
+    attributes: {label: Immutable upstream reference}
+    validations: {required: true}
+  - type: textarea
+    id: boundary
+    attributes: {label: Claim boundary}
+    validations: {required: true}
+  - type: textarea
+    id: evidence
+    attributes: {label: Evidence route}
+    validations: {required: true}
+  - type: input
+    id: state
+    attributes: {label: Current state}
+    validations: {required: true}
+  - type: textarea
+    id: promotion
+    attributes: {label: Finite promotion condition}
+    validations: {required: true}

@@ -1,0 +1,45 @@
+name: GCL release
+
+on:
+  workflow_call:
+    inputs:
+      release_kind:
+        required: true
+        type: string
+      artifact_manifest:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+
+jobs:
+  release-evidence:
+    environment: ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Validate manifest
+        shell: bash
+        env:
+          MANIFEST: ${{ inputs.artifact_manifest }}
+          RELEASE_KIND: ${{ inputs.release_kind }}
+        run: |
+          test -f "$MANIFEST"
+          sha256sum "$MANIFEST" > release-manifest.sha256
+          printf 'release_kind=%s\nsource=%s\n' "$RELEASE_KIND" "$GITHUB_SHA" \
+            > release-evidence.txt
+      - uses: actions/attest-build-provenance@96b4a1ef7235a096b17240c259729fdd70c83d45
+        with:
+          subject-path: ${{ inputs.artifact_manifest }}
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: release-evidence
+          path: |
+            release-manifest.sha256
+            release-evidence.txt

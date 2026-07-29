@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask the Council
+    url: https://github.com/orgs/grandchallenge/discussions/categories/ask-the-council
+    about: Nonbinding questions and deliberation
+  - name: Security report
+    url: https://github.com/grandchallenge/.github/security/advisories/new
+    about: Report a vulnerability privately

@@ -1,0 +1,31 @@
+name: Operational incident
+description: Record a security, automation, release, or governance-control failure.
+title: "[INCIDENT] "
+labels: ["type:operational-incident", "risk:high"]
+body:
+  - type: input
+    id: stable_id
+    attributes: {label: Stable incident ID, placeholder: INC-YYYY-NNN}
+    validations: {required: true}
+  - type: input
+    id: upstream
+    attributes: {label: Immutable affected reference}
+    validations: {required: true}
+  - type: textarea
+    id: boundary
+    attributes: {label: Impact and claim boundary}
+    validations: {required: true}
+  - type: textarea
+    id: evidence
+    attributes: {label: Evidence route and timeline}
+    validations: {required: true}
+  - type: dropdown
+    id: state
+    attributes:
+      label: Current state
+      options: [open, contained, recovery, monitoring]
+    validations: {required: true}
+  - type: textarea
+    id: promotion
+    attributes: {label: Finite closure condition}
+    validations: {required: true}

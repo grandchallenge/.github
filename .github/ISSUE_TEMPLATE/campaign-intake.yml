@@ -1,0 +1,48 @@
+name: Campaign intake
+description: Propose a governed programme campaign.
+title: "[CAMPAIGN] "
+labels: ["type:campaign", "state:intake"]
+body:
+  - type: markdown
+    attributes:
+      value: GitHub records the work graph; it does not certify mathematics.
+  - type: input
+    id: stable_id
+    attributes:
+      label: Stable campaign ID
+      placeholder: CAMPAIGN-YYYY-NNN
+    validations: {required: true}
+  - type: dropdown
+    id: pillar
+    attributes:
+      label: Pillar
+      options: [Programme, Forge, Solve, Cert, Provider, Community, Standards]
+    validations: {required: true}
+  - type: input
+    id: upstream
+    attributes:
+      label: Immutable upstream reference
+      description: Full commit SHA, release digest, or content-addressed URI.
+    validations: {required: true}
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Claim boundary
+      description: State exactly what is and is not being claimed.
+    validations: {required: true}
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence route
+      description: Canonical records, validation, and intended MATHCERT route.
+    validations: {required: true}
+  - type: input
+    id: state
+    attributes: {label: Current state}
+    validations: {required: true}
+  - type: textarea
+    id: promotion
+    attributes:
+      label: Finite promotion condition
+      description: A falsifiable condition with a responsible human reviewer.
+    validations: {required: true}
