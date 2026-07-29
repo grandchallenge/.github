@@ -10,7 +10,7 @@ jobs:
   action-policy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Reject mutable action references
         shell: bash
         run: |
@@ -23,14 +23,14 @@ jobs:
           fi
       - name: Review dependency changes
         if: github.event_name == 'pull_request'
-        uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294
       - uses: ossf/scorecard-action@2d1146689b8cda280b9bc96326124645441f03bc
         with:
           results_file: results.sarif
           results_format: sarif
           publish_results: false
       - name: Preserve Scorecard evidence
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: gcl-scorecard-evidence
           path: results.sarif
