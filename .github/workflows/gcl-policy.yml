@@ -1,0 +1,46 @@
+name: GCL policy
+
+on:
+  workflow_call:
+    inputs:
+      profile:
+        description: Constitutional repository profile
+        required: true
+        type: string
+      standards_ref:
+        description: Exact gcl-standards commit SHA
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Reject mutable standards identity
+        shell: bash
+        env:
+          STANDARDS_REF: ${{ inputs.standards_ref }}
+        run: |
+          [[ "$STANDARDS_REF" =~ ^[0-9a-f]{40}$ ]] ||
+            { echo "standards_ref must be a full commit SHA"; exit 1; }
+      - name: Validate constitutional files
+        shell: bash
+        env:
+          PROFILE: ${{ inputs.profile }}
+        run: |
+          test -f SECURITY.md
+          test -f SUPPORT.md
+          test -f AGENTS.md
+          test -f .github/CODEOWNERS
+          printf '{"profile":"%s","repository":"%s","commit":"%s","run_id":"%s"}\n' \
+            "$PROFILE" "$GITHUB_REPOSITORY" "$GITHUB_SHA" "$GITHUB_RUN_ID" \
+            > gcl-evidence-manifest.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: gcl-policy-evidence
+          path: gcl-evidence-manifest.json
+          if-no-files-found: error

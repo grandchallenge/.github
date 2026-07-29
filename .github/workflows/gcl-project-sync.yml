@@ -1,0 +1,27 @@
+name: GCL project sync
+
+on:
+  workflow_call:
+    inputs:
+      dry_run:
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Constitutional boundary
+        shell: bash
+        env:
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          echo "dry_run=$DRY_RUN"
+          echo "Project synchronization may reconcile metadata only."
+          echo "It must never change a mathematical claim disposition."

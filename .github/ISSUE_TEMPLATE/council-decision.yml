@@ -1,0 +1,29 @@
+name: Council decision
+description: Propose a binding governance decision or ADR.
+title: "[COUNCIL] "
+labels: ["type:governance-decision", "council:review"]
+body:
+  - type: input
+    id: stable_id
+    attributes: {label: Stable decision ID, placeholder: ADR-NNNN}
+    validations: {required: true}
+  - type: input
+    id: upstream
+    attributes: {label: Immutable proposal reference}
+    validations: {required: true}
+  - type: textarea
+    id: boundary
+    attributes: {label: Authority and scope boundary}
+    validations: {required: true}
+  - type: textarea
+    id: evidence
+    attributes: {label: Evidence and alternatives}
+    validations: {required: true}
+  - type: input
+    id: state
+    attributes: {label: Current state, placeholder: proposed}
+    validations: {required: true}
+  - type: textarea
+    id: promotion
+    attributes: {label: Finite adoption condition}
+    validations: {required: true}
