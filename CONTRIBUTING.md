@@ -9,3 +9,10 @@ Choose the repository that owns the next action:
 
 Use the repository issue forms. Cross-pillar submissions must include an immutable
 upstream commit SHA, a stable identifier, and an explicit promotion condition.
+# Constitutional review
+
+Constitutional campaigns use the
+[`Constitutional review clerk`](docs/CONSTITUTIONAL_REVIEW.md). Humans inspect
+one exact-revision packet and sign only the role-specific attestation that
+matches the office they discharge. Automation performs identity, staleness,
+check, and receipt bookkeeping.

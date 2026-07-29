@@ -2,6 +2,8 @@
 
 /.github/ISSUE_TEMPLATE/ @grandchallenge/amanuensis @grandchallenge/the-council
 /.github/workflows/ @grandchallenge/security @grandchallenge/amanuensis
+/governance/review-campaigns/ @grandchallenge/the-council @grandchallenge/amanuensis
+/scripts/constitutional_review_clerk.py @grandchallenge/security @grandchallenge/the-council @grandchallenge/amanuensis
 /profile/ @grandchallenge/community-maintainers @grandchallenge/amanuensis
 /SECURITY.md @grandchallenge/security
 /SUPPORT.md @grandchallenge/community-maintainers

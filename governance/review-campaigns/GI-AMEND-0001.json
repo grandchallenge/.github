@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "campaign_id": "GI-AMEND-0001",
+  "organization": "grandchallenge",
+  "constitutional_source": {
+    "repository": "grandchallenge/INTELLECT",
+    "path": "CONSTITUTION.md",
+    "effective_version": "1.0.0"
+  },
+  "primary_pr": {
+    "repository": "grandchallenge/INTELLECT",
+    "pull_request": 13
+  },
+  "subjects": [
+    {
+      "repository": "grandchallenge/INTELLECT",
+      "pull_request": 13,
+      "forbidden_changed_paths": [
+        "CONSTITUTION.md"
+      ],
+      "required_changed_paths": [
+        "AMENDMENTS/0001-commentary-and-gcl-ghos.md",
+        "docs/CONSTITUTIONAL_COMMENTARY_AND_OPERATING_DOCTRINE.md",
+        "docs/adr/0004-commentary-and-gcl-ghos-authority.md",
+        "governance/constitutional_authority_schedule.json",
+        "tests/test_constitutional_authority.py"
+      ]
+    },
+    {
+      "repository": "grandchallenge/gcl-standards",
+      "pull_request": 10,
+      "required_changed_paths": [
+        "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
+        "schemas/repository_profile.schema.json",
+        "standards/GCL-GHOS-00.md",
+        "tests/test_validate.py"
+      ]
+    }
+  ],
+  "human_stewards": [
+    "fyremael"
+  ],
+  "receipt": {
+    "repository": "grandchallenge/INTELLECT",
+    "path_prefix": "governance/reviews"
+  }
+}
