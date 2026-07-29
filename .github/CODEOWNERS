@@ -1,1 +1,5 @@
-* @fyremael
+* @grandchallenge/amanuensis
+
+/.github/workflows/ @grandchallenge/security @grandchallenge/amanuensis
+/governance/review-campaigns/ @grandchallenge/the-council @grandchallenge/amanuensis
+/scripts/constitutional_review_clerk.py @grandchallenge/security @grandchallenge/the-council @grandchallenge/amanuensis
