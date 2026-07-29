@@ -1,0 +1,10 @@
+changelog:
+  exclude:
+    labels: ["skip-changelog"]
+  categories:
+    - title: Governance and community
+      labels: ["governance", "type:governance-decision", "community"]
+    - title: Automation
+      labels: ["automation", "dependencies"]
+    - title: Other changes
+      labels: ["*"]
