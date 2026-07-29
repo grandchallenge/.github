@@ -1,0 +1,35 @@
+name: Constitutional review tests
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/constitutional-review-clerk.yml"
+      - ".github/workflows/constitutional-review-tests.yml"
+      - "governance/review-campaigns/**"
+      - "scripts/constitutional_review_clerk.py"
+      - "tests/test_constitutional_review_clerk.py"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/constitutional-review-clerk.yml"
+      - ".github/workflows/constitutional-review-tests.yml"
+      - "governance/review-campaigns/**"
+      - "scripts/constitutional_review_clerk.py"
+      - "tests/test_constitutional_review_clerk.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Compile
+        run: python -m compileall -q scripts tests
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
