@@ -1,0 +1,45 @@
+name: QTR incubator validation
+
+on:
+  pull_request:
+    paths:
+      - "incubation/quantum-technologies-research/**"
+      - ".github/workflows/qtr-incubator.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "incubation/quantum-technologies-research/**"
+      - ".github/workflows/qtr-incubator.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate governed packet
+        working-directory: incubation/quantum-technologies-research
+        run: python ci/validate.py
+      - name: Run reference tests
+        working-directory: incubation/quantum-technologies-research
+        run: python -m unittest discover -s tests -p "test_*.py" -v
+      - name: Replay baseline report
+        working-directory: incubation/quantum-technologies-research
+        run: |
+          python reference/signal_discovery.py --output /tmp/qtr-baseline.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          expected = json.loads(Path("evidence/baseline-report.json").read_text())
+          observed = json.loads(Path("/tmp/qtr-baseline.json").read_text())
+          if observed != expected:
+              raise SystemExit("baseline replay mismatch")
+          print(observed["payload_sha256"])
+          PY
