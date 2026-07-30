@@ -15,8 +15,8 @@ from urllib.request import Request, urlopen
 
 
 SUCCESSFUL_CHECK_CONCLUSIONS = {"success", "neutral", "skipped"}
-INDEPENDENT_ROLES = ("adversary", "referee")
-ALL_ROLES = (*INDEPENDENT_ROLES, "human_steward")
+AGENT_ROLES = ("adversary", "referee")
+ALL_ROLES = (*AGENT_ROLES, "human_steward")
 
 
 class ClerkError(RuntimeError):
@@ -118,24 +118,112 @@ def build_packet(
     config: Mapping[str, Any], subjects: Iterable[Subject]
 ) -> dict[str, Any]:
     ordered = sorted(subjects, key=lambda item: item.repository)
-    packet = {
+    subject_record = {
         "schema_version": "1.0.0",
         "campaign_id": config["campaign_id"],
         "constitutional_source": config["constitutional_source"],
         "subjects": [item.packet_view() for item in ordered],
+    }
+    subject_digest = canonical_digest(subject_record)
+    authors = sorted({item.author for item in ordered})
+    agent_findings = validate_agent_findings(
+        config.get("agent_findings", {}),
+        subject_digest=subject_digest,
+        proposal_authors=set(authors),
+    )
+    packet = {
+        **subject_record,
+        "staffing_mode": config["staffing_mode"],
+        "human_steward": config["human_stewards"][0],
+        "proposal_authors": authors,
+        "subject_sha256": subject_digest,
+        "agent_findings": agent_findings,
         "required_roles": list(ALL_ROLES),
         "authority_boundary": (
-            "Automation assembles and records evidence; only named humans "
-            "supply review judgment and Human Steward authorization."
+            "Distinct non-author agents supply Adversary and Referee findings; "
+            "only the named Human Steward supplies reserved authorization."
         ),
     }
-    packet["ready_for_human_review"] = all(
+    packet["ready_for_steward_review"] = (
+        set(agent_findings) == set(AGENT_ROLES)
+    ) and all(
         subject.checks_ready
         and all(passed for _, passed in subject.boundary_checks)
         for subject in ordered
     )
+    packet["ready_for_human_review"] = packet["ready_for_steward_review"]
     packet["packet_sha256"] = canonical_digest(packet)
     return packet
+
+
+def validate_agent_findings(
+    raw_findings: Mapping[str, Any],
+    *,
+    subject_digest: str,
+    proposal_authors: set[str],
+) -> dict[str, dict[str, Any]]:
+    if not isinstance(raw_findings, Mapping):
+        raise ClerkError("agent_findings must be an object")
+    if any(role not in AGENT_ROLES for role in raw_findings):
+        raise ClerkError("agent_findings contains an unknown office")
+
+    admitted: dict[str, dict[str, Any]] = {}
+    for role in AGENT_ROLES:
+        finding = raw_findings.get(role)
+        if finding is None:
+            continue
+        if not isinstance(finding, Mapping):
+            raise ClerkError(f"{role} finding must be an object or null")
+        required = {
+            "office",
+            "reviewer_id",
+            "session_id",
+            "subject_sha256",
+            "status",
+            "obligations",
+            "findings",
+            "evidence_refs",
+            "residual_uncertainty",
+            "recorded_at",
+            "record_url",
+        }
+        missing = sorted(required - set(finding))
+        if missing:
+            raise ClerkError(f"{role} finding is incomplete: {missing}")
+        if finding["office"] != role or finding["status"] != "approved":
+            raise ClerkError(f"{role} finding has the wrong office or status")
+        if finding["subject_sha256"] != subject_digest:
+            raise ClerkError(f"{role} finding is stale")
+        if finding["reviewer_id"] in proposal_authors:
+            raise ClerkError(f"{role} reviewer is a proposal author")
+        for field in (
+            "reviewer_id",
+            "session_id",
+            "recorded_at",
+            "record_url",
+        ):
+            if not isinstance(finding[field], str) or not finding[field]:
+                raise ClerkError(f"{role} finding requires {field}")
+        for field in (
+            "obligations",
+            "findings",
+            "evidence_refs",
+            "residual_uncertainty",
+        ):
+            if not isinstance(finding[field], list):
+                raise ClerkError(f"{role} finding requires {field}")
+        if not finding["obligations"] or not finding["evidence_refs"]:
+            raise ClerkError(f"{role} finding lacks obligations or evidence")
+        admitted[role] = dict(finding)
+
+    if set(admitted) == set(AGENT_ROLES):
+        adversary = admitted["adversary"]
+        referee = admitted["referee"]
+        if adversary["reviewer_id"] == referee["reviewer_id"]:
+            raise ClerkError("Adversary and Referee require distinct agent identities")
+        if adversary["session_id"] == referee["session_id"]:
+            raise ClerkError("Adversary and Referee require distinct agent sessions")
+    return admitted
 
 
 def marker(campaign_id: str, packet_digest: str, role: str) -> str:
@@ -178,36 +266,19 @@ def packet_comment_body(packet: Mapping[str, Any]) -> str:
             *rows,
             "",
             "This packet is evidence, not approval. Any new subject commit creates "
-            "a new digest and makes reactions on this packet stale.",
+            "a new digest and makes agent findings and Steward reactions stale.",
             "",
-            "The Clerk will recognize one eligible `+1` reaction on each "
-            "role-specific attestation. Other reactions and comments do not sign.",
+            "The Clerk recognizes structured, distinct agent Adversary and Referee "
+            "findings, then one eligible `+1` reaction on the Human Steward "
+            "attestation. Other reactions and comments do not sign.",
         ]
     )
 
 
 def attestation_text(role: str) -> tuple[str, ...]:
-    if role == "adversary":
-        return (
-            "I inspected the exact revisions and automated evidence in this packet.",
-            "I actively looked for authority inversion, self-ratification, semantic "
-            "split brain, mathematical overclaim, criterion drift, migration defects, "
-            "and missing negative tests.",
-            "I found no unresolved blocking defect. If I find one, I will comment "
-            "instead of signing.",
-        )
-    if role == "referee":
-        return (
-            "I inspected the exact revisions, declared acceptance conditions, tests, "
-            "compatibility plan, and recorded residual uncertainty.",
-            "The burden for a reviewable constitutional proposal is met at these "
-            "exact commits.",
-            "I found no unresolved blocking condition. If revision is required, I "
-            "will comment instead of signing.",
-        )
     if role == "human_steward":
         return (
-            "I substantively inspected the exact revisions, independent findings, "
+            "I substantively inspected the exact revisions, agent findings, "
             "authority boundary, compatibility plan, and consequences.",
             "Acting as Human Steward, I authorize admission of these exact revisions "
             "subject to the separate activation PR and its checks.",
@@ -232,83 +303,74 @@ def attestation_comment_body(
             "**To sign:** after inspection, react 👍 to this comment. That single "
             "reaction attests to every statement above.",
             "",
-            "The Clerk rejects authors, bots, people without write access to every "
-            "subject, duplicate Adversary/Referee identities, non-stewards, and "
-            "reactions attached to a stale packet.",
+            "The Clerk rejects missing or duplicate agent findings, bots, "
+            "non-stewards, and reactions attached to a stale packet.",
         ]
     )
 
 
-def select_signers(
+def select_human_steward(
     *,
-    role_reactions: Mapping[str, list[Mapping[str, Any]]],
-    authors: set[str],
-    eligible_independent: set[str],
+    reactions: list[Mapping[str, Any]],
+    eligible_reviewers: set[str],
     human_stewards: set[str],
-) -> tuple[dict[str, Mapping[str, Any]], dict[str, str]]:
-    selected: dict[str, Mapping[str, Any]] = {}
-    missing: dict[str, str] = {}
-    used_independent: set[str] = set()
-
-    for role in ALL_ROLES:
-        candidates = sorted(
-            role_reactions.get(role, []),
-            key=lambda item: (item.get("created_at", ""), item["user"]["login"]),
-        )
-        signer = None
-        for reaction in candidates:
-            user = reaction["user"]
-            login = user["login"]
-            if reaction.get("content") != "+1" or user.get("type") != "User":
-                continue
-            if role in INDEPENDENT_ROLES:
-                if (
-                    login in authors
-                    or login not in eligible_independent
-                    or login in used_independent
-                ):
-                    continue
-            elif (
-                login not in human_stewards
-                or login not in eligible_independent
-            ):
-                continue
-            signer = reaction
-            break
-        if signer is None:
-            missing[role] = "no eligible +1 attestation on the current packet"
-            continue
-        selected[role] = signer
-        if role in INDEPENDENT_ROLES:
-            used_independent.add(signer["user"]["login"])
-    return selected, missing
+) -> Mapping[str, Any] | None:
+    candidates = sorted(
+        reactions,
+        key=lambda item: (item.get("created_at", ""), item["user"]["login"]),
+    )
+    for reaction in candidates:
+        user = reaction["user"]
+        login = user["login"]
+        if (
+            reaction.get("content") == "+1"
+            and user.get("type") == "User"
+            and login in human_stewards
+            and login in eligible_reviewers
+        ):
+            return reaction
+    return None
 
 
 def build_receipt(
     packet: Mapping[str, Any],
-    signers: Mapping[str, Mapping[str, Any]],
-    role_comments: Mapping[str, Mapping[str, Any]],
+    steward_reaction: Mapping[str, Any],
+    steward_comment: Mapping[str, Any],
 ) -> dict[str, Any]:
     signoffs = []
-    for role in ALL_ROLES:
-        reaction = signers[role]
-        comment = role_comments[role]
-        body = comment["body"]
+    for role in AGENT_ROLES:
+        finding = packet["agent_findings"][role]
         signoffs.append(
             {
                 "office": role,
-                "reviewer": reaction["user"]["login"],
-                "reaction_id": reaction["id"],
-                "reacted_at": reaction.get("created_at"),
-                "attestation_comment": comment["html_url"],
-                "attestation_sha256": hashlib.sha256(
-                    body.encode("utf-8")
-                ).hexdigest(),
+                "reviewer": finding["reviewer_id"],
+                "reviewer_kind": "agent",
+                "session_id": finding["session_id"],
+                "authentication_id": finding["session_id"],
+                "authenticated_at": finding["recorded_at"],
+                "attestation_record": finding["record_url"],
+                "attestation_sha256": canonical_digest(finding),
             }
         )
+    body = steward_comment["body"]
+    signoffs.append(
+        {
+            "office": "human_steward",
+            "reviewer": steward_reaction["user"]["login"],
+            "reviewer_kind": "human",
+            "session_id": None,
+            "authentication_id": str(steward_reaction["id"]),
+            "authenticated_at": steward_reaction.get("created_at"),
+            "attestation_record": steward_comment["html_url"],
+            "attestation_sha256": hashlib.sha256(body.encode("utf-8")).hexdigest(),
+        }
+    )
     return {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "campaign_id": packet["campaign_id"],
+        "staffing_mode": packet["staffing_mode"],
+        "human_steward": packet["human_steward"],
+        "proposal_authors": packet["proposal_authors"],
         "packet_sha256": packet["packet_sha256"],
         "subjects": [
             {
@@ -325,8 +387,9 @@ def build_receipt(
         .replace("+00:00", "Z"),
         "status": "complete",
         "authority_boundary": (
-            "This receipt records human attestations. It does not merge or activate "
-            "the proposal; admission remains a separate reviewed pull request."
+            "This receipt records separated agent findings and Human Steward "
+            "authorization. It does not merge or activate the proposal; admission "
+            "remains a separate reviewed pull request."
         ),
     }
 
@@ -366,48 +429,46 @@ class ReviewClerk:
             ),
             packet_comment_body(packet),
         )
-        role_comments = {
-            role: self._ensure_comment(
-                primary,
-                comments,
-                marker(
-                    packet["campaign_id"],
-                    packet["packet_sha256"],
-                    role,
-                ),
-                attestation_comment_body(packet, role),
-            )
-            for role in ALL_ROLES
-        }
+        steward_comment = self._ensure_comment(
+            primary,
+            comments,
+            marker(
+                packet["campaign_id"],
+                packet["packet_sha256"],
+                "human_steward",
+            ),
+            attestation_comment_body(packet, "human_steward"),
+        )
 
         status: dict[str, Any] = {
             "campaign_id": packet["campaign_id"],
             "packet_sha256": packet["packet_sha256"],
             "packet_comment": packet_comment.get("html_url"),
             "ready_for_human_review": packet["ready_for_human_review"],
+            "ready_for_steward_review": packet["ready_for_steward_review"],
+            "agent_findings": sorted(packet["agent_findings"]),
             "complete": False,
         }
         if not self.apply:
             status["mode"] = "dry-run"
             status["missing"] = {
-                role: "comments and reactions are not read in dry-run mode"
-                for role in ALL_ROLES
+                role: "structured agent finding is not admitted"
+                for role in AGENT_ROLES
+                if role not in packet["agent_findings"]
             }
+            status["missing"]["human_steward"] = (
+                "comments and reactions are not read in dry-run mode"
+            )
             self._write_status(output_dir, status)
             return status
 
-        role_reactions = {
-            role: self.client.get(
-                f"/repos/{primary['repository']}/issues/comments/"
-                f"{comment['id']}/reactions?per_page=100"
-            )
-            for role, comment in role_comments.items()
-        }
-        authors = {subject.author for subject in subjects}
+        steward_reactions = self.client.get(
+            f"/repos/{primary['repository']}/issues/comments/"
+            f"{steward_comment['id']}/reactions?per_page=100"
+        )
         candidate_logins = {
             reaction["user"]["login"]
-            for reactions in role_reactions.values()
-            for reaction in reactions
+            for reaction in steward_reactions
             if reaction.get("content") == "+1"
             and reaction.get("user", {}).get("type") == "User"
         }
@@ -417,20 +478,27 @@ class ReviewClerk:
             if self._eligible_on_all_subjects(login, subjects)
             and not self._has_current_changes_requested(login, subjects)
         }
-        signers, missing = select_signers(
-            role_reactions=role_reactions,
-            authors=authors,
-            eligible_independent=eligible,
+        steward = select_human_steward(
+            reactions=steward_reactions,
+            eligible_reviewers=eligible,
             human_stewards=set(self.config["human_stewards"]),
         )
-        status["missing"] = missing
-        status["signers"] = {
-            role: reaction["user"]["login"]
-            for role, reaction in signers.items()
+        missing = {
+            role: "structured agent finding is not admitted"
+            for role in AGENT_ROLES
+            if role not in packet["agent_findings"]
         }
+        if steward is None:
+            missing["human_steward"] = (
+                "no eligible +1 attestation on the current packet"
+            )
+        status["missing"] = missing
+        status["signers"] = (
+            {"human_steward": steward["user"]["login"]} if steward else {}
+        )
 
-        if packet["ready_for_human_review"] and not missing:
-            receipt = build_receipt(packet, signers, role_comments)
+        if packet["ready_for_steward_review"] and not missing and steward:
+            receipt = build_receipt(packet, steward, steward_comment)
             receipt_path = output_dir / "constitutional-review-receipt.json"
             receipt_path.write_text(
                 json.dumps(receipt, indent=2, sort_keys=True) + "\n",
@@ -576,7 +644,7 @@ class ReviewClerk:
             [
                 f"<!-- gcl-constitutional-receipt:{receipt['packet_sha256']} -->",
                 "The Council Clerk generated this immutable review receipt from "
-                "role-bound human attestations.",
+                "separated agent findings and Human Steward authorization.",
                 "",
                 "Automation must copy the decoded JSON into the configured "
                 "repository path through a separate reviewed pull request. This "
@@ -605,7 +673,8 @@ class ReviewClerk:
         body = "\n".join(
             [
                 completion_marker,
-                "Human attestations are complete for this exact review packet.",
+                "Agent findings and Human Steward authorization are complete for "
+                "this exact review packet.",
                 "",
                 f"Packet digest: `{receipt['packet_sha256']}`",
                 "",
@@ -640,6 +709,8 @@ def load_config(path: Path) -> dict[str, Any]:
         "campaign_id",
         "organization",
         "constitutional_source",
+        "staffing_mode",
+        "agent_findings",
         "primary_pr",
         "subjects",
         "human_stewards",
@@ -650,6 +721,10 @@ def load_config(path: Path) -> dict[str, Any]:
         raise ClerkError(f"missing config fields: {missing}")
     if config["schema_version"] != "1.0.0":
         raise ClerkError("unsupported config version")
+    if config["staffing_mode"] != "steward_supervised_agents":
+        raise ClerkError("unsupported staffing mode")
+    if len(config["human_stewards"]) != 1:
+        raise ClerkError("exactly one Human Steward is required")
     if len(config["subjects"]) < 1:
         raise ClerkError("at least one review subject is required")
     return config
