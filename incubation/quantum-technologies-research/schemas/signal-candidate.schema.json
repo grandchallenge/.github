@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/qtr/signal-candidate.schema.json",
+  "title": "GCL QTR Signal Candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "candidate_id",
+    "predicate_id",
+    "family",
+    "status",
+    "evidence_class",
+    "input_width",
+    "promise_domain",
+    "oracle_model",
+    "signal",
+    "readout",
+    "cost",
+    "expected_metrics",
+    "provenance",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "candidate_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]+$"},
+    "predicate_id": {"enum": ["or", "majority", "parity"]},
+    "family": {
+      "enum": [
+        "symmetric_statistic",
+        "marked_amplitude",
+        "phase",
+        "witness_operator",
+        "span_program",
+        "walk",
+        "hamiltonian",
+        "fourier_representation"
+      ]
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "normalized",
+        "executable",
+        "verified",
+        "adversarially_reviewed",
+        "referee_promoted",
+        "rejected",
+        "terminated"
+      ]
+    },
+    "evidence_class": {
+      "enum": [
+        "definition",
+        "derivation",
+        "theorem_candidate",
+        "certified_mathematics",
+        "reference_implementation",
+        "simulation_evidence",
+        "resource_estimate",
+        "hardware_evidence",
+        "negative_result"
+      ]
+    },
+    "input_width": {"type": "integer", "minimum": 1},
+    "promise_domain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "description"],
+      "properties": {
+        "kind": {"enum": ["all_inputs", "hamming_weights"]},
+        "weights": {
+          "type": "array",
+          "items": {"type": "integer", "minimum": 0},
+          "uniqueItems": true
+        },
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "oracle_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "query_unit", "description"],
+      "properties": {
+        "id": {"const": "bit_query"},
+        "query_unit": {"const": "controlled_bit_or_phase_query"},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "signal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "implementation", "definition", "dimension", "normalization"],
+      "properties": {
+        "type": {"enum": ["scalar", "amplitude", "phase", "singular_value_signature"]},
+        "implementation": {
+          "enum": ["hamming_normalized", "marked_amplitude", "parity_phase"]
+        },
+        "definition": {"type": "string", "minLength": 1},
+        "dimension": {"type": "integer", "minimum": 1},
+        "normalization": {"type": "string", "minLength": 1}
+      }
+    },
+    "readout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["metric", "rule", "zero_region", "one_region"],
+      "properties": {
+        "metric": {"enum": ["absolute", "euclidean"]},
+        "rule": {"type": "string", "minLength": 1},
+        "zero_region": {"type": "string", "minLength": 1},
+        "one_region": {"type": "string", "minLength": 1}
+      }
+    },
+    "cost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declared_queries_per_signal_call", "construction", "assumptions"],
+      "properties": {
+        "declared_queries_per_signal_call": {"type": "integer", "minimum": 0},
+        "construction": {"type": "string", "minLength": 1},
+        "assumptions": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "expected_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "semantic_sufficient_on_domain",
+        "cross_label_collisions",
+        "empirical_gap",
+        "alternation_degree_lower_bound"
+      ],
+      "properties": {
+        "semantic_sufficient_on_domain": {"type": "boolean"},
+        "cross_label_collisions": {"type": "integer", "minimum": 0},
+        "empirical_gap": {"type": "number", "minimum": 0},
+        "alternation_degree_lower_bound": {"type": "integer", "minimum": 0}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sources", "replay_command"],
+      "properties": {
+        "sources": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "replay_command": {"type": "string", "minLength": 1}
+      }
+    },
+    "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  }
+}

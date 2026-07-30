@@ -1,0 +1,93 @@
+{
+  "evaluator_version": "0.1.0",
+  "payload_sha256": "25e2f69285cd3f0cf652ad701480de7d0e2d48a758a616f1985b2a29e90c513d",
+  "registry_version": "0.1.0",
+  "reports": [
+    {
+      "alternation_degree_lower_bound": 1,
+      "candidate_id": "or_marked_amplitude_n4",
+      "collision_witnesses": [],
+      "cross_label_collisions": 0,
+      "declared_queries_per_signal_call": 1,
+      "dimension": 1,
+      "distinct_signal_count": 5,
+      "domain_size": 16,
+      "empirical_gap": 0.5,
+      "ordered_scalar_labels": [
+        {"labels": [0], "multiplicity": 1, "signal": 0.0},
+        {"labels": [1], "multiplicity": 4, "signal": 0.5},
+        {"labels": [1], "multiplicity": 6, "signal": 0.707106781187},
+        {"labels": [1], "multiplicity": 4, "signal": 0.866025403784},
+        {"labels": [1], "multiplicity": 1, "signal": 1.0}
+      ],
+      "predicate_id": "or",
+      "report_sha256": "428b71ca276fb7e5554e62ad820bd8718789baca7f7b9f7ed09a0864b4202628",
+      "semantic_sufficient_on_domain": true,
+      "utility_index": 0.0625
+    },
+    {
+      "alternation_degree_lower_bound": 1,
+      "candidate_id": "majority_hamming_n5",
+      "collision_witnesses": [],
+      "cross_label_collisions": 0,
+      "declared_queries_per_signal_call": 1,
+      "dimension": 1,
+      "distinct_signal_count": 6,
+      "domain_size": 32,
+      "empirical_gap": 0.4,
+      "ordered_scalar_labels": [
+        {"labels": [0], "multiplicity": 1, "signal": -1.0},
+        {"labels": [0], "multiplicity": 5, "signal": -0.6},
+        {"labels": [0], "multiplicity": 10, "signal": -0.2},
+        {"labels": [1], "multiplicity": 10, "signal": 0.2},
+        {"labels": [1], "multiplicity": 5, "signal": 0.6},
+        {"labels": [1], "multiplicity": 1, "signal": 1.0}
+      ],
+      "predicate_id": "majority",
+      "report_sha256": "5b3b358d2483ebd0bfe8367b90191852afa480063cc5f1f1f6a7da4eb9146419",
+      "semantic_sufficient_on_domain": true,
+      "utility_index": 0.05
+    },
+    {
+      "alternation_degree_lower_bound": 1,
+      "candidate_id": "parity_phase_n4",
+      "collision_witnesses": [],
+      "cross_label_collisions": 0,
+      "declared_queries_per_signal_call": 4,
+      "dimension": 1,
+      "distinct_signal_count": 2,
+      "domain_size": 16,
+      "empirical_gap": 2.0,
+      "ordered_scalar_labels": [
+        {"labels": [1], "multiplicity": 8, "signal": -1.0},
+        {"labels": [0], "multiplicity": 8, "signal": 1.0}
+      ],
+      "predicate_id": "parity",
+      "report_sha256": "bd09c5a924d087965aef8d9f27a394c78e209729edde9f97cbcb1e8af01adbcb",
+      "semantic_sufficient_on_domain": true,
+      "utility_index": 0.1
+    },
+    {
+      "alternation_degree_lower_bound": 4,
+      "candidate_id": "parity_hamming_n4",
+      "collision_witnesses": [],
+      "cross_label_collisions": 0,
+      "declared_queries_per_signal_call": 1,
+      "dimension": 1,
+      "distinct_signal_count": 5,
+      "domain_size": 16,
+      "empirical_gap": 0.5,
+      "ordered_scalar_labels": [
+        {"labels": [0], "multiplicity": 1, "signal": -1.0},
+        {"labels": [1], "multiplicity": 4, "signal": -0.5},
+        {"labels": [0], "multiplicity": 6, "signal": 0.0},
+        {"labels": [1], "multiplicity": 4, "signal": 0.5},
+        {"labels": [0], "multiplicity": 1, "signal": 1.0}
+      ],
+      "predicate_id": "parity",
+      "report_sha256": "1a97fc8ef2d2bc0931cf47d9132329d62ddb31e39f0b23c2c05ab36b9232a97e",
+      "semantic_sufficient_on_domain": true,
+      "utility_index": 0.025
+    }
+  ]
+}
