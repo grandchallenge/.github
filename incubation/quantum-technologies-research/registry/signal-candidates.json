@@ -1,0 +1,228 @@
+{
+  "registry_version": "0.1.0",
+  "candidates": [
+    {
+      "schema_version": "0.1.0",
+      "candidate_id": "or_marked_amplitude_n4",
+      "predicate_id": "or",
+      "family": "marked_amplitude",
+      "status": "executable",
+      "evidence_class": "reference_implementation",
+      "input_width": 4,
+      "promise_domain": {
+        "kind": "all_inputs",
+        "description": "All four-bit strings."
+      },
+      "oracle_model": {
+        "id": "bit_query",
+        "query_unit": "controlled_bit_or_phase_query",
+        "description": "The input is available through a coherent indexed bit or phase query."
+      },
+      "signal": {
+        "type": "singular_value_signature",
+        "implementation": "marked_amplitude",
+        "definition": "The signature is sqrt(w(x)/n), equal to the nonzero singular value of [x_1 ... x_n]/sqrt(n).",
+        "dimension": 1,
+        "normalization": "The row operator has Euclidean norm at most one."
+      },
+      "readout": {
+        "metric": "absolute",
+        "rule": "Return one iff the singular-value signature is positive.",
+        "zero_region": "{0}",
+        "one_region": "[1/sqrt(n), 1]"
+      },
+      "cost": {
+        "declared_queries_per_signal_call": 1,
+        "construction": "Prepare a uniform index state and apply one coherent input query to create the marked component.",
+        "assumptions": [
+          "Uniform index-state preparation is not counted as an input query.",
+          "This record does not include the polynomial-filter or amplification degree."
+        ]
+      },
+      "expected_metrics": {
+        "semantic_sufficient_on_domain": true,
+        "cross_label_collisions": 0,
+        "empirical_gap": 0.5,
+        "alternation_degree_lower_bound": 1
+      },
+      "provenance": {
+        "sources": [
+          "QTR-SIG-WP00",
+          "arXiv:1806.01838"
+        ],
+        "replay_command": "python reference/signal_discovery.py --candidate or_marked_amplitude_n4"
+      },
+      "limitations": [
+        "The finite-instance gap scales as 1/sqrt(n).",
+        "The record does not by itself prove optimal query complexity or advantage."
+      ]
+    },
+    {
+      "schema_version": "0.1.0",
+      "candidate_id": "majority_hamming_n5",
+      "predicate_id": "majority",
+      "family": "symmetric_statistic",
+      "status": "executable",
+      "evidence_class": "reference_implementation",
+      "input_width": 5,
+      "promise_domain": {
+        "kind": "all_inputs",
+        "description": "All five-bit strings; odd width removes the tie case."
+      },
+      "oracle_model": {
+        "id": "bit_query",
+        "query_unit": "controlled_bit_or_phase_query",
+        "description": "The input is available through a coherent indexed bit or phase query."
+      },
+      "signal": {
+        "type": "scalar",
+        "implementation": "hamming_normalized",
+        "definition": "The signature is 2w(x)/n - 1.",
+        "dimension": 1,
+        "normalization": "The scalar lies in [-1, 1]."
+      },
+      "readout": {
+        "metric": "absolute",
+        "rule": "Return one iff the normalized Hamming signal is positive.",
+        "zero_region": "[-1, -1/n]",
+        "one_region": "[1/n, 1]"
+      },
+      "cost": {
+        "declared_queries_per_signal_call": 1,
+        "construction": "Use a uniform index register and an indexed phase query to block encode the average signed bit observable.",
+        "assumptions": [
+          "One signal call means one invocation of the block-encoding primitive, not classical computation of Hamming weight.",
+          "State preparation and reflection costs must be added in later resource work packages."
+        ]
+      },
+      "expected_metrics": {
+        "semantic_sufficient_on_domain": true,
+        "cross_label_collisions": 0,
+        "empirical_gap": 0.4,
+        "alternation_degree_lower_bound": 1
+      },
+      "provenance": {
+        "sources": [
+          "QTR-SIG-WP00",
+          "arXiv:1606.02685",
+          "arXiv:1806.01838"
+        ],
+        "replay_command": "python reference/signal_discovery.py --candidate majority_hamming_n5"
+      },
+      "limitations": [
+        "The adjacent-class gap scales as 2/n without a stronger margin promise.",
+        "Finite-domain separation does not establish a low fault-tolerant gate count."
+      ]
+    },
+    {
+      "schema_version": "0.1.0",
+      "candidate_id": "parity_phase_n4",
+      "predicate_id": "parity",
+      "family": "phase",
+      "status": "executable",
+      "evidence_class": "negative_result",
+      "input_width": 4,
+      "promise_domain": {
+        "kind": "all_inputs",
+        "description": "All four-bit strings."
+      },
+      "oracle_model": {
+        "id": "bit_query",
+        "query_unit": "controlled_bit_or_phase_query",
+        "description": "The input is available through a coherent indexed bit or phase query."
+      },
+      "signal": {
+        "type": "phase",
+        "implementation": "parity_phase",
+        "definition": "The signature is (-1)^w(x).",
+        "dimension": 1,
+        "normalization": "The phase signature is in {-1, +1}."
+      },
+      "readout": {
+        "metric": "absolute",
+        "rule": "Return one iff the phase signature is -1.",
+        "zero_region": "{+1}",
+        "one_region": "{-1}"
+      },
+      "cost": {
+        "declared_queries_per_signal_call": 4,
+        "construction": "Accumulate the XOR of all four queried bits into a phase.",
+        "assumptions": [
+          "Exact construction under the bit-query model queries every bit in this fixture.",
+          "The constant-dimensional signal is intentionally retained as an access-cost control."
+        ]
+      },
+      "expected_metrics": {
+        "semantic_sufficient_on_domain": true,
+        "cross_label_collisions": 0,
+        "empirical_gap": 2.0,
+        "alternation_degree_lower_bound": 1
+      },
+      "provenance": {
+        "sources": [
+          "QTR-SIG-WP00"
+        ],
+        "replay_command": "python reference/signal_discovery.py --candidate parity_phase_n4"
+      },
+      "limitations": [
+        "Perfect label separation is purchased by full-input access.",
+        "This candidate demonstrates that signal dimension alone is not an algorithmic complexity measure."
+      ]
+    },
+    {
+      "schema_version": "0.1.0",
+      "candidate_id": "parity_hamming_n4",
+      "predicate_id": "parity",
+      "family": "symmetric_statistic",
+      "status": "executable",
+      "evidence_class": "negative_result",
+      "input_width": 4,
+      "promise_domain": {
+        "kind": "all_inputs",
+        "description": "All four-bit strings."
+      },
+      "oracle_model": {
+        "id": "bit_query",
+        "query_unit": "controlled_bit_or_phase_query",
+        "description": "The input is available through a coherent indexed bit or phase query."
+      },
+      "signal": {
+        "type": "scalar",
+        "implementation": "hamming_normalized",
+        "definition": "The signature is 2w(x)/n - 1, while labels are parity.",
+        "dimension": 1,
+        "normalization": "The scalar lies in [-1, 1]."
+      },
+      "readout": {
+        "metric": "absolute",
+        "rule": "Any exact scalar polynomial readout must alternate at every consecutive Hamming weight.",
+        "zero_region": "Signals associated with even Hamming weights.",
+        "one_region": "Signals associated with odd Hamming weights."
+      },
+      "cost": {
+        "declared_queries_per_signal_call": 1,
+        "construction": "Use a uniform index register and an indexed phase query to block encode the average signed bit observable.",
+        "assumptions": [
+          "The signal primitive is cheap, but the required polynomial is highly oscillatory.",
+          "The alternation count is only a degree lower bound for exact sign realization on sampled points."
+        ]
+      },
+      "expected_metrics": {
+        "semantic_sufficient_on_domain": true,
+        "cross_label_collisions": 0,
+        "empirical_gap": 0.5,
+        "alternation_degree_lower_bound": 4
+      },
+      "provenance": {
+        "sources": [
+          "QTR-SIG-WP00"
+        ],
+        "replay_command": "python reference/signal_discovery.py --candidate parity_hamming_n4"
+      },
+      "limitations": [
+        "No low-degree exact scalar separator exists across all five ordered Hamming signals.",
+        "The fixture does not substitute for the general polynomial or adversary lower-bound methods."
+      ]
+    }
+  ]
+}
