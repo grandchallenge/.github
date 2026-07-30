@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "incubation/quantum-technologies-research/**"
+      - ".github/records/qtr/QTR-BOOT-001-source-identity.json"
       - ".github/scripts/qtr_source_identity.py"
       - ".github/workflows/qtr-incubator.yml"
   push:
@@ -11,6 +12,7 @@ on:
       - main
     paths:
       - "incubation/quantum-technologies-research/**"
+      - ".github/records/qtr/QTR-BOOT-001-source-identity.json"
       - ".github/scripts/qtr_source_identity.py"
       - ".github/workflows/qtr-incubator.yml"
 
@@ -58,6 +60,8 @@ jobs:
           python .github/scripts/qtr_source_identity.py \
             --source-commit 33b87f2f15f3af6c6e3b9e38ed3d0d3ba6244835 \
             --output /tmp/qtr-source-identity-ledger.json
+      - name: Verify committed source identity ledger
+        run: cmp --silent /tmp/qtr-source-identity-ledger.json .github/records/qtr/QTR-BOOT-001-source-identity.json
       - name: Preserve source identity ledger
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
