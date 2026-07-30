@@ -1,0 +1,33 @@
+{
+  "manifest_version": "0.1.0",
+  "programme_id": "QTR",
+  "programme_name": "GCL Quantum Technologies Research",
+  "source_repository": "grandchallenge/.github",
+  "source_path": "incubation/quantum-technologies-research",
+  "source_branch": "agent/qtr-signal-discovery-incubator",
+  "target_repository": "grandchallenge/QUANTUM-TECHNOLOGIES",
+  "target_path": ".",
+  "status": "awaiting_target_repository",
+  "required_files": [
+    "README.md",
+    "QTR-CHARTER-00.md",
+    "work-packages/QTR-SIG-WP00.md",
+    "schemas/signal-candidate.schema.json",
+    "registry/signal-candidates.json",
+    "reference/signal_discovery.py",
+    "tests/test_signal_discovery.py",
+    "ci/validate.py",
+    "evidence/baseline-report.json",
+    "MIGRATION_MANIFEST.json"
+  ],
+  "migration_gates": [
+    "Create the target repository with protected default branch and Actions enabled.",
+    "Copy every required file without semantic modification.",
+    "Record source and target byte lengths and SHA-256 identities.",
+    "Replay the validator and tests in the target repository.",
+    "Replace awaiting_target_repository with migrated_candidate.",
+    "Open a programme adoption pull request and collect all required role reviews.",
+    "Pin the adopted charter and WP00 revisions before authorizing promoted downstream work."
+  ],
+  "claim_boundary": "Incubation and migration do not constitute charter adoption, theorem certification, algorithmic advantage, or hardware validation."
+}
