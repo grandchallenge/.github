@@ -65,8 +65,8 @@ Older records remain visible for audit but cannot satisfy the current campaign.
 
 `governance/review-campaigns/GI-AMEND-0001.json` binds:
 
-- `grandchallenge/INTELLECT#13`;
-- `grandchallenge/gcl-standards#10`;
+- `grandchallenge/INTELLECT#14`;
+- `grandchallenge/gcl-standards#13`;
 - `fyremael` as the Human Steward; and
 - pending non-author agent Adversary and Referee finding slots.
 

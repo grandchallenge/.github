@@ -10,12 +10,12 @@
   },
   "primary_pr": {
     "repository": "grandchallenge/INTELLECT",
-    "pull_request": 13
+    "pull_request": 14
   },
   "subjects": [
     {
       "repository": "grandchallenge/INTELLECT",
-      "pull_request": 13,
+      "pull_request": 14,
       "forbidden_changed_paths": [
         "CONSTITUTION.md"
       ],
@@ -24,15 +24,18 @@
         "docs/CONSTITUTIONAL_COMMENTARY_AND_OPERATING_DOCTRINE.md",
         "docs/adr/0004-commentary-and-gcl-ghos-authority.md",
         "governance/constitutional_authority_schedule.json",
+        "governance/steward_directives/GI-STEWARD-0001.md",
+        "schemas/constitutional_review_receipt.schema.json",
         "tests/test_constitutional_authority.py"
       ]
     },
     {
       "repository": "grandchallenge/gcl-standards",
-      "pull_request": 10,
+      "pull_request": 13,
       "required_changed_paths": [
         "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
-        "schemas/repository_profile.schema.json",
+        "implementation/2026-07-29_STEWARD_SUPERVISED_AGENT_STAFFING.md",
+        "programme-adoption/MATH-PROGRAMME.yaml",
         "standards/GCL-GHOS-00.md",
         "tests/test_validate.py"
       ]
