@@ -1,0 +1,72 @@
+{
+  "files": [
+    {
+      "bytes": 3684,
+      "path": "incubation/quantum-technologies-research/README.md",
+      "relative_path": "README.md",
+      "sha256": "fc3403dc449e5d8116348d1138b8b01e48860aebfcd8a0ea1e21cbc14027b97b"
+    },
+    {
+      "bytes": 9708,
+      "path": "incubation/quantum-technologies-research/QTR-CHARTER-00.md",
+      "relative_path": "QTR-CHARTER-00.md",
+      "sha256": "eb7209f0e648c9185b86e48e550402985f7f6a83c8429fdd3ec5b9f4a0df1ad8"
+    },
+    {
+      "bytes": 8985,
+      "path": "incubation/quantum-technologies-research/work-packages/QTR-SIG-WP00.md",
+      "relative_path": "work-packages/QTR-SIG-WP00.md",
+      "sha256": "d6f7e373c6b5a1f23ccbde94b85ba9bb0621a49dd8f7bf35093598bed987317e"
+    },
+    {
+      "bytes": 4706,
+      "path": "incubation/quantum-technologies-research/schemas/signal-candidate.schema.json",
+      "relative_path": "schemas/signal-candidate.schema.json",
+      "sha256": "cf524bd386769587412c8c1502cbd7df166ab11ab38c475b1e903440ead05ee1"
+    },
+    {
+      "bytes": 8477,
+      "path": "incubation/quantum-technologies-research/registry/signal-candidates.json",
+      "relative_path": "registry/signal-candidates.json",
+      "sha256": "0076c24f50b7fce5edc2d6675fbf2dfe12135f203d87d2babd2e156c81b8450a"
+    },
+    {
+      "bytes": 8820,
+      "path": "incubation/quantum-technologies-research/reference/signal_discovery.py",
+      "relative_path": "reference/signal_discovery.py",
+      "sha256": "fd0888cadc5ed97273d0e76075e30391e13702a3dbd1a6d151fe66b4ab7ceff1"
+    },
+    {
+      "bytes": 3013,
+      "path": "incubation/quantum-technologies-research/tests/test_signal_discovery.py",
+      "relative_path": "tests/test_signal_discovery.py",
+      "sha256": "b6480fb035a195acc7a7f431ffec904a7fb95781d75c80ffc473dd99243bda7b"
+    },
+    {
+      "bytes": 5757,
+      "path": "incubation/quantum-technologies-research/ci/validate.py",
+      "relative_path": "ci/validate.py",
+      "sha256": "5bac0d0d02ca320ed5b92c02e9f829e9ce128725de5efb2192ce92119fdcacef"
+    },
+    {
+      "bytes": 3502,
+      "path": "incubation/quantum-technologies-research/evidence/baseline-report.json",
+      "relative_path": "evidence/baseline-report.json",
+      "sha256": "784600d1ff8648d70defbc9f1589cdd4489f0ede6e56afad49f0b3c24ce293c2"
+    },
+    {
+      "bytes": 1475,
+      "path": "incubation/quantum-technologies-research/MIGRATION_MANIFEST.json",
+      "relative_path": "MIGRATION_MANIFEST.json",
+      "sha256": "7ea0b4fa1a4e2f74ee096d2a33962f7dcd967a7cd302f6a905861b2db53a4689"
+    }
+  ],
+  "ledger_version": "0.1.0",
+  "payload_identity_sha256": "5c8bfd314a1bb99004fc96a6b0b02242f22975afa20ac04debb22d5f958c1bd8",
+  "programme_id": "QTR",
+  "source_commit": "33b87f2f15f3af6c6e3b9e38ed3d0d3ba6244835",
+  "source_path": "incubation/quantum-technologies-research",
+  "source_repository": "grandchallenge/.github",
+  "target_path": ".",
+  "target_repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+}
