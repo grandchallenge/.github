@@ -62,6 +62,63 @@ jobs:
             --output /tmp/qtr-source-identity-ledger.json
       - name: Verify committed source identity ledger
         run: cmp --silent /tmp/qtr-source-identity-ledger.json .github/records/qtr/QTR-BOOT-001-source-identity.json
+      - name: Stage and verify exact migration payload
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import shutil
+          from pathlib import Path
+
+          ledger_path = Path(".github/records/qtr/QTR-BOOT-001-source-identity.json")
+          ledger = json.loads(ledger_path.read_text())
+          staging = Path("/tmp/qtr-migration-payload")
+          if staging.exists():
+              shutil.rmtree(staging)
+          staging.mkdir(parents=True)
+
+          expected_paths = set()
+          for entry in ledger["files"]:
+              source = Path(entry["path"])
+              relative = Path(entry["relative_path"])
+              if relative.is_absolute() or ".." in relative.parts:
+                  raise SystemExit(f"unsafe ledger path: {relative}")
+              relative_name = relative.as_posix()
+              if relative_name in expected_paths:
+                  raise SystemExit(f"duplicate ledger path: {relative_name}")
+
+              data = source.read_bytes()
+              digest = hashlib.sha256(data).hexdigest()
+              if len(data) != entry["bytes"]:
+                  raise SystemExit(f"byte-count mismatch: {source}")
+              if digest != entry["sha256"]:
+                  raise SystemExit(f"SHA-256 mismatch: {source}")
+
+              destination = staging / relative
+              destination.parent.mkdir(parents=True, exist_ok=True)
+              destination.write_bytes(data)
+              expected_paths.add(relative_name)
+
+          observed_paths = {
+              path.relative_to(staging).as_posix()
+              for path in staging.rglob("*")
+              if path.is_file()
+          }
+          if observed_paths != expected_paths:
+              missing = sorted(expected_paths - observed_paths)
+              extra = sorted(observed_paths - expected_paths)
+              raise SystemExit(f"staged file-set mismatch: missing={missing}, extra={extra}")
+
+          for entry in ledger["files"]:
+              staged = staging / entry["relative_path"]
+              data = staged.read_bytes()
+              if len(data) != entry["bytes"]:
+                  raise SystemExit(f"staged byte-count mismatch: {staged}")
+              if hashlib.sha256(data).hexdigest() != entry["sha256"]:
+                  raise SystemExit(f"staged SHA-256 mismatch: {staged}")
+
+          print(f"staged and verified {len(observed_paths)} ledger-listed files")
+          PY
       - name: Preserve source identity ledger
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
@@ -73,6 +130,6 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: qtr-migration-payload
-          path: incubation/quantum-technologies-research/
+          path: /tmp/qtr-migration-payload/
           if-no-files-found: error
           retention-days: 30
