@@ -40,81 +40,51 @@
     }
   ],
   "human_stewards": [
-    "fyremael"
+    "fyremael",
+    "jimsteeg"
   ],
   "agent_findings": {
-    "adversary": {
-      "office": "adversary",
-      "reviewer_id": "openai-gpt-5.6-thinking-adversary",
-      "session_id": "gpt-5.6-thinking-adversary-20260803T063850Z-4140d276",
-      "subject_sha256": "4140d276a8d30bbdd8f6cb5717b9b7b45dc68d119f813a321d94244402c32f10",
-      "status": "approved",
-      "obligations": [
-        "invalidate this finding on any subject-head movement",
-        "require a distinct non-author Referee agent identity and session",
-        "reserve exact-packet authorization to the Human Steward after both agent findings",
-        "keep both subject pull requests open, unchanged, and unmerged until the receipt sequence permits the next protected operation",
-        "retain proposed and candidate status until the separate activation and admission operations"
+    "adversary": null,
+    "referee": null
+  },
+  "merge_head_reconciliation": {
+    "status": "requires_fresh_packet",
+    "reason": "The INTELLECT subject moved after receipt admission and before protected merge. Exact-head movement invalidates the prior agent findings, Human Steward reaction, packet digest, and receipt even though the five reviewed subject files did not change.",
+    "intellect_subject": {
+      "repository": "grandchallenge/INTELLECT",
+      "pull_request": 32,
+      "reviewed_head": "e0bca408b1a846f73daed2bb8164e7f085d2fbe1",
+      "final_head": "f1f5c4459def29139240c67ca858126021d1f12f",
+      "merge_commit": "9de374989eabf83921408379c238c7b72b3379e1",
+      "reviewed_subject_files_unchanged": true,
+      "additional_paths": [
+        "governance/attestations/GI-STEWARD-0001-HUMAN-STEWARD-ROSTER-001.md",
+        "governance/attestations/GI-STEWARD-0001-HUMAN-STEWARD-ROSTER-002.md",
+        "governance/reviews/GI-AMEND-0001-cc007ca6fe04.json",
+        "governance/steward_directives/GI-STEWARD-0001.md",
+        "tests/test_gi_amend_0001_receipt.py",
+        "tests/test_gi_steward_0001_post_merge_attestation.py",
+        "tests/test_gi_steward_0001_second_order_closure.py"
       ],
-      "findings": [
-        "the amendment, ADR, standards admission, and programme-adoption sequence is acyclic",
-        "the Clerk and both validators share one digest-addressed receipt identity",
-        "receipt substitution, path drift, subject drift, and reviewer-session drift fail closed",
-        "all required changed-path, forbidden-path, and exact-head check gates pass",
-        "no critical Adversary blocker remains"
-      ],
-      "evidence_refs": [
-        "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5163133964",
-        "https://github.com/grandchallenge/INTELLECT/pull/32",
-        "https://github.com/grandchallenge/gcl-standards/pull/18",
-        "https://github.com/grandchallenge/.github/pull/29",
-        "https://github.com/grandchallenge/.github/actions/runs/30790871048"
-      ],
-      "residual_uncertainty": [
-        "the review depends on GitHub-hosted exact-head metadata",
-        "bootstrap agent-office independence remains documentary rather than organizationally external"
-      ],
-      "recorded_at": "2026-08-03T06:38:50Z",
-      "record_url": "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5163133964"
+      "final_head_checks": {
+        "ci": "30796554993",
+        "gcl_conformance": "30796555669"
+      }
     },
-    "referee": {
-      "office": "referee",
-      "reviewer_id": "openai-gpt-5.6-thinking-referee",
-      "session_id": "gpt-5.6-thinking-referee-20260803T070257Z-4140d276",
+    "standards_subject": {
+      "repository": "grandchallenge/gcl-standards",
+      "pull_request": 18,
+      "reviewed_head": "fa90ffc2bd23a6b0c8e184c7da2dd6ef1174a4ee",
+      "final_head": "fa90ffc2bd23a6b0c8e184c7da2dd6ef1174a4ee",
+      "merge_commit": "3caf058f30c46c41a634fcd54d546f8d59bc91f1"
+    },
+    "invalidated_records": {
       "subject_sha256": "4140d276a8d30bbdd8f6cb5717b9b7b45dc68d119f813a321d94244402c32f10",
-      "status": "approved",
-      "obligations": [
-        "invalidate this finding on any movement of INTELLECT PR #32 or gcl-standards PR #18",
-        "reserve full exact-packet authorization to the named Human Steward after protected admission of this Referee record",
-        "publish the complete receipt at the Clerk-derived digest-addressed INTELLECT path through a separately reviewed integration",
-        "keep amendment activation, ADR acceptance, GCL-GHOS admission, and MATH-PROGRAMME adoption as separate ordered operations",
-        "retain all mathematical, certification, novelty, priority, deployment, product, and commercial claims outside this constitutional review"
-      ],
-      "findings": [
-        "the exact subject digest remains stable and both subject heads remain open, clean, and unchanged",
-        "the admitted-Adversary packet digest is 689b7e4bb869402fcd1711b4b726dcaed479b984e58576196e3e3f3a6b556791",
-        "the activation sequence is acyclic and does not require prior ADR acceptance or programme adoption",
-        "the Clerk, INTELLECT validator, and standards validator share one digest-addressed receipt identity and fail closed on substitution or drift",
-        "receipt publication and later activation can use consistent reviewed-subject and integration-commit identities without Git self-reference",
-        "Adversary and Referee identities and sessions are distinct and neither is a proposal author",
-        "all required path boundaries and exact-head checks pass",
-        "no blocking Referee defect remains"
-      ],
-      "evidence_refs": [
-        "https://github.com/grandchallenge/INTELLECT/pull/32",
-        "https://github.com/grandchallenge/gcl-standards/pull/18",
-        "https://github.com/grandchallenge/.github/pull/30",
-        "https://github.com/grandchallenge/.github/actions/runs/30792194444",
-        "https://github.com/grandchallenge/.github/pull/30#issuecomment-5163275745",
-        "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5163133964"
-      ],
-      "residual_uncertainty": [
-        "exact-head evidence remains dependent on GitHub-hosted metadata and checks",
-        "bootstrap agent-office independence is documentary and session-separated rather than organizationally external",
-        "the Human Steward must inspect the final two-finding packet digest before authorizing receipt admission"
-      ],
-      "recorded_at": "2026-08-03T07:02:57Z",
-      "record_url": "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5163304824"
+      "packet_sha256": "cc007ca6fe0437d5906d84beada789852ab048e398bfb15924e3516e4c0c9d79",
+      "receipt_path": "governance/reviews/GI-AMEND-0001-cc007ca6fe04.json",
+      "adversary_comment": "5163133964",
+      "referee_comment": "5163304824",
+      "human_steward_reaction": "391888540"
     }
   },
   "receipt": {

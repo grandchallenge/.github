@@ -99,46 +99,63 @@ class ReviewClerkTests(unittest.TestCase):
             },
         )
 
-    def test_agent_findings_are_bound_and_distinct(self) -> None:
+    def test_agent_findings_reset_after_merge_head_movement(self) -> None:
         config = self.campaign()
-        records = config["agent_findings"]
-        adversary = records["adversary"]
-        referee = records["referee"]
-        self.assertIsInstance(adversary, dict)
-        self.assertIsInstance(referee, dict)
-        assert isinstance(adversary, dict)
-        assert isinstance(referee, dict)
-        subject_digest = (
-            "4140d276a8d30bbdd8f6cb5717b9b7b45dc68d119f813a321d94244402c32f10"
+        self.assertEqual(
+            config["agent_findings"],
+            {"adversary": None, "referee": None},
         )
-        expected_urls = {
-            "adversary": (
-                "https://github.com/grandchallenge/gcl-standards/issues/3"
-                "#issuecomment-5163133964"
-            ),
-            "referee": (
-                "https://github.com/grandchallenge/gcl-standards/issues/3"
-                "#issuecomment-5163304824"
-            ),
-        }
-        for office, record in (("adversary", adversary), ("referee", referee)):
-            with self.subTest(office=office):
-                self.assertEqual(record["office"], office)
-                self.assertEqual(record["status"], "approved")
-                self.assertEqual(record["subject_sha256"], subject_digest)
-                self.assertEqual(record["record_url"], expected_urls[office])
-                self.assertNotEqual(record["reviewer_id"], "fyremael")
-        self.assertNotEqual(adversary["reviewer_id"], referee["reviewer_id"])
-        self.assertNotEqual(adversary["session_id"], referee["session_id"])
-        serialized = json.dumps(config, sort_keys=True)
-        for stale_identity in (
-            "60a5faa6e5b5fd199e5f463ebf722e132459933821faa7ec86bf3230c4a3f8e3",
-            "5162694877",
-            "45e4de7b489db54081472eb6f44fff5bf9eff3abcc66fde22993e133c72da034",
-            "5162939806",
-        ):
-            with self.subTest(stale_identity=stale_identity):
-                self.assertNotIn(stale_identity, serialized)
+        reconciliation = config["merge_head_reconciliation"]
+        self.assertEqual(reconciliation["status"], "requires_fresh_packet")
+        intellect = reconciliation["intellect_subject"]
+        self.assertEqual(
+            intellect["reviewed_head"],
+            "e0bca408b1a846f73daed2bb8164e7f085d2fbe1",
+        )
+        self.assertEqual(
+            intellect["final_head"],
+            "f1f5c4459def29139240c67ca858126021d1f12f",
+        )
+        self.assertEqual(
+            intellect["merge_commit"],
+            "9de374989eabf83921408379c238c7b72b3379e1",
+        )
+        self.assertTrue(intellect["reviewed_subject_files_unchanged"])
+        self.assertEqual(
+            set(intellect["additional_paths"]),
+            {
+                "governance/attestations/GI-STEWARD-0001-HUMAN-STEWARD-ROSTER-001.md",
+                "governance/attestations/GI-STEWARD-0001-HUMAN-STEWARD-ROSTER-002.md",
+                "governance/reviews/GI-AMEND-0001-cc007ca6fe04.json",
+                "governance/steward_directives/GI-STEWARD-0001.md",
+                "tests/test_gi_amend_0001_receipt.py",
+                "tests/test_gi_steward_0001_post_merge_attestation.py",
+                "tests/test_gi_steward_0001_second_order_closure.py",
+            },
+        )
+        standards = reconciliation["standards_subject"]
+        self.assertEqual(standards["reviewed_head"], standards["final_head"])
+        self.assertEqual(
+            standards["final_head"],
+            "fa90ffc2bd23a6b0c8e184c7da2dd6ef1174a4ee",
+        )
+        invalidated = reconciliation["invalidated_records"]
+        self.assertEqual(
+            invalidated["subject_sha256"],
+            "4140d276a8d30bbdd8f6cb5717b9b7b45dc68d119f813a321d94244402c32f10",
+        )
+        self.assertEqual(
+            invalidated["packet_sha256"],
+            "cc007ca6fe0437d5906d84beada789852ab048e398bfb15924e3516e4c0c9d79",
+        )
+        self.assertEqual(invalidated["adversary_comment"], "5163133964")
+        self.assertEqual(invalidated["referee_comment"], "5163304824")
+
+    def test_both_human_stewards_are_allowlisted_with_fyremael_default(self) -> None:
+        config = self.campaign()
+        self.assertEqual(config["human_stewards"], ["fyremael", "jimsteeg"])
+        packet = clerk.build_packet(config, [])
+        self.assertEqual(packet["human_steward"], "fyremael")
 
     def test_proposal_author_cannot_supply_agent_review(self) -> None:
         with self.assertRaisesRegex(clerk.ClerkError, "proposal author"):
