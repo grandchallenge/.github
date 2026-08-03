@@ -40,8 +40,7 @@
     }
   ],
   "human_stewards": [
-    "fyremael",
-    "jimsteeg"
+    "fyremael"
   ],
   "agent_findings": {
     "adversary": null,
@@ -50,6 +49,14 @@
   "merge_head_reconciliation": {
     "status": "requires_fresh_packet",
     "reason": "The INTELLECT subject moved after receipt admission and before protected merge. Exact-head movement invalidates the prior agent findings, Human Steward reaction, packet digest, and receipt even though the five reviewed subject files did not change.",
+    "stewardship_scope": {
+      "acting_human_steward": "fyremael",
+      "recognized_global_officeholders": [
+        "fyremael",
+        "jimsteeg"
+      ],
+      "rule": "This exact campaign names one acting Human Steward. The global Human Steward roster is maintained by the separate GI-STEWARD-0001 attestations."
+    },
     "intellect_subject": {
       "repository": "grandchallenge/INTELLECT",
       "pull_request": 32,
