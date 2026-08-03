@@ -51,3 +51,5 @@ jobs:
           print('PACKET_SHA256=' + packet['packet_sha256'])
           print(json.dumps(packet, indent=2, sort_keys=True))
           PY
+
+# Temporary admitted-Adversary packet probe.
