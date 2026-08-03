@@ -24,6 +24,12 @@ API_VERSION = "2026-03-10"
 OWNER = "grandchallenge"
 CAMPAIGN_ID = "GCL-GHOS-READBACK-GAP-001"
 SCHEMA_PATH = "governance/settings-readback/GCL-GHOS-OWNER-EXPORT-001.schema.json"
+SCHEMA_VERSION = "1.1.0"
+ORG_RULESETS_PLAN_DENIAL = {
+    "message": "Upgrade to GitHub Team to enable this feature.",
+    "documentation_url": "https://docs.github.com/rest/orgs/rules#get-all-organization-repository-rulesets",
+    "status": "403",
+}
 REPOSITORIES = (
     ".github",
     "INTELLECT",
@@ -122,6 +128,72 @@ def capture_optional(
     return {"path": path, "status": status, "payload": payload}
 
 
+def collect_rulesets(
+    request: RequestFn,
+    *,
+    name: str,
+    list_path: str,
+    detail_path: Callable[[int], str],
+) -> dict[str, Any]:
+    listed = capture_json(request, f"{name} list", list_path)
+    items = require_list(f"{name} list", listed["payload"])
+    details: list[dict[str, Any]] = []
+    seen: set[int] = set()
+    for item in items:
+        if not isinstance(item, dict) or not isinstance(item.get("id"), int):
+            raise OwnerExportError(f"{name} list contains an invalid item")
+        rule_id = item["id"]
+        if rule_id in seen:
+            raise OwnerExportError(f"{name} list contains duplicate rule id {rule_id}")
+        seen.add(rule_id)
+        details.append(
+            capture_json(
+                request,
+                f"{name} {rule_id}",
+                detail_path(rule_id),
+            )
+        )
+    return {"availability": "available", "list": listed, "details": details}
+
+
+def collect_organization_rulesets(request: RequestFn) -> dict[str, Any]:
+    path = f"/orgs/{OWNER}/rulesets?per_page=100"
+    status, payload = request(path)
+    if status == 200:
+        items = require_list("organization rulesets", payload)
+        details: list[dict[str, Any]] = []
+        seen: set[int] = set()
+        for item in items:
+            if not isinstance(item, dict) or not isinstance(item.get("id"), int):
+                raise OwnerExportError("organization ruleset list contains an invalid item")
+            rule_id = item["id"]
+            if rule_id in seen:
+                raise OwnerExportError(f"organization ruleset list contains duplicate rule id {rule_id}")
+            seen.add(rule_id)
+            details.append(
+                capture_json(
+                    request,
+                    f"organization ruleset {rule_id}",
+                    f"/orgs/{OWNER}/rulesets/{rule_id}",
+                )
+            )
+        return {
+            "availability": "available",
+            "list": {"path": path, "status": status, "payload": payload},
+            "details": details,
+        }
+    if status == 403 and payload == ORG_RULESETS_PLAN_DENIAL:
+        return {
+            "availability": "plan_unavailable",
+            "list": {"path": path, "status": status, "payload": payload},
+            "details": [],
+        }
+    raise OwnerExportError(
+        "organization rulesets returned unsupported response; "
+        f"status={status}, payload={payload!r}"
+    )
+
+
 def collect_export(request: RequestFn, recorded_at: str | None = None) -> dict[str, Any]:
     user = require_object("authenticated user", capture_json(request, "authenticated user", "/user")["payload"])
     login = user.get("login")
@@ -146,24 +218,7 @@ def collect_export(request: RequestFn, recorded_at: str | None = None) -> dict[s
         "organization workflow permissions",
         f"/orgs/{OWNER}/actions/permissions/workflow",
     )
-    org_rulesets_list = capture_json(
-        request,
-        "organization rulesets",
-        f"/orgs/{OWNER}/rulesets?per_page=100",
-    )
-    org_rulesets = require_list("organization rulesets", org_rulesets_list["payload"])
-    org_rule_details: list[dict[str, Any]] = []
-    for item in org_rulesets:
-        if not isinstance(item, dict) or not isinstance(item.get("id"), int):
-            raise OwnerExportError("organization ruleset list contains an invalid item")
-        rule_id = item["id"]
-        org_rule_details.append(
-            capture_json(
-                request,
-                f"organization ruleset {rule_id}",
-                f"/orgs/{OWNER}/rulesets/{rule_id}",
-            )
-        )
+    org_rulesets = collect_organization_rulesets(request)
 
     repositories: list[dict[str, Any]] = []
     for repo in REPOSITORIES:
@@ -177,10 +232,18 @@ def collect_export(request: RequestFn, recorded_at: str | None = None) -> dict[s
         if metadata_payload.get("default_branch") != "main":
             raise OwnerExportError(f"{repo} default branch is not main")
 
+        repository_rulesets = collect_rulesets(
+            request,
+            name=f"{repo} rulesets",
+            list_path=f"{prefix}/rulesets?per_page=100&includes_parents=true",
+            detail_path=lambda rule_id, prefix=prefix: f"{prefix}/rulesets/{rule_id}",
+        )
+
         repositories.append(
             {
                 "repository": f"{OWNER}/{repo}",
                 "metadata": metadata,
+                "rulesets": repository_rulesets,
                 "main_protection": capture_optional(
                     request,
                     f"{repo} main protection",
@@ -220,7 +283,7 @@ def collect_export(request: RequestFn, recorded_at: str | None = None) -> dict[s
 
     result = {
         "$schema": SCHEMA_PATH,
-        "schema_version": "1.0.0",
+        "schema_version": SCHEMA_VERSION,
         "campaign_id": CAMPAIGN_ID,
         "recorded_at": recorded_at or utc_now(),
         "api_version": API_VERSION,
@@ -233,10 +296,7 @@ def collect_export(request: RequestFn, recorded_at: str | None = None) -> dict[s
         "organization_settings": {
             "actions_permissions": org_actions,
             "actions_workflow_permissions": org_workflow,
-            "rulesets": {
-                "list": org_rulesets_list,
-                "details": org_rule_details,
-            },
+            "rulesets": org_rulesets,
         },
         "repository_count": len(repositories),
         "repositories": repositories,
@@ -263,12 +323,70 @@ def _require_endpoint(
     return endpoint
 
 
+def validate_rulesets(
+    value: Any,
+    *,
+    name: str,
+    expected_list_path: str,
+    expected_detail_prefix: str,
+    allow_plan_unavailable: bool,
+) -> None:
+    if not isinstance(value, dict):
+        raise OwnerExportError(f"{name} must be an object")
+    availability = value.get("availability")
+    listed = value.get("list")
+    details = value.get("details")
+    if not isinstance(details, list):
+        raise OwnerExportError(f"{name} details must be an array")
+
+    if availability == "plan_unavailable":
+        if not allow_plan_unavailable:
+            raise OwnerExportError(f"{name} cannot be plan_unavailable")
+        endpoint = _require_endpoint(listed, name=f"{name} list", allowed={403})
+        if endpoint["path"] != expected_list_path:
+            raise OwnerExportError(f"{name} list path mismatch")
+        if endpoint["payload"] != ORG_RULESETS_PLAN_DENIAL:
+            raise OwnerExportError(f"{name} plan denial payload mismatch")
+        if details:
+            raise OwnerExportError(f"{name} plan_unavailable details must be empty")
+        return
+
+    if availability != "available":
+        raise OwnerExportError(f"{name} availability is invalid")
+    endpoint = _require_endpoint(listed, name=f"{name} list", allowed={200})
+    if endpoint["path"] != expected_list_path:
+        raise OwnerExportError(f"{name} list path mismatch")
+    items = require_list(f"{name} list payload", endpoint["payload"])
+    listed_ids: list[int] = []
+    for item in items:
+        if not isinstance(item, dict) or not isinstance(item.get("id"), int):
+            raise OwnerExportError(f"{name} list contains an invalid item")
+        listed_ids.append(item["id"])
+    if len(listed_ids) != len(set(listed_ids)):
+        raise OwnerExportError(f"{name} list contains duplicate rule ids")
+
+    detail_ids: list[int] = []
+    for index, detail in enumerate(details):
+        endpoint = _require_endpoint(detail, name=f"{name} detail {index}", allowed={200})
+        payload = endpoint["payload"]
+        if not isinstance(payload, dict) or not isinstance(payload.get("id"), int):
+            raise OwnerExportError(f"{name} detail payload is invalid")
+        rule_id = payload["id"]
+        if endpoint["path"] != f"{expected_detail_prefix}/{rule_id}":
+            raise OwnerExportError(f"{name} detail path mismatch")
+        detail_ids.append(rule_id)
+    if len(detail_ids) != len(set(detail_ids)):
+        raise OwnerExportError(f"{name} details contain duplicate rule ids")
+    if set(listed_ids) != set(detail_ids):
+        raise OwnerExportError(f"{name} list/detail identities do not match")
+
+
 def validate_export(value: dict[str, Any]) -> None:
     if not isinstance(value, dict):
         raise OwnerExportError("owner export must be an object")
     if value.get("$schema") != SCHEMA_PATH:
         raise OwnerExportError("schema identity mismatch")
-    if value.get("schema_version") != "1.0.0":
+    if value.get("schema_version") != SCHEMA_VERSION:
         raise OwnerExportError("schema version mismatch")
     if value.get("campaign_id") != CAMPAIGN_ID:
         raise OwnerExportError("campaign identity mismatch")
@@ -300,28 +418,13 @@ def validate_export(value: dict[str, Any]) -> None:
         name="organization workflow permissions",
         allowed={200},
     )
-    rulesets = organization_settings.get("rulesets")
-    if not isinstance(rulesets, dict):
-        raise OwnerExportError("organization rulesets are missing")
-    listed = _require_endpoint(rulesets.get("list"), name="organization ruleset list", allowed={200})
-    if not isinstance(listed["payload"], list):
-        raise OwnerExportError("organization ruleset list payload must be an array")
-    details = rulesets.get("details")
-    if not isinstance(details, list):
-        raise OwnerExportError("organization ruleset details must be an array")
-    listed_ids = {
-        item.get("id")
-        for item in listed["payload"]
-        if isinstance(item, dict) and isinstance(item.get("id"), int)
-    }
-    detail_ids: set[int] = set()
-    for index, endpoint in enumerate(details):
-        item = _require_endpoint(endpoint, name=f"organization ruleset detail {index}", allowed={200})
-        if not isinstance(item["payload"], dict) or not isinstance(item["payload"].get("id"), int):
-            raise OwnerExportError("organization ruleset detail payload is invalid")
-        detail_ids.add(item["payload"]["id"])
-    if listed_ids != detail_ids:
-        raise OwnerExportError("organization ruleset list/detail identities do not match")
+    validate_rulesets(
+        organization_settings.get("rulesets"),
+        name="organization rulesets",
+        expected_list_path=f"/orgs/{OWNER}/rulesets?per_page=100",
+        expected_detail_prefix=f"/orgs/{OWNER}/rulesets",
+        allow_plan_unavailable=True,
+    )
 
     repositories = value.get("repositories")
     if not isinstance(repositories, list):
@@ -337,6 +440,9 @@ def validate_export(value: dict[str, Any]) -> None:
         if not isinstance(row, dict):
             raise OwnerExportError("repository row must be an object")
         repo = row["repository"]
+        short_name = repo.split("/", 1)[1]
+        quoted_repo = urllib.parse.quote(short_name)
+        prefix = f"/repos/{OWNER}/{quoted_repo}"
         metadata = _require_endpoint(row.get("metadata"), name=f"{repo} metadata", allowed={200})
         metadata_payload = metadata["payload"]
         if not isinstance(metadata_payload, dict):
@@ -349,6 +455,13 @@ def validate_export(value: dict[str, Any]) -> None:
         if metadata_payload.get("default_branch") != "main":
             raise OwnerExportError(f"{repo} default branch drift")
 
+        validate_rulesets(
+            row.get("rulesets"),
+            name=f"{repo} rulesets",
+            expected_list_path=f"{prefix}/rulesets?per_page=100&includes_parents=true",
+            expected_detail_prefix=f"{prefix}/rulesets",
+            allow_plan_unavailable=False,
+        )
         _require_endpoint(row.get("main_protection"), name=f"{repo} main protection", allowed={200, 404})
         _require_endpoint(row.get("actions_permissions"), name=f"{repo} Actions permissions", allowed={200})
         _require_endpoint(
