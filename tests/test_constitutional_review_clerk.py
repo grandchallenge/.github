@@ -99,45 +99,71 @@ class ReviewClerkTests(unittest.TestCase):
             },
         )
 
-    def test_fresh_adversary_is_bound_and_referee_remains_null(self) -> None:
+    def test_fresh_agent_findings_are_bound_and_distinct(self) -> None:
         config = self.campaign()
         adversary = config["agent_findings"]["adversary"]
+        referee = config["agent_findings"]["referee"]
         self.assertIsInstance(adversary, dict)
+        self.assertIsInstance(referee, dict)
         assert isinstance(adversary, dict)
+        assert isinstance(referee, dict)
+
+        subject_digest = (
+            "71afd1dbc9e44f444acf78524120761d95707687aacdbd840ad811860814763c"
+        )
         self.assertEqual(adversary["office"], "adversary")
+        self.assertEqual(referee["office"], "referee")
         self.assertEqual(adversary["status"], "approved")
+        self.assertEqual(referee["status"], "approved")
+        self.assertEqual(adversary["subject_sha256"], subject_digest)
+        self.assertEqual(referee["subject_sha256"], subject_digest)
         self.assertEqual(
             adversary["reviewer_id"],
             "openai-gpt-5.6-thinking-final-head-adversary",
+        )
+        self.assertEqual(
+            referee["reviewer_id"],
+            "openai-gpt-5.6-thinking-final-head-referee",
         )
         self.assertEqual(
             adversary["session_id"],
             "gpt-5.6-thinking-final-head-adversary-20260803T090100Z-71afd1db",
         )
         self.assertEqual(
-            adversary["subject_sha256"],
-            "71afd1dbc9e44f444acf78524120761d95707687aacdbd840ad811860814763c",
+            referee["session_id"],
+            "gpt-5.6-thinking-final-head-referee-20260803T092100Z-71afd1db",
         )
         self.assertEqual(
             adversary["record_url"],
             "https://github.com/grandchallenge/gcl-standards/issues/3"
             "#issuecomment-5164348042",
         )
+        self.assertEqual(
+            referee["record_url"],
+            "https://github.com/grandchallenge/gcl-standards/issues/3"
+            "#issuecomment-5164535200",
+        )
+        self.assertNotEqual(adversary["reviewer_id"], referee["reviewer_id"])
+        self.assertNotEqual(adversary["session_id"], referee["session_id"])
         self.assertNotEqual(adversary["reviewer_id"], "fyremael")
-        self.assertIsNone(config["agent_findings"]["referee"])
+        self.assertNotEqual(referee["reviewer_id"], "fyremael")
 
         reconciliation = config["merge_head_reconciliation"]
-        self.assertEqual(reconciliation["status"], "fresh_adversary_approved")
-        packet = reconciliation["fresh_packet"]
         self.assertEqual(
-            packet["subject_sha256"],
-            "71afd1dbc9e44f444acf78524120761d95707687aacdbd840ad811860814763c",
+            reconciliation["status"], "fresh_two_agent_findings_approved"
         )
+        packet = reconciliation["fresh_packet"]
+        self.assertEqual(packet["subject_sha256"], subject_digest)
         self.assertEqual(
             packet["null_finding_packet_sha256"],
             "3ab38fa30964b15be02d8ab55d23ec93583fc1383f5313f06f7a3144606f0c6e",
         )
-        self.assertEqual(packet["clerk_run"], "30798956756")
+        self.assertEqual(packet["null_finding_clerk_run"], "30798956756")
+        self.assertEqual(
+            packet["one_finding_packet_sha256"],
+            "d35e3bf9249f44638688769eed04c54545810a8a59c97b2d89b4c26e326105a6",
+        )
+        self.assertEqual(packet["one_finding_clerk_run"], "30800882962")
 
         intellect = reconciliation["intellect_subject"]
         self.assertEqual(
@@ -183,6 +209,7 @@ class ReviewClerkTests(unittest.TestCase):
         self.assertEqual(invalidated["adversary_comment"], "5163133964")
         self.assertEqual(invalidated["referee_comment"], "5163304824")
         self.assertNotEqual(invalidated["adversary_comment"], "5164348042")
+        self.assertNotEqual(invalidated["referee_comment"], "5164535200")
 
     def test_exact_campaign_names_one_acting_human_steward(self) -> None:
         config_path = (
