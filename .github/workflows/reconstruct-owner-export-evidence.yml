@@ -1,0 +1,49 @@
+name: Reconstruct owner-export evidence
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".staging/GCL-GHOS-OWNER-EXPORT-001.json.gz.b64"
+      - ".github/workflows/reconstruct-owner-export-evidence.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  reconstruct:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Reconstruct and verify evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p governance/settings-readback/evidence
+          base64 -d .staging/GCL-GHOS-OWNER-EXPORT-001.json.gz.b64 > /tmp/evidence.json.gz
+          echo "1acdfda4aad91df741ba4f733e2125d6327267438a3e569f3197b5e240d46b65  /tmp/evidence.json.gz" | sha256sum -c -
+          gzip -dc /tmp/evidence.json.gz > governance/settings-readback/evidence/GCL-GHOS-OWNER-EXPORT-001.json
+          echo "b60f42d46e6044358d70d0f673f08afbc4e295afba95cd2fe3e9a65d8ab57d7c  governance/settings-readback/evidence/GCL-GHOS-OWNER-EXPORT-001.json" | sha256sum -c -
+          printf '%s  %s\n' \
+            "b60f42d46e6044358d70d0f673f08afbc4e295afba95cd2fe3e9a65d8ab57d7c" \
+            "GCL-GHOS-OWNER-EXPORT-001.json" \
+            > governance/settings-readback/evidence/GCL-GHOS-OWNER-EXPORT-001.json.sha256
+          python scripts/gcl_ghos_owner_export.py \
+            --validate governance/settings-readback/evidence/GCL-GHOS-OWNER-EXPORT-001.json
+          rm -f .staging/GCL-GHOS-OWNER-EXPORT-001.json.gz.b64
+          rm -f .github/workflows/reconstruct-owner-export-evidence.yml
+          rmdir .staging 2>/dev/null || true
+      - name: Commit exact evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "gcl-council-clerk"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && exit 0
+          git commit -m "GCL-GHOS-OWNER-EXPORT-EVIDENCE-ADMISSION-001: stage exact evidence"
+          git push origin HEAD:${{ github.head_ref }}
