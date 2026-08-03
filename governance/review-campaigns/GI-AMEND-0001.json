@@ -43,7 +43,46 @@
     "fyremael"
   ],
   "agent_findings": {
-    "adversary": null,
+    "adversary": {
+      "office": "adversary",
+      "reviewer_id": "openai-gpt-5.6-thinking-successor-adversary",
+      "session_id": "gi-amend-0001-successor-adversary-20260803T0534Z",
+      "subject_sha256": "60a5faa6e5b5fd199e5f463ebf722e132459933821faa7ec86bf3230c4a3f8e3",
+      "status": "approved",
+      "obligations": [
+        "test the corrected amendment, ADR, standard-admission, and programme-adoption order for cycles",
+        "test separation of candidate review, amendment activation, ADR acceptance, standard admission, programme adoption, and organization-wide conformance",
+        "test exact-revision, role-separation, and stale-finding rejection",
+        "test exact commit and receipt identity gates",
+        "test authority boundaries across INTELLECT, gcl-standards, MATH-PROGRAMME, AETHER, MATHCERT, and GitHub",
+        "inspect negative-test coverage and claim boundaries"
+      ],
+      "findings": [
+        "The prior unrepresentable post-ADR/pre-adoption state is corrected: ADR acceptance and exact standard admission may coexist with proposed programme adoption.",
+        "Accepted ADR state now requires an effective amendment, a nonempty constitutional review receipt, and exact 40-character amendment and standards commits.",
+        "Active programme adoption separately requires an ISO activation date; non-active records cannot claim one.",
+        "The amendment activation gate no longer requires prior ADR acceptance, GCL-GHOS admission, or programme adoption.",
+        "ADR acceptance no longer requires prior programme adoption, and organization-wide activation remains blocked until the pilot and unresolved-deviation gates are complete.",
+        "All exact-subject checks and configured path boundaries passed for the corrected packet.",
+        "No unresolved blocking defect was found for Adversary approval of this exact successor packet."
+      ],
+      "evidence_refs": [
+        "https://github.com/grandchallenge/INTELLECT/pull/32",
+        "https://github.com/grandchallenge/gcl-standards/pull/18",
+        "https://github.com/grandchallenge/.github/pull/26",
+        "https://github.com/grandchallenge/.github/actions/runs/30787513883",
+        "https://github.com/grandchallenge/gcl-standards/actions/runs/30787473173",
+        "https://github.com/grandchallenge/gcl-standards/actions/runs/30787473467",
+        "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5162694877"
+      ],
+      "residual_uncertainty": [
+        "correlated judgment risk may remain across agent systems despite office and session separation",
+        "live GitHub settings may drift and require settings read-back before later admission",
+        "the distinct Referee finding, Human Steward authorization, constitutional receipt, amendment activation, ADR acceptance, GCL-GHOS admission, and programme adoption remain pending"
+      ],
+      "recorded_at": "2026-08-03T05:34:00Z",
+      "record_url": "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5162694877"
+    },
     "referee": null
   },
   "receipt": {
