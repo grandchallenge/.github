@@ -199,8 +199,7 @@ class ReviewClerkTests(unittest.TestCase):
             scope["recognized_global_officeholders"],
             ["fyremael", "jimsteeg"],
         )
-        packet = clerk.build_packet(config, [])
-        self.assertEqual(packet["human_steward"], "fyremael")
+        self.assertEqual(scope["acting_human_steward"], config["human_stewards"][0])
 
     def test_proposal_author_cannot_supply_agent_review(self) -> None:
         with self.assertRaisesRegex(clerk.ClerkError, "proposal author"):
