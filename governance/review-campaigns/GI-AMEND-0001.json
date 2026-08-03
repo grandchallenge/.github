@@ -33,11 +33,11 @@
       "repository": "grandchallenge/gcl-standards",
       "pull_request": 13,
       "required_changed_paths": [
+        "ci/validate.py",
         "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
+        "implementation/2026-07-29_GITHUB_CONSTITUTIONAL_BOOTSTRAP.md",
         "implementation/2026-07-29_STEWARD_SUPERVISED_AGENT_STAFFING.md",
-        "programme-adoption/MATH-PROGRAMME.yaml",
-        "standards/GCL-GHOS-00.md",
-        "tests/test_validate.py"
+        "standards/GCL-GHOS-00.md"
       ]
     }
   ],
