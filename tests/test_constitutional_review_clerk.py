@@ -55,6 +55,16 @@ def finding(
 
 
 class ReviewClerkTests(unittest.TestCase):
+    def campaign(self) -> dict[str, object]:
+        return json.loads(
+            (
+                ROOT
+                / "governance"
+                / "review-campaigns"
+                / "GI-AMEND-0001.json"
+            ).read_text(encoding="utf-8")
+        )
+
     def test_packet_digest_is_stable(self) -> None:
         value = {"b": [2, 1], "a": "same"}
         self.assertEqual(
@@ -62,58 +72,42 @@ class ReviewClerkTests(unittest.TestCase):
             clerk.canonical_digest({"a": "same", "b": [2, 1]}),
         )
 
-    def test_gi_amend_campaign_matches_merged_subject_contract(self) -> None:
-        config = json.loads(
-            (
-                ROOT
-                / "governance"
-                / "review-campaigns"
-                / "GI-AMEND-0001.json"
-            ).read_text(encoding="utf-8")
-        )
-        subjects = {
-            item["repository"]: item for item in config["subjects"]
-        }
+    def test_gi_amend_campaign_matches_successor_subject_contract(self) -> None:
+        config = self.campaign()
+        subjects = {item["repository"]: item for item in config["subjects"]}
+        self.assertEqual(config["primary_pr"]["pull_request"], 32)
+        self.assertEqual(subjects["grandchallenge/INTELLECT"]["pull_request"], 32)
+        self.assertEqual(subjects["grandchallenge/gcl-standards"]["pull_request"], 18)
         self.assertEqual(
-            subjects["grandchallenge/INTELLECT"]["pull_request"], 14
-        )
-        self.assertEqual(
-            subjects["grandchallenge/gcl-standards"]["pull_request"], 13
+            set(subjects["grandchallenge/INTELLECT"]["required_changed_paths"]),
+            {
+                "AMENDMENTS/0001-commentary-and-gcl-ghos.md",
+                "governance/constitutional_authority_schedule.json",
+                "schemas/constitutional_authority_schedule.schema.json",
+                "src/grand_intellect/constitutional_authority.py",
+                "tests/test_constitutional_authority.py",
+            },
         )
         self.assertEqual(
-            set(
-                subjects["grandchallenge/gcl-standards"][
-                    "required_changed_paths"
-                ]
-            ),
+            set(subjects["grandchallenge/gcl-standards"]["required_changed_paths"]),
             {
                 "ci/validate.py",
                 "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
-                "implementation/2026-07-29_GITHUB_CONSTITUTIONAL_BOOTSTRAP.md",
-                "implementation/2026-07-29_STEWARD_SUPERVISED_AGENT_STAFFING.md",
+                "programme-adoption/MATH-PROGRAMME.yaml",
                 "standards/GCL-GHOS-00.md",
+                "tests/test_validate.py",
             },
         )
 
-    def test_activation_outputs_are_not_pr13_boundary_evidence(self) -> None:
-        config = json.loads(
-            (
-                ROOT
-                / "governance"
-                / "review-campaigns"
-                / "GI-AMEND-0001.json"
-            ).read_text(encoding="utf-8")
-        )
-        standards_subject = next(
-            item
-            for item in config["subjects"]
-            if item["repository"] == "grandchallenge/gcl-standards"
-        )
-        required = set(standards_subject["required_changed_paths"])
-        self.assertNotIn(
-            "programme-adoption/MATH-PROGRAMME.yaml", required
-        )
-        self.assertNotIn("tests/test_validate.py", required)
+    def test_successor_packet_invalidates_prior_agent_findings(self) -> None:
+        config = self.campaign()
+        self.assertIsNone(config["agent_findings"]["adversary"])
+        self.assertIsNone(config["agent_findings"]["referee"])
+        subject_prs = {
+            item["repository"]: item["pull_request"] for item in config["subjects"]
+        }
+        self.assertNotEqual(subject_prs["grandchallenge/INTELLECT"], 14)
+        self.assertNotEqual(subject_prs["grandchallenge/gcl-standards"], 13)
 
     def test_proposal_author_cannot_supply_agent_review(self) -> None:
         with self.assertRaisesRegex(clerk.ClerkError, "proposal author"):
@@ -189,7 +183,7 @@ class ReviewClerkTests(unittest.TestCase):
             "subjects": [
                 {
                     "repository": "grandchallenge/INTELLECT",
-                    "pull_request": 13,
+                    "pull_request": 32,
                     "head_sha": "b" * 40,
                 }
             ],
@@ -198,9 +192,7 @@ class ReviewClerkTests(unittest.TestCase):
             "body": "Human Steward exact attestation",
             "html_url": "https://example.test/steward",
         }
-        receipt = clerk.build_receipt(
-            packet, reaction(3, "steward"), comment
-        )
+        receipt = clerk.build_receipt(packet, reaction(3, "steward"), comment)
         self.assertEqual(receipt["schema_version"], "1.1.0")
         self.assertEqual(receipt["staffing_mode"], "steward_supervised_agents")
         self.assertEqual(
