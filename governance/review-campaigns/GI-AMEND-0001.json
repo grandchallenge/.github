@@ -43,7 +43,40 @@
     "fyremael"
   ],
   "agent_findings": {
-    "adversary": null,
+    "adversary": {
+      "office": "adversary",
+      "reviewer_id": "openai-gpt-5.6-thinking-adversary",
+      "session_id": "gpt-5.6-thinking-adversary-20260803T063850Z-4140d276",
+      "subject_sha256": "4140d276a8d30bbdd8f6cb5717b9b7b45dc68d119f813a321d94244402c32f10",
+      "status": "approved",
+      "obligations": [
+        "invalidate this finding on any subject-head movement",
+        "require a distinct non-author Referee agent identity and session",
+        "reserve exact-packet authorization to the Human Steward after both agent findings",
+        "keep both subject pull requests open, unchanged, and unmerged until the receipt sequence permits the next protected operation",
+        "retain proposed and candidate status until the separate activation and admission operations"
+      ],
+      "findings": [
+        "the amendment, ADR, standards admission, and programme-adoption sequence is acyclic",
+        "the Clerk and both validators share one digest-addressed receipt identity",
+        "receipt substitution, path drift, subject drift, and reviewer-session drift fail closed",
+        "all required changed-path, forbidden-path, and exact-head check gates pass",
+        "no critical Adversary blocker remains"
+      ],
+      "evidence_refs": [
+        "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5163133964",
+        "https://github.com/grandchallenge/INTELLECT/pull/32",
+        "https://github.com/grandchallenge/gcl-standards/pull/18",
+        "https://github.com/grandchallenge/.github/pull/29",
+        "https://github.com/grandchallenge/.github/actions/runs/30790871048"
+      ],
+      "residual_uncertainty": [
+        "the review depends on GitHub-hosted exact-head metadata",
+        "bootstrap agent-office independence remains documentary rather than organizationally external"
+      ],
+      "recorded_at": "2026-08-03T06:38:50Z",
+      "record_url": "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5163133964"
+    },
     "referee": null
   },
   "receipt": {
