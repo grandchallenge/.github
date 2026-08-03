@@ -8,6 +8,7 @@ import re
 import unittest
 from pathlib import Path
 
+# This module binds the protected owner-export evidence identity and mutations.
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = (
     ROOT
