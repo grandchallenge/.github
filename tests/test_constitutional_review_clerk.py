@@ -151,9 +151,21 @@ class ReviewClerkTests(unittest.TestCase):
         self.assertEqual(invalidated["adversary_comment"], "5163133964")
         self.assertEqual(invalidated["referee_comment"], "5163304824")
 
-    def test_both_human_stewards_are_allowlisted_with_fyremael_default(self) -> None:
-        config = self.campaign()
-        self.assertEqual(config["human_stewards"], ["fyremael", "jimsteeg"])
+    def test_exact_campaign_names_one_acting_human_steward(self) -> None:
+        config_path = (
+            ROOT
+            / "governance"
+            / "review-campaigns"
+            / "GI-AMEND-0001.json"
+        )
+        config = clerk.load_config(config_path)
+        self.assertEqual(config["human_stewards"], ["fyremael"])
+        scope = config["merge_head_reconciliation"]["stewardship_scope"]
+        self.assertEqual(scope["acting_human_steward"], "fyremael")
+        self.assertEqual(
+            scope["recognized_global_officeholders"],
+            ["fyremael", "jimsteeg"],
+        )
         packet = clerk.build_packet(config, [])
         self.assertEqual(packet["human_steward"], "fyremael")
 
