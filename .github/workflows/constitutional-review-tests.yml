@@ -52,4 +52,4 @@ jobs:
           print(json.dumps(packet, indent=2, sort_keys=True))
           PY
 
-# Temporary successor packet probe revision 2.
+# Temporary successor packet probe revision 3.
