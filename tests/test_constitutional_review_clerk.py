@@ -99,23 +99,37 @@ class ReviewClerkTests(unittest.TestCase):
             },
         )
 
-    def test_adversary_finding_is_bound_and_referee_remains_null(self) -> None:
+    def test_agent_findings_are_bound_and_distinct(self) -> None:
         config = self.campaign()
-        finding_record = config["agent_findings"]["adversary"]
-        self.assertIsInstance(finding_record, dict)
-        assert isinstance(finding_record, dict)
-        self.assertEqual(finding_record["office"], "adversary")
-        self.assertEqual(finding_record["status"], "approved")
-        self.assertEqual(
-            finding_record["subject_sha256"],
-            "4140d276a8d30bbdd8f6cb5717b9b7b45dc68d119f813a321d94244402c32f10",
+        records = config["agent_findings"]
+        adversary = records["adversary"]
+        referee = records["referee"]
+        self.assertIsInstance(adversary, dict)
+        self.assertIsInstance(referee, dict)
+        assert isinstance(adversary, dict)
+        assert isinstance(referee, dict)
+        subject_digest = (
+            "4140d276a8d30bbdd8f6cb5717b9b7b45dc68d119f813a321d94244402c32f10"
         )
-        self.assertEqual(
-            finding_record["record_url"],
-            "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5163133964",
-        )
-        self.assertNotEqual(finding_record["reviewer_id"], "fyremael")
-        self.assertIsNone(config["agent_findings"]["referee"])
+        expected_urls = {
+            "adversary": (
+                "https://github.com/grandchallenge/gcl-standards/issues/3"
+                "#issuecomment-5163133964"
+            ),
+            "referee": (
+                "https://github.com/grandchallenge/gcl-standards/issues/3"
+                "#issuecomment-5163304824"
+            ),
+        }
+        for office, record in (("adversary", adversary), ("referee", referee)):
+            with self.subTest(office=office):
+                self.assertEqual(record["office"], office)
+                self.assertEqual(record["status"], "approved")
+                self.assertEqual(record["subject_sha256"], subject_digest)
+                self.assertEqual(record["record_url"], expected_urls[office])
+                self.assertNotEqual(record["reviewer_id"], "fyremael")
+        self.assertNotEqual(adversary["reviewer_id"], referee["reviewer_id"])
+        self.assertNotEqual(adversary["session_id"], referee["session_id"])
         serialized = json.dumps(config, sort_keys=True)
         for stale_identity in (
             "60a5faa6e5b5fd199e5f463ebf722e132459933821faa7ec86bf3230c4a3f8e3",
