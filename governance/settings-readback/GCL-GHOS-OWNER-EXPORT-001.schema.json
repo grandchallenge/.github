@@ -1,0 +1,105 @@
+{
+  "$id": "https://grandchallenge.ai/schemas/gcl-ghos-owner-export-1.0.0.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "const": "governance/settings-readback/GCL-GHOS-OWNER-EXPORT-001.schema.json"
+    },
+    "api_version": {
+      "const": "2026-03-10"
+    },
+    "campaign_id": {
+      "const": "GCL-GHOS-READBACK-GAP-001"
+    },
+    "claim_boundaries": {
+      "additionalProperties": false,
+      "properties": {
+        "certification_claim_authorized": {
+          "const": false
+        },
+        "commercial_claim_authorized": {
+          "const": false
+        },
+        "deployment_claim_authorized": {
+          "const": false
+        },
+        "mathematical_claim_authorized": {
+          "const": false
+        },
+        "novelty_claim_authorized": {
+          "const": false
+        },
+        "organization_wide_conformance": {
+          "const": false
+        }
+      },
+      "required": [
+        "organization_wide_conformance",
+        "mathematical_claim_authorized",
+        "certification_claim_authorized",
+        "novelty_claim_authorized",
+        "deployment_claim_authorized",
+        "commercial_claim_authorized"
+      ],
+      "type": "object"
+    },
+    "collector": {
+      "additionalProperties": false,
+      "properties": {
+        "login": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "membership_state": {
+          "const": "active"
+        },
+        "organization_role": {
+          "const": "admin"
+        }
+      },
+      "required": [
+        "login",
+        "membership_state",
+        "organization_role"
+      ],
+      "type": "object"
+    },
+    "organization": {
+      "const": "grandchallenge"
+    },
+    "organization_settings": {
+      "type": "object"
+    },
+    "recorded_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "repositories": {
+      "maxItems": 12,
+      "minItems": 12,
+      "type": "array"
+    },
+    "repository_count": {
+      "const": 12
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    }
+  },
+  "required": [
+    "$schema",
+    "schema_version",
+    "campaign_id",
+    "recorded_at",
+    "api_version",
+    "organization",
+    "collector",
+    "organization_settings",
+    "repository_count",
+    "repositories",
+    "claim_boundaries"
+  ],
+  "title": "GCL-GHOS organization-owner settings export",
+  "type": "object"
+}
