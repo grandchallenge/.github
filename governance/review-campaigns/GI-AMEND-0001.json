@@ -83,11 +83,57 @@
       "recorded_at": "2026-08-03T09:01:00Z",
       "record_url": "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5164348042"
     },
-    "referee": null
+    "referee": {
+      "office": "referee",
+      "reviewer_id": "openai-gpt-5.6-thinking-final-head-referee",
+      "session_id": "gpt-5.6-thinking-final-head-referee-20260803T092100Z-71afd1db",
+      "subject_sha256": "71afd1dbc9e44f444acf78524120761d95707687aacdbd840ad811860814763c",
+      "status": "approved",
+      "obligations": [
+        "invalidate this finding if either recorded final subject head, the campaign subject contract, or the admitted Adversary identity changes",
+        "reserve authorization of the resulting two-finding packet to the named acting Human Steward after protected admission of this Referee record",
+        "publish the final Clerk packet and Human Steward attestation before generating the replacement receipt",
+        "admit the replacement digest-addressed receipt through a separate reviewed INTELLECT pull request before amendment activation",
+        "keep amendment activation, ADR-0001 acceptance, GCL-GHOS admission, MATH-PROGRAMME adoption, and organization-wide claims as separate ordered operations"
+      ],
+      "findings": [
+        "the Referee reviewed the canonical one-finding packet d35e3bf9249f44638688769eed04c54545810a8a59c97b2d89b4c26e326105a6 produced by Clerk run 30800882962",
+        "the packet binds subject digest 71afd1dbc9e44f444acf78524120761d95707687aacdbd840ad811860814763c, INTELLECT PR #32 final head f1f5c4459def29139240c67ca858126021d1f12f, and gcl-standards PR #18 final head fa90ffc2bd23a6b0c8e184c7da2dd6ef1174a4ee",
+        "all configured changed-path and forbidden-path boundaries pass and every subject check recorded by the Clerk has a successful conclusion",
+        "the admitted Adversary identity openai-gpt-5.6-thinking-final-head-adversary and session gpt-5.6-thinking-final-head-adversary-20260803T090100Z-71afd1db are distinct from this Referee identity and session",
+        "neither agent reviewer is the proposal author fyremael",
+        "the activation sequence is acyclic: final packet authorization precedes replacement receipt admission; receipt admission precedes amendment activation; ADR acceptance and GCL-GHOS admission follow activation; programme adoption follows standards admission",
+        "the INTELLECT activation validator cross-binds campaign, packet digest, proposal authors, reviewed subject heads, agent identities and sessions, Human Steward identity, and attestation references",
+        "the activation record may consistently name the reviewed subject heads while residing in a later integration commit; this introduces no Git self-reference requirement",
+        "the receipt resolver confines the digest-addressed record to the INTELLECT repository root and rejects malformed paths, wrong prefixes, missing files, traversal, substitution, and signoff drift",
+        "the standards validator uses the same digest-addressed receipt identity and preserves the separation between amendment activation, ADR acceptance, standards admission, and programme adoption",
+        "the prior packet, receipt, findings, and Human Steward reaction remain explicitly invalidated historical evidence and cannot satisfy the final-head campaign",
+        "the campaign has exactly one acting Human Steward, fyremael, while fyremael and jimsteeg remain separately recognized global Human Steward officeholders",
+        "candidate review and subject merge create no constitutional activation or downstream authority",
+        "no blocking Referee defect remains"
+      ],
+      "evidence_refs": [
+        "https://github.com/grandchallenge/.github/pull/34",
+        "https://github.com/grandchallenge/.github/actions/runs/30800882962",
+        "https://github.com/grandchallenge/INTELLECT/pull/32",
+        "https://github.com/grandchallenge/gcl-standards/pull/18",
+        "https://github.com/grandchallenge/INTELLECT/blob/f1f5c4459def29139240c67ca858126021d1f12f/src/grand_intellect/constitutional_authority.py",
+        "https://github.com/grandchallenge/gcl-standards/blob/fa90ffc2bd23a6b0c8e184c7da2dd6ef1174a4ee/ci/validate.py",
+        "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5164535200"
+      ],
+      "residual_uncertainty": [
+        "the review depends on GitHub-hosted pull-request metadata and check-run records captured by the Clerk",
+        "agent-office independence is identity- and session-separated within the bootstrap agent-governance model rather than external institutional review",
+        "the packet digest may change if GitHub-reported subject check metadata changes; the post-admission Clerk run must establish the final two-finding digest as source of truth",
+        "Human Steward packet authorization, replacement receipt admission, and amendment activation remain pending"
+      ],
+      "recorded_at": "2026-08-03T09:21:00Z",
+      "record_url": "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5164535200"
+    }
   },
   "merge_head_reconciliation": {
-    "status": "fresh_adversary_approved",
-    "reason": "The INTELLECT subject moved after receipt admission and before protected merge. Exact-head movement invalidated the prior review packet. A fresh final-head packet has now been generated and its Adversary finding is admitted; Referee, Human Steward signature, replacement receipt, and activation remain pending.",
+    "status": "fresh_two_agent_findings_approved",
+    "reason": "The INTELLECT subject moved after receipt admission and before protected merge. Exact-head movement invalidated the prior review packet. A fresh final-head packet has now been generated and distinct Adversary and Referee findings are approved; Human Steward signature, replacement receipt, and activation remain pending.",
     "stewardship_scope": {
       "acting_human_steward": "fyremael",
       "recognized_global_officeholders": [
@@ -99,7 +145,9 @@
     "fresh_packet": {
       "subject_sha256": "71afd1dbc9e44f444acf78524120761d95707687aacdbd840ad811860814763c",
       "null_finding_packet_sha256": "3ab38fa30964b15be02d8ab55d23ec93583fc1383f5313f06f7a3144606f0c6e",
-      "clerk_run": "30798956756"
+      "null_finding_clerk_run": "30798956756",
+      "one_finding_packet_sha256": "d35e3bf9249f44638688769eed04c54545810a8a59c97b2d89b4c26e326105a6",
+      "one_finding_clerk_run": "30800882962"
     },
     "intellect_subject": {
       "repository": "grandchallenge/INTELLECT",
