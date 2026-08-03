@@ -1,7 +1,151 @@
 {
-  "$id": "https://grandchallenge.ai/schemas/gcl-ghos-owner-export-1.0.0.json",
+  "$id": "https://grandchallenge.ai/schemas/gcl-ghos-owner-export-1.1.0.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
+  "$defs": {
+    "endpoint": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "status": {
+          "type": "integer"
+        },
+        "payload": {}
+      },
+      "required": [
+        "path",
+        "status",
+        "payload"
+      ],
+      "type": "object"
+    },
+    "availableRulesets": {
+      "additionalProperties": false,
+      "properties": {
+        "availability": {
+          "const": "available"
+        },
+        "list": {
+          "$ref": "#/$defs/endpoint"
+        },
+        "details": {
+          "items": {
+            "$ref": "#/$defs/endpoint"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "availability",
+        "list",
+        "details"
+      ],
+      "type": "object"
+    },
+    "planUnavailableRulesets": {
+      "additionalProperties": false,
+      "properties": {
+        "availability": {
+          "const": "plan_unavailable"
+        },
+        "list": {
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "const": "/orgs/grandchallenge/rulesets?per_page=100"
+            },
+            "status": {
+              "const": 403
+            },
+            "payload": {
+              "additionalProperties": false,
+              "properties": {
+                "documentation_url": {
+                  "const": "https://docs.github.com/rest/orgs/rules#get-all-organization-repository-rulesets"
+                },
+                "message": {
+                  "const": "Upgrade to GitHub Team to enable this feature."
+                },
+                "status": {
+                  "const": "403"
+                }
+              },
+              "required": [
+                "message",
+                "documentation_url",
+                "status"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "path",
+            "status",
+            "payload"
+          ],
+          "type": "object"
+        },
+        "details": {
+          "maxItems": 0,
+          "type": "array"
+        }
+      },
+      "required": [
+        "availability",
+        "list",
+        "details"
+      ],
+      "type": "object"
+    },
+    "repositoryRow": {
+      "additionalProperties": false,
+      "properties": {
+        "repository": {
+          "pattern": "^grandchallenge/",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/$defs/endpoint"
+        },
+        "rulesets": {
+          "$ref": "#/$defs/availableRulesets"
+        },
+        "main_protection": {
+          "$ref": "#/$defs/endpoint"
+        },
+        "actions_permissions": {
+          "$ref": "#/$defs/endpoint"
+        },
+        "actions_workflow_permissions": {
+          "$ref": "#/$defs/endpoint"
+        },
+        "vulnerability_alerts": {
+          "$ref": "#/$defs/endpoint"
+        },
+        "automated_security_fixes": {
+          "$ref": "#/$defs/endpoint"
+        },
+        "code_scanning_default_setup": {
+          "$ref": "#/$defs/endpoint"
+        }
+      },
+      "required": [
+        "repository",
+        "metadata",
+        "rulesets",
+        "main_protection",
+        "actions_permissions",
+        "actions_workflow_permissions",
+        "vulnerability_alerts",
+        "automated_security_fixes",
+        "code_scanning_default_setup"
+      ],
+      "type": "object"
+    }
+  },
   "properties": {
     "$schema": {
       "const": "governance/settings-readback/GCL-GHOS-OWNER-EXPORT-001.schema.json"
@@ -69,6 +213,30 @@
       "const": "grandchallenge"
     },
     "organization_settings": {
+      "additionalProperties": false,
+      "properties": {
+        "actions_permissions": {
+          "$ref": "#/$defs/endpoint"
+        },
+        "actions_workflow_permissions": {
+          "$ref": "#/$defs/endpoint"
+        },
+        "rulesets": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/availableRulesets"
+            },
+            {
+              "$ref": "#/$defs/planUnavailableRulesets"
+            }
+          ]
+        }
+      },
+      "required": [
+        "actions_permissions",
+        "actions_workflow_permissions",
+        "rulesets"
+      ],
       "type": "object"
     },
     "recorded_at": {
@@ -76,6 +244,9 @@
       "type": "string"
     },
     "repositories": {
+      "items": {
+        "$ref": "#/$defs/repositoryRow"
+      },
       "maxItems": 12,
       "minItems": 12,
       "type": "array"
@@ -84,7 +255,7 @@
       "const": 12
     },
     "schema_version": {
-      "const": "1.0.0"
+      "const": "1.1.0"
     }
   },
   "required": [
