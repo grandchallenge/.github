@@ -1,0 +1,176 @@
+name: GCL-GHOS settings readback artifact
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/gcl-ghos-settings-readback-artifact.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  readback:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Mint organization readback token
+        id: app-token
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+      - name: Collect settings and post status summary
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          mkdir -p readback-output
+          python - <<'PY'
+          from __future__ import annotations
+
+          import json
+          import os
+          import urllib.error
+          import urllib.request
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          API = "https://api.github.com"
+          TOKEN = os.environ["GH_TOKEN"]
+          OWNER = "grandchallenge"
+          REPOS = [
+              ".github", "INTELLECT", "gcl-standards", "MATH-PROGRAMME",
+              "MATHFORGE", "MATHSOLVE", "MATHCERT", "MODULUS", "GLOSS",
+              "QUANTUM-TECHNOLOGIES", "lean-action", "upload-pages-artifact",
+          ]
+
+          def request(method: str, path: str, body: object | None = None) -> tuple[int, object]:
+              data = None if body is None else json.dumps(body).encode()
+              req = urllib.request.Request(
+                  API + path,
+                  data=data,
+                  method=method,
+                  headers={
+                      "Accept": "application/vnd.github+json",
+                      "Authorization": f"Bearer {TOKEN}",
+                      "X-GitHub-Api-Version": "2022-11-28",
+                      "User-Agent": "gcl-ghos-settings-readback-001",
+                  },
+              )
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as response:
+                      payload = response.read()
+                      return response.status, json.loads(payload) if payload else None
+              except urllib.error.HTTPError as exc:
+                  payload = exc.read()
+                  try:
+                      parsed = json.loads(payload) if payload else None
+                  except json.JSONDecodeError:
+                      parsed = payload.decode(errors="replace")
+                  return exc.code, parsed
+
+          def capture(path: str) -> dict[str, object]:
+              status, payload = request("GET", path)
+              return {"path": path, "status": status, "payload": payload}
+
+          recorded_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+          result: dict[str, object] = {
+              "schema_version": "1.0.0",
+              "campaign_id": "GCL-GHOS-SETTINGS-READBACK-001",
+              "recorded_at": recorded_at,
+              "collector": "grandchallenge-council-clerk-app",
+              "organization": OWNER,
+              "authority": {
+                  "constitution_version": "1.1.0",
+                  "gi_amend_0001_activation": "8d47ed8930d33253ae476c64dfec7c748185a535",
+                  "gcl_ghos_admission": "31211b286a9c4a2874da5559118ef2f026f7de52",
+                  "math_programme_pilot_adoption": "9aea6a49153b9c524319544b8f94cf7eeea2e65e",
+                  "campaign_issue": "https://github.com/grandchallenge/gcl-standards/issues/22",
+              },
+              "organization_endpoints": {},
+              "repositories": {},
+          }
+
+          org_paths = {
+              "organization": f"/orgs/{OWNER}",
+              "actions_permissions": f"/orgs/{OWNER}/actions/permissions",
+              "actions_workflow_permissions": f"/orgs/{OWNER}/actions/permissions/workflow",
+              "rulesets": f"/orgs/{OWNER}/rulesets?per_page=100",
+          }
+          for key, path in org_paths.items():
+              result["organization_endpoints"][key] = capture(path)
+
+          repo_paths = {
+              "repository": "/repos/{owner}/{repo}",
+              "rulesets": "/repos/{owner}/{repo}/rulesets?per_page=100",
+              "main_protection": "/repos/{owner}/{repo}/branches/main/protection",
+              "actions_permissions": "/repos/{owner}/{repo}/actions/permissions",
+              "actions_workflow_permissions": "/repos/{owner}/{repo}/actions/permissions/workflow",
+              "vulnerability_alerts": "/repos/{owner}/{repo}/vulnerability-alerts",
+              "automated_security_fixes": "/repos/{owner}/{repo}/automated-security-fixes",
+              "private_vulnerability_reporting": "/repos/{owner}/{repo}/private-vulnerability-reporting",
+              "code_scanning_default_setup": "/repos/{owner}/{repo}/code-scanning/default-setup",
+          }
+          for repo in REPOS:
+              result["repositories"][repo] = {
+                  key: capture(template.format(owner=OWNER, repo=repo))
+                  for key, template in repo_paths.items()
+              }
+
+          output_path = Path("readback-output/GCL-GHOS-SETTINGS-READBACK-001.json")
+          output_path.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+          lines = [
+              "`GCL-GHOS-SETTINGS-READBACK-001` live collection completed.",
+              "",
+              f"- recorded at: `{recorded_at}`;",
+              f"- collector: `grandchallenge-council-clerk-app`;",
+              f"- repositories: `{len(REPOS)}`;",
+              "- raw evidence: workflow artifact `gcl-ghos-settings-readback-001`;",
+              "- no settings or repository contents were mutated.",
+              "",
+              "Organization endpoint status:",
+          ]
+          for key, value in result["organization_endpoints"].items():
+              lines.append(f"- `{key}`: HTTP `{value['status']}`")
+          lines += ["", "Repository status order: `repo/rulesets/main-protection/actions/workflow-permissions/vulnerability-alerts/automated-fixes/private-reporting/codeql-default`.", ""]
+          for repo in REPOS:
+              row = result["repositories"][repo]
+              keys = list(repo_paths)
+              lines.append(f"- `{OWNER}/{repo}`: `{'/'.join(str(row[key]['status']) for key in keys)}`")
+          lines += [
+              "",
+              "Denied or unsupported endpoints remain `readback_blocked`; no conformance inference is made from their denial.",
+              "Temporary PR #37 must be closed unmerged after artifact extraction.",
+          ]
+          status, payload = request(
+              "POST",
+              f"/repos/{OWNER}/gcl-standards/issues/22/comments",
+              {"body": "\n".join(lines)},
+          )
+          if status != 201:
+              raise SystemExit(f"failed to post summary: {status} {payload}")
+
+          print(json.dumps({
+              "recorded_at": recorded_at,
+              "comment_id": payload.get("id") if isinstance(payload, dict) else None,
+              "organization_statuses": {
+                  key: value["status"] for key, value in result["organization_endpoints"].items()
+              },
+              "repository_statuses": {
+                  repo: {key: value["status"] for key, value in row.items()}
+                  for repo, row in result["repositories"].items()
+              },
+          }, indent=2, sort_keys=True))
+          PY
+      - name: Preserve raw settings readback
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: gcl-ghos-settings-readback-001
+          path: readback-output/GCL-GHOS-SETTINGS-READBACK-001.json
+          if-no-files-found: error
+          retention-days: 14
