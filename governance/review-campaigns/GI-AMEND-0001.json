@@ -10,34 +10,32 @@
   },
   "primary_pr": {
     "repository": "grandchallenge/INTELLECT",
-    "pull_request": 14
+    "pull_request": 32
   },
   "subjects": [
     {
       "repository": "grandchallenge/INTELLECT",
-      "pull_request": 14,
+      "pull_request": 32,
       "forbidden_changed_paths": [
         "CONSTITUTION.md"
       ],
       "required_changed_paths": [
         "AMENDMENTS/0001-commentary-and-gcl-ghos.md",
-        "docs/CONSTITUTIONAL_COMMENTARY_AND_OPERATING_DOCTRINE.md",
-        "docs/adr/0004-commentary-and-gcl-ghos-authority.md",
         "governance/constitutional_authority_schedule.json",
-        "governance/steward_directives/GI-STEWARD-0001.md",
-        "schemas/constitutional_review_receipt.schema.json",
+        "schemas/constitutional_authority_schedule.schema.json",
+        "src/grand_intellect/constitutional_authority.py",
         "tests/test_constitutional_authority.py"
       ]
     },
     {
       "repository": "grandchallenge/gcl-standards",
-      "pull_request": 13,
+      "pull_request": 18,
       "required_changed_paths": [
         "ci/validate.py",
         "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
-        "implementation/2026-07-29_GITHUB_CONSTITUTIONAL_BOOTSTRAP.md",
-        "implementation/2026-07-29_STEWARD_SUPERVISED_AGENT_STAFFING.md",
-        "standards/GCL-GHOS-00.md"
+        "programme-adoption/MATH-PROGRAMME.yaml",
+        "standards/GCL-GHOS-00.md",
+        "tests/test_validate.py"
       ]
     }
   ],
@@ -45,50 +43,7 @@
     "fyremael"
   ],
   "agent_findings": {
-    "adversary": {
-      "office": "adversary",
-      "reviewer_id": "openai-gpt-5.6-thinking-adversary",
-      "session_id": "gi-amend-0001-adversary-20260803T0404Z",
-      "subject_sha256": "4f6af31da8c7af555e27a686526c02ca3c8a2ccb90912f7fb71803e0f5673272",
-      "status": "approved",
-      "obligations": [
-        "test constitutional authority inversion and self-ratification",
-        "test separation of proposal author, Adversary, Referee, and Human Steward roles",
-        "test exact-revision and distinct-session binding",
-        "test GitHub, AETHER, programme, and mathematical authority boundaries",
-        "test staffing changes do not waive office obligations or reserved powers",
-        "inspect compatibility, migration, negative-test, and claim-boundary coverage"
-      ],
-      "findings": [
-        "No authority inversion was found across Constitution, INTELLECT, AETHER, MATH-PROGRAMME, MATHCERT, gcl-standards, or GitHub layers.",
-        "GI-STEWARD-0001 changes staffing without making GI-AMEND-0001 self-ratifying or transferring Human Steward reserved powers.",
-        "Proposal-author self-review and reuse of one agent identity or session across Adversary and Referee offices are rejected by doctrine, clerk validation, and negative tests.",
-        "The corrected campaign boundary matches the exact subject PRs and treats MATH-PROGRAMME adoption as a later activation output.",
-        "GitHub checks and settings remain operational evidence and do not establish constitutional activation or mathematical certification.",
-        "No unresolved blocking defect was found for Adversary approval of this exact subject packet.",
-        "ADR-0001 omits ordinal 3 in its activation-condition numbering; this is nonblocking and should be normalized before final activation."
-      ],
-      "evidence_refs": [
-        "https://github.com/grandchallenge/INTELLECT/pull/14",
-        "https://github.com/grandchallenge/gcl-standards/pull/13",
-        "https://github.com/grandchallenge/.github/pull/24",
-        "https://github.com/grandchallenge/.github/actions/runs/30783318541",
-        "https://github.com/grandchallenge/INTELLECT/actions/runs/30506276238",
-        "https://github.com/grandchallenge/INTELLECT/actions/runs/30506276513",
-        "https://github.com/grandchallenge/gcl-standards/actions/runs/30506615912",
-        "https://github.com/grandchallenge/gcl-standards/actions/runs/30506616244",
-        "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5162157103"
-      ],
-      "residual_uncertainty": [
-        "correlated judgment risk may remain across agent systems despite identity and session separation",
-        "Human Steward authority remains concentrated in one accountable person during bootstrap",
-        "live GitHub settings may drift and require continuing read-back audits",
-        "ADR activation-condition numbering should be normalized before final activation",
-        "the Referee finding, Human Steward authorization, constitutional receipt, activation commit, and MATH-PROGRAMME adoption remain pending"
-      ],
-      "recorded_at": "2026-08-03T04:04:00Z",
-      "record_url": "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5162157103"
-    },
+    "adversary": null,
     "referee": null
   },
   "receipt": {
