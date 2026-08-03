@@ -99,15 +99,21 @@ class ReviewClerkTests(unittest.TestCase):
             },
         )
 
-    def test_successor_packet_invalidates_prior_agent_findings(self) -> None:
+    def test_successor_adversary_is_admitted_without_referee(self) -> None:
         config = self.campaign()
-        self.assertIsNone(config["agent_findings"]["adversary"])
+        adversary = config["agent_findings"]["adversary"]
+        self.assertIsNotNone(adversary)
+        self.assertEqual(adversary["office"], "adversary")
+        self.assertEqual(adversary["status"], "approved")
+        self.assertEqual(
+            adversary["subject_sha256"],
+            "60a5faa6e5b5fd199e5f463ebf722e132459933821faa7ec86bf3230c4a3f8e3",
+        )
+        self.assertNotEqual(
+            adversary["subject_sha256"],
+            "0111e30f8176a47b8bcaecd7c7d1d449b7e57a6a5a4e1b5f2a1f796b18698eb6",
+        )
         self.assertIsNone(config["agent_findings"]["referee"])
-        subject_prs = {
-            item["repository"]: item["pull_request"] for item in config["subjects"]
-        }
-        self.assertNotEqual(subject_prs["grandchallenge/INTELLECT"], 14)
-        self.assertNotEqual(subject_prs["grandchallenge/gcl-standards"], 13)
 
     def test_proposal_author_cannot_supply_agent_review(self) -> None:
         with self.assertRaisesRegex(clerk.ClerkError, "proposal author"):
