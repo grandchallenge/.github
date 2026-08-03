@@ -43,12 +43,51 @@
     "fyremael"
   ],
   "agent_findings": {
-    "adversary": null,
+    "adversary": {
+      "office": "adversary",
+      "reviewer_id": "openai-gpt-5.6-thinking-final-head-adversary",
+      "session_id": "gpt-5.6-thinking-final-head-adversary-20260803T090100Z-71afd1db",
+      "subject_sha256": "71afd1dbc9e44f444acf78524120761d95707687aacdbd840ad811860814763c",
+      "status": "approved",
+      "obligations": [
+        "invalidate this finding if either recorded final subject head changes or the campaign subject contract changes",
+        "require a distinct non-author Referee agent identity and session for the same subject digest",
+        "reserve exact-packet authorization to the named acting Human Steward after both agent findings are admitted",
+        "publish and admit a replacement digest-addressed receipt before amendment activation",
+        "keep ADR acceptance, GCL-GHOS admission, MATH-PROGRAMME adoption, and organization-wide claims as later separate operations"
+      ],
+      "findings": [
+        "the fresh packet binds INTELLECT PR #32 final head f1f5c4459def29139240c67ca858126021d1f12f and gcl-standards PR #18 final head fa90ffc2bd23a6b0c8e184c7da2dd6ef1174a4ee",
+        "the null-finding packet digest is 3ab38fa30964b15be02d8ab55d23ec93583fc1383f5313f06f7a3144606f0c6e and the subject digest is 71afd1dbc9e44f444acf78524120761d95707687aacdbd840ad811860814763c",
+        "all configured required-path and forbidden-path boundaries pass and all subject checks recorded by the Clerk are successful",
+        "the activation sequence remains acyclic: replacement receipt admission precedes amendment activation; ADR acceptance and GCL-GHOS admission follow activation; programme adoption follows standards admission",
+        "the INTELLECT validator cross-binds the receipt campaign, packet digest, reviewed subject heads, proposal authors, agent identities and sessions, and Human Steward attestation",
+        "the standards validator requires the same digest-addressed receipt path and binds its twelve-character suffix to the packet digest prefix",
+        "the prior subject digest, packet, receipt, findings, and Steward reaction are explicitly invalidated and cannot satisfy the fresh campaign",
+        "the exact campaign names fyremael as one acting Human Steward while preserving fyremael and jimsteeg as separate globally recognized officeholders",
+        "candidate review and subject merge do not themselves activate the amendment, accept ADR-0001, admit GCL-GHOS, or create programme adoption",
+        "no critical Adversary blocker remains"
+      ],
+      "evidence_refs": [
+        "https://github.com/grandchallenge/.github/pull/33",
+        "https://github.com/grandchallenge/.github/actions/runs/30798956756",
+        "https://github.com/grandchallenge/INTELLECT/pull/32",
+        "https://github.com/grandchallenge/gcl-standards/pull/18",
+        "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5164348042"
+      ],
+      "residual_uncertainty": [
+        "the review depends on GitHub-hosted final-head metadata and check records",
+        "agent-office independence is identity- and session-separated but remains within the bootstrap agent-governance model",
+        "the distinct Referee finding, Human Steward packet signature, replacement receipt, and activation record remain pending"
+      ],
+      "recorded_at": "2026-08-03T09:01:00Z",
+      "record_url": "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5164348042"
+    },
     "referee": null
   },
   "merge_head_reconciliation": {
-    "status": "requires_fresh_packet",
-    "reason": "The INTELLECT subject moved after receipt admission and before protected merge. Exact-head movement invalidates the prior agent findings, Human Steward reaction, packet digest, and receipt even though the five reviewed subject files did not change.",
+    "status": "fresh_adversary_approved",
+    "reason": "The INTELLECT subject moved after receipt admission and before protected merge. Exact-head movement invalidated the prior review packet. A fresh final-head packet has now been generated and its Adversary finding is admitted; Referee, Human Steward signature, replacement receipt, and activation remain pending.",
     "stewardship_scope": {
       "acting_human_steward": "fyremael",
       "recognized_global_officeholders": [
@@ -56,6 +95,11 @@
         "jimsteeg"
       ],
       "rule": "This exact campaign names one acting Human Steward. The global Human Steward roster is maintained by the separate GI-STEWARD-0001 attestations."
+    },
+    "fresh_packet": {
+      "subject_sha256": "71afd1dbc9e44f444acf78524120761d95707687aacdbd840ad811860814763c",
+      "null_finding_packet_sha256": "3ab38fa30964b15be02d8ab55d23ec93583fc1383f5313f06f7a3144606f0c6e",
+      "clerk_run": "30798956756"
     },
     "intellect_subject": {
       "repository": "grandchallenge/INTELLECT",

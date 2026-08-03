@@ -99,14 +99,46 @@ class ReviewClerkTests(unittest.TestCase):
             },
         )
 
-    def test_agent_findings_reset_after_merge_head_movement(self) -> None:
+    def test_fresh_adversary_is_bound_and_referee_remains_null(self) -> None:
         config = self.campaign()
+        adversary = config["agent_findings"]["adversary"]
+        self.assertIsInstance(adversary, dict)
+        assert isinstance(adversary, dict)
+        self.assertEqual(adversary["office"], "adversary")
+        self.assertEqual(adversary["status"], "approved")
         self.assertEqual(
-            config["agent_findings"],
-            {"adversary": None, "referee": None},
+            adversary["reviewer_id"],
+            "openai-gpt-5.6-thinking-final-head-adversary",
         )
+        self.assertEqual(
+            adversary["session_id"],
+            "gpt-5.6-thinking-final-head-adversary-20260803T090100Z-71afd1db",
+        )
+        self.assertEqual(
+            adversary["subject_sha256"],
+            "71afd1dbc9e44f444acf78524120761d95707687aacdbd840ad811860814763c",
+        )
+        self.assertEqual(
+            adversary["record_url"],
+            "https://github.com/grandchallenge/gcl-standards/issues/3"
+            "#issuecomment-5164348042",
+        )
+        self.assertNotEqual(adversary["reviewer_id"], "fyremael")
+        self.assertIsNone(config["agent_findings"]["referee"])
+
         reconciliation = config["merge_head_reconciliation"]
-        self.assertEqual(reconciliation["status"], "requires_fresh_packet")
+        self.assertEqual(reconciliation["status"], "fresh_adversary_approved")
+        packet = reconciliation["fresh_packet"]
+        self.assertEqual(
+            packet["subject_sha256"],
+            "71afd1dbc9e44f444acf78524120761d95707687aacdbd840ad811860814763c",
+        )
+        self.assertEqual(
+            packet["null_finding_packet_sha256"],
+            "3ab38fa30964b15be02d8ab55d23ec93583fc1383f5313f06f7a3144606f0c6e",
+        )
+        self.assertEqual(packet["clerk_run"], "30798956756")
+
         intellect = reconciliation["intellect_subject"]
         self.assertEqual(
             intellect["reviewed_head"],
@@ -150,6 +182,7 @@ class ReviewClerkTests(unittest.TestCase):
         )
         self.assertEqual(invalidated["adversary_comment"], "5163133964")
         self.assertEqual(invalidated["referee_comment"], "5163304824")
+        self.assertNotEqual(invalidated["adversary_comment"], "5164348042")
 
     def test_exact_campaign_names_one_acting_human_steward(self) -> None:
         config_path = (
@@ -166,8 +199,7 @@ class ReviewClerkTests(unittest.TestCase):
             scope["recognized_global_officeholders"],
             ["fyremael", "jimsteeg"],
         )
-        packet = clerk.build_packet(config, [])
-        self.assertEqual(packet["human_steward"], "fyremael")
+        self.assertEqual(scope["acting_human_steward"], config["human_stewards"][0])
 
     def test_proposal_author_cannot_supply_agent_review(self) -> None:
         with self.assertRaisesRegex(clerk.ClerkError, "proposal author"):
