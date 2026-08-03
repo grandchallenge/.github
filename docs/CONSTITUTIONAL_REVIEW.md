@@ -61,6 +61,25 @@ findings. The packet digest additionally binds those admitted findings. A new
 subject commit invalidates the findings and creates a new Steward attestation.
 Older records remain visible for audit but cannot satisfy the current campaign.
 
+## Campaign boundary integrity
+
+A campaign's required-path contract must describe files actually changed by its
+exact subject pull request. It may not treat a later activation artifact as if
+it were already part of an earlier review subject.
+
+For `GI-AMEND-0001`, `grandchallenge/gcl-standards#13` changed the candidate
+standard, proposed ADR, two implementation records, and `ci/validate.py`. It did
+not change `programme-adoption/MATH-PROGRAMME.yaml` or `tests/test_validate.py`.
+Those paths therefore cannot be required boundary evidence for PR #13.
+
+The MATH-PROGRAMME adoption record remains a separate post-review activation
+output. It stays proposed until the constitutional review receipt is admitted,
+the amendment is activated, ADR-0001 is accepted, and the programme pins the
+resulting exact standards commit.
+
+This distinction prevents a circular gate: review validates the candidate
+packet first; activation and programme adoption then bind the admitted result.
+
 ## Current campaign
 
 `governance/review-campaigns/GI-AMEND-0001.json` binds:

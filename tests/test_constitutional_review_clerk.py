@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -60,6 +61,59 @@ class ReviewClerkTests(unittest.TestCase):
             clerk.canonical_digest(value),
             clerk.canonical_digest({"a": "same", "b": [2, 1]}),
         )
+
+    def test_gi_amend_campaign_matches_merged_subject_contract(self) -> None:
+        config = json.loads(
+            (
+                ROOT
+                / "governance"
+                / "review-campaigns"
+                / "GI-AMEND-0001.json"
+            ).read_text(encoding="utf-8")
+        )
+        subjects = {
+            item["repository"]: item for item in config["subjects"]
+        }
+        self.assertEqual(
+            subjects["grandchallenge/INTELLECT"]["pull_request"], 14
+        )
+        self.assertEqual(
+            subjects["grandchallenge/gcl-standards"]["pull_request"], 13
+        )
+        self.assertEqual(
+            set(
+                subjects["grandchallenge/gcl-standards"][
+                    "required_changed_paths"
+                ]
+            ),
+            {
+                "ci/validate.py",
+                "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
+                "implementation/2026-07-29_GITHUB_CONSTITUTIONAL_BOOTSTRAP.md",
+                "implementation/2026-07-29_STEWARD_SUPERVISED_AGENT_STAFFING.md",
+                "standards/GCL-GHOS-00.md",
+            },
+        )
+
+    def test_activation_outputs_are_not_pr13_boundary_evidence(self) -> None:
+        config = json.loads(
+            (
+                ROOT
+                / "governance"
+                / "review-campaigns"
+                / "GI-AMEND-0001.json"
+            ).read_text(encoding="utf-8")
+        )
+        standards_subject = next(
+            item
+            for item in config["subjects"]
+            if item["repository"] == "grandchallenge/gcl-standards"
+        )
+        required = set(standards_subject["required_changed_paths"])
+        self.assertNotIn(
+            "programme-adoption/MATH-PROGRAMME.yaml", required
+        )
+        self.assertNotIn("tests/test_validate.py", required)
 
     def test_proposal_author_cannot_supply_agent_review(self) -> None:
         with self.assertRaisesRegex(clerk.ClerkError, "proposal author"):
