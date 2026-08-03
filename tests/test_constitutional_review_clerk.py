@@ -99,16 +99,19 @@ class ReviewClerkTests(unittest.TestCase):
             },
         )
 
-    def test_receipt_binding_cure_resets_both_agent_findings(self) -> None:
+    def test_receipt_path_cure_keeps_both_agent_findings_null(self) -> None:
         config = self.campaign()
         self.assertIsNone(config["agent_findings"]["adversary"])
         self.assertIsNone(config["agent_findings"]["referee"])
         serialized = json.dumps(config, sort_keys=True)
-        self.assertNotIn(
+        for stale_identity in (
             "60a5faa6e5b5fd199e5f463ebf722e132459933821faa7ec86bf3230c4a3f8e3",
-            serialized,
-        )
-        self.assertNotIn("5162694877", serialized)
+            "5162694877",
+            "45e4de7b489db54081472eb6f44fff5bf9eff3abcc66fde22993e133c72da034",
+            "5162939806",
+        ):
+            with self.subTest(stale_identity=stale_identity):
+                self.assertNotIn(stale_identity, serialized)
 
     def test_proposal_author_cannot_supply_agent_review(self) -> None:
         with self.assertRaisesRegex(clerk.ClerkError, "proposal author"):
