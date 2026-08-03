@@ -6,7 +6,10 @@ on:
     paths:
       - "scripts/gcl_ghos_owner_export.py"
       - "tests/test_gcl_ghos_owner_export.py"
+      - "tests/test_gcl_ghos_owner_export_evidence.py"
       - "governance/settings-readback/GCL-GHOS-OWNER-EXPORT-001.schema.json"
+      - "governance/settings-readback/evidence/GCL-GHOS-OWNER-EXPORT-001.json"
+      - "governance/settings-readback/evidence/GCL-GHOS-OWNER-EXPORT-001.json.sha256"
       - "docs/GCL-GHOS-OWNER-EXPORT-001.md"
       - ".github/workflows/gcl-ghos-owner-export-tests.yml"
   push:
@@ -14,7 +17,10 @@ on:
     paths:
       - "scripts/gcl_ghos_owner_export.py"
       - "tests/test_gcl_ghos_owner_export.py"
+      - "tests/test_gcl_ghos_owner_export_evidence.py"
       - "governance/settings-readback/GCL-GHOS-OWNER-EXPORT-001.schema.json"
+      - "governance/settings-readback/evidence/GCL-GHOS-OWNER-EXPORT-001.json"
+      - "governance/settings-readback/evidence/GCL-GHOS-OWNER-EXPORT-001.json.sha256"
       - "docs/GCL-GHOS-OWNER-EXPORT-001.md"
       - ".github/workflows/gcl-ghos-owner-export-tests.yml"
 
@@ -32,4 +38,7 @@ jobs:
         with:
           python-version: "3.12.13"
       - name: Run owner-export tests
-        run: python -m unittest tests/test_gcl_ghos_owner_export.py
+        run: >-
+          python -m unittest
+          tests/test_gcl_ghos_owner_export.py
+          tests/test_gcl_ghos_owner_export_evidence.py
