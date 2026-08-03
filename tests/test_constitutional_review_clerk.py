@@ -99,9 +99,22 @@ class ReviewClerkTests(unittest.TestCase):
             },
         )
 
-    def test_receipt_path_cure_keeps_both_agent_findings_null(self) -> None:
+    def test_adversary_finding_is_bound_and_referee_remains_null(self) -> None:
         config = self.campaign()
-        self.assertIsNone(config["agent_findings"]["adversary"])
+        finding_record = config["agent_findings"]["adversary"]
+        self.assertIsInstance(finding_record, dict)
+        assert isinstance(finding_record, dict)
+        self.assertEqual(finding_record["office"], "adversary")
+        self.assertEqual(finding_record["status"], "approved")
+        self.assertEqual(
+            finding_record["subject_sha256"],
+            "4140d276a8d30bbdd8f6cb5717b9b7b45dc68d119f813a321d94244402c32f10",
+        )
+        self.assertEqual(
+            finding_record["record_url"],
+            "https://github.com/grandchallenge/gcl-standards/issues/3#issuecomment-5163133964",
+        )
+        self.assertNotEqual(finding_record["reviewer_id"], "fyremael")
         self.assertIsNone(config["agent_findings"]["referee"])
         serialized = json.dumps(config, sort_keys=True)
         for stale_identity in (
