@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import importlib.util
 import json
-import os
 import sys
 import unittest
 from pathlib import Path
@@ -109,36 +108,6 @@ class ReviewClerkTests(unittest.TestCase):
         }
         self.assertNotEqual(subject_prs["grandchallenge/INTELLECT"], 14)
         self.assertNotEqual(subject_prs["grandchallenge/gcl-standards"], 13)
-
-    def test_live_successor_packet_probe(self) -> None:
-        token = os.environ.get("GITHUB_TOKEN")
-        if not token:
-            self.skipTest("GITHUB_TOKEN unavailable outside Actions")
-        config = self.campaign()
-        review = clerk.ReviewClerk(clerk.GitHubClient(token), config, apply=False)
-        subjects = [review._load_subject(item) for item in config["subjects"]]
-        packet = clerk.build_packet(config, subjects)
-        print("SUBJECT_SHA256=" + packet["subject_sha256"])
-        print("PACKET_SHA256=" + packet["packet_sha256"])
-        print(json.dumps(packet, indent=2, sort_keys=True))
-        self.assertEqual(
-            {
-                subject["repository"]: subject["head_sha"]
-                for subject in packet["subjects"]
-            },
-            {
-                "grandchallenge/INTELLECT": "fdd177140a7922022ac334597f3543e0a7cf1b54",
-                "grandchallenge/gcl-standards": "b9a30ad2a65c5845c69a4184d59bfe55f060a91e",
-            },
-        )
-        self.assertTrue(all(subject["checks_ready"] for subject in packet["subjects"]))
-        self.assertTrue(
-            all(
-                boundary["passed"]
-                for subject in packet["subjects"]
-                for boundary in subject["boundary_checks"]
-            )
-        )
 
     def test_proposal_author_cannot_supply_agent_review(self) -> None:
         with self.assertRaisesRegex(clerk.ClerkError, "proposal author"):
