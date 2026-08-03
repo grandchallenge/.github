@@ -99,21 +99,16 @@ class ReviewClerkTests(unittest.TestCase):
             },
         )
 
-    def test_successor_adversary_is_admitted_without_referee(self) -> None:
+    def test_receipt_binding_cure_resets_both_agent_findings(self) -> None:
         config = self.campaign()
-        adversary = config["agent_findings"]["adversary"]
-        self.assertIsNotNone(adversary)
-        self.assertEqual(adversary["office"], "adversary")
-        self.assertEqual(adversary["status"], "approved")
-        self.assertEqual(
-            adversary["subject_sha256"],
-            "60a5faa6e5b5fd199e5f463ebf722e132459933821faa7ec86bf3230c4a3f8e3",
-        )
-        self.assertNotEqual(
-            adversary["subject_sha256"],
-            "0111e30f8176a47b8bcaecd7c7d1d449b7e57a6a5a4e1b5f2a1f796b18698eb6",
-        )
+        self.assertIsNone(config["agent_findings"]["adversary"])
         self.assertIsNone(config["agent_findings"]["referee"])
+        serialized = json.dumps(config, sort_keys=True)
+        self.assertNotIn(
+            "60a5faa6e5b5fd199e5f463ebf722e132459933821faa7ec86bf3230c4a3f8e3",
+            serialized,
+        )
+        self.assertNotIn("5162694877", serialized)
 
     def test_proposal_author_cannot_supply_agent_review(self) -> None:
         with self.assertRaisesRegex(clerk.ClerkError, "proposal author"):
@@ -217,5 +212,3 @@ class ReviewClerkTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-# Temporary admitted-Adversary packet probe event carrier.
