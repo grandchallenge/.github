@@ -20,8 +20,6 @@ on:
 
 permissions:
   contents: read
-  pull-requests: read
-  checks: read
 
 jobs:
   test:
@@ -35,21 +33,3 @@ jobs:
         run: python -m compileall -q scripts tests
       - name: Unit tests
         run: python -m unittest discover -s tests -v
-      - name: Generate exact final-head review packet
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          python scripts/constitutional_review_clerk.py \
-            --config governance/review-campaigns/GI-AMEND-0001.json \
-            --output-dir /tmp/gi-amend-0001-final-head-packet
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          packet = json.loads(
-              Path('/tmp/gi-amend-0001-final-head-packet/review-packet.json').read_text()
-          )
-          print('SUBJECT_SHA256=' + packet['subject_sha256'])
-          print('PACKET_SHA256=' + packet['packet_sha256'])
-          print(json.dumps(packet, indent=2, sort_keys=True))
-          PY
