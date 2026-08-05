@@ -31,7 +31,7 @@ jobs:
     steps:
       - name: Mint Council Clerk token
         id: app-token
-        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
         with:
           app-id: ${{ secrets.app_id || secrets.GCL_COUNCIL_CLERK_APP_ID }}
           private-key: ${{ secrets.private_key || secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
@@ -64,7 +64,7 @@ jobs:
               missing_before:$missing,dry_run:($dry_run == "true"),
               authority_boundary:"metadata-only; never changes claim status"}' \
             > project-sync-evidence.json
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: project-sync-evidence
           path: project-sync-evidence.json
