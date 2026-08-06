@@ -23,12 +23,12 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
       - name: Mint Council Clerk token
         id: app-token
-        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
         with:
           app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
           private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
@@ -55,7 +55,7 @@ jobs:
             --output-dir "${{ steps.campaign.outputs.output }}" \
             --apply
       - name: Preserve review evidence
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: constitutional-review-${{ inputs.campaign || 'GI-AMEND-0001' }}
           path: ${{ steps.campaign.outputs.output }}
