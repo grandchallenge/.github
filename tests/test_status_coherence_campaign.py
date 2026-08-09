@@ -63,22 +63,32 @@ class StatusCoherenceCampaignTests(unittest.TestCase):
             subjects["grandchallenge/gcl-standards"]["required_changed_paths"],
         )
 
-    def test_campaign_admits_only_the_exact_adversary_finding(self) -> None:
+    def test_campaign_admits_exact_distinct_agent_findings(self) -> None:
         findings = self.config["agent_findings"]
-        self.assertEqual(set(findings), {"adversary"})
+        self.assertEqual(set(findings), {"adversary", "referee"})
         adversary = findings["adversary"]
+        referee = findings["referee"]
         self.assertEqual(adversary["office"], "adversary")
+        self.assertEqual(referee["office"], "referee")
         self.assertEqual(adversary["status"], "approved")
+        self.assertEqual(referee["status"], "approved")
         self.assertEqual(
             adversary["subject_sha256"],
             "2eb93829c45978256075b28d18b19084d48b68a565411e0af05e2c7d8918dd7b",
         )
+        self.assertEqual(referee["subject_sha256"], adversary["subject_sha256"])
         self.assertEqual(
             adversary["record_url"],
             "https://github.com/grandchallenge/gcl-standards/issues/35"
             "#issuecomment-5229564404",
         )
-        self.assertNotIn("referee", findings)
+        self.assertEqual(
+            referee["record_url"],
+            "https://github.com/grandchallenge/gcl-standards/issues/35"
+            "#issuecomment-5229588884",
+        )
+        self.assertNotEqual(adversary["reviewer_id"], referee["reviewer_id"])
+        self.assertNotEqual(adversary["session_id"], referee["session_id"])
         self.assertEqual(
             self.config["finding_binding"], "campaign_contract_v1"
         )
