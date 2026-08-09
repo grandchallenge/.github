@@ -1,0 +1,88 @@
+name: Weekly optimality scorecard
+
+on:
+  schedule:
+    - cron: "17 17 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weekly-optimality-scorecard
+  cancel-in-progress: false
+
+jobs:
+  propose-scorecard:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Mint Council Clerk token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: grandchallenge/gcl-standards
+          token: ${{ steps.app-token.outputs.token }}
+          path: gcl-standards
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v6
+        with:
+          python-version: "3.12.13"
+          cache: pip
+          cache-dependency-path: gcl-standards/requirements.txt
+      - name: Install scorecard validator dependencies
+        run: python -m pip install --requirement gcl-standards/requirements.txt
+      - name: Collect exact state and render proposal
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          python scripts/weekly_optimality_scorecard.py \
+            --run-id "$GITHUB_RUN_ID" \
+            --json-output scorecard.json \
+            --markdown-output scorecard.md
+          record_id="$(python -c 'import json; print(json.load(open("scorecard.json"))["record_id"])')"
+          mkdir -p gcl-standards/scorecards
+          mv scorecard.json "gcl-standards/scorecards/${record_id}.json"
+          mv scorecard.md "gcl-standards/scorecards/${record_id}.md"
+          echo "record_id=$record_id" >> "$GITHUB_ENV"
+      - name: Validate generated record
+        working-directory: gcl-standards
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, "ci")
+          from optimality_scorecard import validate_scorecard
+          path = Path("scorecards") / f"{os.environ['record_id']}.json"
+          validate_scorecard(json.loads(path.read_text(encoding="utf-8")))
+          PY
+      - name: Open draft scorecard pull request
+        working-directory: gcl-standards
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          branch="automation/optimality-scorecard-${record_id}-${GITHUB_RUN_ID}"
+          git config user.name "gcl-council-clerk[bot]"
+          git config user.email "gcl-council-clerk[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add scorecards/
+          git commit -m "evidence: propose ${record_id}"
+          git push origin "$branch"
+          gh pr create \
+            --repo grandchallenge/gcl-standards \
+            --base main \
+            --head "$branch" \
+            --draft \
+            --title "[scorecard] ${record_id}" \
+            --body "Automated deterministic weekly proposal from Council Clerk App run ${GITHUB_RUN_ID}. Unknown values remain unknown with owned deviations. This draft does not approve, merge, or authorize any claim."

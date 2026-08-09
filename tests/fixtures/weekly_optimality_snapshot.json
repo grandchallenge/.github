@@ -1,0 +1,30 @@
+{
+  "run_id": "123",
+  "generated_at": "2026-08-09T00:00:00Z",
+  "window": {
+    "start": "2026-08-02T00:00:00Z",
+    "end": "2026-08-09T00:00:00Z"
+  },
+  "repositories": [
+    {
+      "repository": "grandchallenge/gcl-standards",
+      "default_branch": "main",
+      "head_sha": "1111111111111111111111111111111111111111",
+      "protected": true,
+      "evidence": "https://github.com/grandchallenge/gcl-standards/settings/rules"
+    },
+    {
+      "repository": "grandchallenge/INTELLECT",
+      "default_branch": "main",
+      "head_sha": "2222222222222222222222222222222222222222",
+      "protected": null,
+      "evidence": "https://github.com/grandchallenge/INTELLECT/settings"
+    }
+  ],
+  "status_contradictions": 0,
+  "status_evidence": "https://github.com/grandchallenge/gcl-standards/blob/1111111111111111111111111111111111111111/evidence/coherence.json",
+  "pr_decision_hours": [12.0, 36.0],
+  "governed_decisions": 1,
+  "production_demonstrations": 0,
+  "math_inference_violations": 0
+}
