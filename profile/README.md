@@ -8,10 +8,26 @@ authority.
 
 [![MATH-PROGRAMME umbrella progress illustration showing the five-repository governance, certification and integration framework; accelerated nine-day maintenance cadence; eight-campaign portfolio; ten Core Clarity invariants; complete required-workflow coverage; and INTELLECT integration.](assets/math-programme-progress-2026-07-31.jpg)](https://github.com/grandchallenge/MATH-PROGRAMME)
 
-*Status snapshot: July 31, 2026 at 18:21 PT. The illustration is a navigational
+*Status snapshot: August 8, 2026 at 22:12 PT. The illustration is a navigational
 summary; protected, content-addressed records in the governed repositories remain
 authoritative. No mathematical, certification, novelty, priority, patentability,
 mechanical, manufacturing, or commercial claim is promoted by this presentation.*
+
+## Current governed status
+
+- `GI-AMEND-0001` is effective under the protected
+  [INTELLECT authority schedule](https://github.com/grandchallenge/INTELLECT/blob/main/governance/constitutional_authority_schedule.json).
+- `GCL-GHOS-00` `0.1.1` is the admitted documentary-only successor selected by
+  [protected admission `5c4e73e55d362a5198b9076ead694909a5e0ebf3`](https://github.com/grandchallenge/gcl-standards/commit/5c4e73e55d362a5198b9076ead694909a5e0ebf3).
+- MATH-PROGRAMME actively adopts that exact admission through
+  [protected adoption `c39aab2bfbb2725accd18d69a0daea7fe96a0eee`](https://github.com/grandchallenge/gcl-standards/commit/c39aab2bfbb2725accd18d69a0daea7fe96a0eee),
+  while retaining the `0.1.0` adoption lineage.
+
+Machine-readable activation, admission, and adoption records take precedence
+over descriptive documents. Descriptive status is generated from or validated
+against those records. These statuses do not grant GitHub independent
+constitutional, mathematical, certification, production, deployment, novelty,
+or commercial authority.
 
 - The [Programme front door](https://grandchallenge.github.io/MATH-PROGRAMME/)
   and [Programme Atlas](https://grandchallenge.github.io/MATH-PROGRAMME/PROGRAMME_ATLAS/)
@@ -29,7 +45,8 @@ mechanical, manufacturing, or commercial claim is promoted by this presentation.
 - [gcl-standards](https://github.com/grandchallenge/gcl-standards) is the
   subordinate, versioned registry and publication surface for cross-programme
   standards. A candidate standard remains nonbinding until admitted by its
-  superior authority and adopted through the applicable programme decision.
+  superior authority and adopted through the applicable programme decision;
+  `GCL-GHOS-00` `0.1.1` has completed that sequence for MATH-PROGRAMME.
 
 The mathematics authority split is specified in the
 [three-pillar architecture](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ARCHITECTURE_OVERVIEW.md).
