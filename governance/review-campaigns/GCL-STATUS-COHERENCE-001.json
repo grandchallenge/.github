@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0.0",
+  "campaign_id": "GCL-STATUS-COHERENCE-001",
+  "organization": "grandchallenge",
+  "staffing_mode": "steward_supervised_agents",
+  "constitutional_source": {
+    "repository": "grandchallenge/INTELLECT",
+    "path": "CONSTITUTION.md",
+    "effective_version": "1.1.0"
+  },
+  "primary_pr": {
+    "repository": "grandchallenge/gcl-standards",
+    "pull_request": 36
+  },
+  "subjects": [
+    {
+      "repository": "grandchallenge/INTELLECT",
+      "pull_request": 52,
+      "forbidden_changed_paths": [
+        "CONSTITUTION.md"
+      ],
+      "required_changed_paths": [
+        "AMENDMENTS/0001-commentary-and-gcl-ghos.md",
+        "README.md",
+        "docs/STATUS.md",
+        "governance/constitutional_authority_schedule.json",
+        "schemas/constitutional_authority_schedule.schema.json",
+        "src/grand_intellect/constitutional_authority.py",
+        "tests/test_constitutional_authority.py",
+        "tests/test_gi_amend_0001_documentary_closure.py"
+      ]
+    },
+    {
+      "repository": "grandchallenge/gcl-standards",
+      "pull_request": 36,
+      "required_changed_paths": [
+        ".github/workflows/ci.yml",
+        "README.md",
+        "ci/ghos_documentary_successor.py",
+        "ci/git_content.py",
+        "ci/intellect_profile_reconciliation.py",
+        "ci/math_programme_pilot_adoption.py",
+        "ci/standard_admission.py",
+        "ci/status_coherence.py",
+        "ci/validate.py",
+        "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
+        "schemas/coherence_receipt.schema.json",
+        "schemas/current_admission_selection.schema.json",
+        "schemas/current_programme_adoption_selection.schema.json",
+        "schemas/current_status_projection.schema.json",
+        "schemas/standard_successor_lineage.schema.json",
+        "standards/GCL-GHOS-00.md",
+        "standards/history/GCL-GHOS-00-0.1.0.md",
+        "tests/test_ghos_documentary_successor.py",
+        "tests/test_git_content.py",
+        "tests/test_intellect_profile_reconciliation.py",
+        "tests/test_standard_admission.py",
+        "tests/test_status_coherence.py"
+      ]
+    }
+  ],
+  "human_stewards": [
+    "fyremael"
+  ],
+  "agent_findings": {},
+  "receipt": {
+    "repository": "grandchallenge/gcl-standards",
+    "path_prefix": "evidence/coherence-reviews"
+  }
+}
