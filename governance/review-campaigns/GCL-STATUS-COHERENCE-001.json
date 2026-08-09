@@ -2,6 +2,7 @@
   "schema_version": "1.0.0",
   "campaign_id": "GCL-STATUS-COHERENCE-001",
   "organization": "grandchallenge",
+  "finding_binding": "campaign_contract_v1",
   "staffing_mode": "steward_supervised_agents",
   "constitutional_source": {
     "repository": "grandchallenge/INTELLECT",

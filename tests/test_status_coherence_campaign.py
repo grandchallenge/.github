@@ -65,6 +65,9 @@ class StatusCoherenceCampaignTests(unittest.TestCase):
 
     def test_campaign_starts_without_fabricated_findings_or_authorization(self) -> None:
         self.assertEqual(self.config["agent_findings"], {})
+        self.assertEqual(
+            self.config["finding_binding"], "campaign_contract_v1"
+        )
         self.assertEqual(self.config["human_stewards"], ["fyremael"])
         self.assertEqual(
             self.config["primary_pr"],
