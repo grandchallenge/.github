@@ -41,11 +41,30 @@ class HumanGovernanceTransitionCampaignTests(unittest.TestCase):
             },
         )
 
-    def test_campaign_reserves_one_steward_and_starts_without_findings(self) -> None:
+    def test_campaign_reserves_one_steward_and_admits_distinct_findings(self) -> None:
         self.assertEqual(self.config["finding_binding"], "campaign_contract_v1")
         self.assertEqual(self.config["staffing_mode"], "steward_supervised_agents")
         self.assertEqual(self.config["human_stewards"], ["fyremael"])
-        self.assertEqual(self.config["agent_findings"], {})
+        findings = self.config["agent_findings"]
+        self.assertEqual(set(findings), {"adversary", "referee"})
+        for office, finding in findings.items():
+            self.assertEqual(finding["office"], office)
+            self.assertEqual(finding["status"], "approved")
+            self.assertEqual(
+                finding["subject_sha256"],
+                "492cfec63cffc27c88381c53e9a079540e42fb2982d795096a19f17c785a3a3c",
+            )
+            self.assertTrue(finding["record_url"].startswith(
+                "https://github.com/grandchallenge/INTELLECT/pull/54#issuecomment-"
+            ))
+        self.assertNotEqual(
+            findings["adversary"]["reviewer_id"],
+            findings["referee"]["reviewer_id"],
+        )
+        self.assertNotEqual(
+            findings["adversary"]["session_id"],
+            findings["referee"]["session_id"],
+        )
         self.assertEqual(
             self.config["receipt"],
             {
