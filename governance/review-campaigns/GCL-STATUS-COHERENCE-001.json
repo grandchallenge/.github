@@ -64,7 +64,50 @@
   "human_stewards": [
     "fyremael"
   ],
-  "agent_findings": {},
+  "agent_findings": {
+    "adversary": {
+      "office": "adversary",
+      "reviewer_id": "openai-gpt-5.6-sol-gcl-status-coherence-adversary-r5",
+      "session_id": "60e4b013-3330-431b-a5be-13d002894438",
+      "subject_sha256": "2eb93829c45978256075b28d18b19084d48b68a565411e0af05e2c7d8918dd7b",
+      "status": "approved",
+      "obligations": [
+        "invalidate this finding if either frozen subject head or the campaign contract changes",
+        "require a distinct non-author Referee identity and session for this exact subject digest",
+        "reserve exact-packet authorization to fyremael after both agent findings are admitted",
+        "preserve ordered admission A followed by adoption B referencing immutable admission A",
+        "retain every fixed nonclaim boundary through integration and closeout"
+      ],
+      "findings": [
+        "the packet binds INTELLECT head e12716e743fb306e41a80ace0bcfc64f71adf086 and gcl-standards head 921027678259ee54547b536277ed538290eed58c; both draft PRs are clean and all recorded checks are successful",
+        "the canonical packet digest recomputes to 671f373d08c1146fb7ffe70cc4d3bc327a10c81879592ac23b0b52ea97aede40 and the subject digest recomputes to 2eb93829c45978256075b28d18b19084d48b68a565411e0af05e2c7d8918dd7b",
+        "the protected campaign contract recomputes to 3614301da3b6cf55286c32e9012e701ec8b28577eaff0b6dd841ad0ee282ff5e",
+        "the prior sequencing blocker is resolved: selected admission records immutable admission_commit_sha A with next_gate not_started, while active adoption commit B independently references A and supplies the completed current gate projection",
+        "the adversarial fixture now constructs distinct pending-admission A and active-adoption B revisions and validates their exact relationship",
+        "README and ADR successor language is time-stable and validators reject the prior pending or preparatory assertions",
+        "canonical Git evidence validation resolves repository, commit, path, and blob identities from Git objects and rejects substitution or unresolved evidence",
+        "GCL-GHOS 0.1.1 retains the exact 0.1.0 normative body and expected normative SHA-256; the historical 0.1.0 Git blob remains fixed",
+        "all constitutional, organization-wide conformance, mathematical, certification, production, novelty, deployment, and commercial claim-authority fields remain false",
+        "local source validation, focused ordered-sequence tests, documentary-successor tests, and diff checks pass; exact-head remote CI and security checks are green",
+        "no blocking Adversary finding remains"
+      ],
+      "evidence_refs": [
+        "https://github.com/grandchallenge/INTELLECT/pull/52",
+        "https://github.com/grandchallenge/gcl-standards/pull/36",
+        "https://github.com/grandchallenge/INTELLECT/commit/e12716e743fb306e41a80ace0bcfc64f71adf086",
+        "https://github.com/grandchallenge/gcl-standards/commit/921027678259ee54547b536277ed538290eed58c",
+        "https://github.com/grandchallenge/.github/commit/6d09039a9dd660c8614bdd044bda7c43a5f55b64",
+        "https://github.com/grandchallenge/gcl-standards/actions/runs/31292186638",
+        "https://github.com/grandchallenge/INTELLECT/actions/runs/31290838962"
+      ],
+      "residual_uncertainty": [
+        "the distinct Referee finding and Human Steward authorization remain pending",
+        "the protected admission, adoption, INTELLECT projection, public-profile, and coherence-receipt merge identities do not yet exist and must be validated at their exact downstream heads"
+      ],
+      "recorded_at": "2026-08-09T03:25:01Z",
+      "record_url": "https://github.com/grandchallenge/gcl-standards/issues/35#issuecomment-5229564404"
+    }
+  },
   "receipt": {
     "repository": "grandchallenge/gcl-standards",
     "path_prefix": "evidence/coherence-reviews"

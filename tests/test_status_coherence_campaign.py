@@ -63,8 +63,22 @@ class StatusCoherenceCampaignTests(unittest.TestCase):
             subjects["grandchallenge/gcl-standards"]["required_changed_paths"],
         )
 
-    def test_campaign_starts_without_fabricated_findings_or_authorization(self) -> None:
-        self.assertEqual(self.config["agent_findings"], {})
+    def test_campaign_admits_only_the_exact_adversary_finding(self) -> None:
+        findings = self.config["agent_findings"]
+        self.assertEqual(set(findings), {"adversary"})
+        adversary = findings["adversary"]
+        self.assertEqual(adversary["office"], "adversary")
+        self.assertEqual(adversary["status"], "approved")
+        self.assertEqual(
+            adversary["subject_sha256"],
+            "2eb93829c45978256075b28d18b19084d48b68a565411e0af05e2c7d8918dd7b",
+        )
+        self.assertEqual(
+            adversary["record_url"],
+            "https://github.com/grandchallenge/gcl-standards/issues/35"
+            "#issuecomment-5229564404",
+        )
+        self.assertNotIn("referee", findings)
         self.assertEqual(
             self.config["finding_binding"], "campaign_contract_v1"
         )

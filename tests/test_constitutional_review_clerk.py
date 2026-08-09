@@ -82,6 +82,7 @@ class ReviewClerkTests(unittest.TestCase):
                 / "GCL-STATUS-COHERENCE-001.json"
             ).read_text(encoding="utf-8")
         )
+        config["agent_findings"] = {}
         subjects = [
             clerk.Subject(
                 repository="grandchallenge/INTELLECT",
