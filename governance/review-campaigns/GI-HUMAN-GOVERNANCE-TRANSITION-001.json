@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "campaign_id": "GI-HUMAN-GOVERNANCE-TRANSITION-001",
+  "organization": "grandchallenge",
+  "finding_binding": "campaign_contract_v1",
+  "staffing_mode": "steward_supervised_agents",
+  "constitutional_source": {
+    "repository": "grandchallenge/INTELLECT",
+    "path": "CONSTITUTION.md",
+    "effective_version": "1.1.0"
+  },
+  "primary_pr": {
+    "repository": "grandchallenge/INTELLECT",
+    "pull_request": 54
+  },
+  "subjects": [
+    {
+      "repository": "grandchallenge/INTELLECT",
+      "pull_request": 54,
+      "forbidden_changed_paths": [
+        "CONSTITUTION.md"
+      ],
+      "required_changed_paths": [
+        "governance/steward_directives/GI-STEWARD-0002.md",
+        "schemas/constitutional_authority_schedule.schema.json",
+        "src/grand_intellect/constitutional_authority.py",
+        "tests/test_constitutional_authority.py",
+        "tests/test_gi_steward_0002_transition.py"
+      ]
+    }
+  ],
+  "human_stewards": [
+    "fyremael"
+  ],
+  "agent_findings": {},
+  "receipt": {
+    "repository": "grandchallenge/INTELLECT",
+    "path_prefix": "governance/reviews"
+  }
+}
