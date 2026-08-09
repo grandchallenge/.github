@@ -114,6 +114,29 @@ def canonical_digest(value: Mapping[str, Any]) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def core_campaign_contract(config: Mapping[str, Any]) -> dict[str, Any]:
+    """Return the immutable finding contract, excluding findings themselves."""
+
+    required = (
+        "schema_version",
+        "campaign_id",
+        "organization",
+        "finding_binding",
+        "staffing_mode",
+        "constitutional_source",
+        "primary_pr",
+        "subjects",
+        "human_stewards",
+        "receipt",
+    )
+    missing = [field for field in required if field not in config]
+    if missing:
+        raise ClerkError(f"campaign finding contract is incomplete: {missing}")
+    if config["finding_binding"] != "campaign_contract_v1":
+        raise ClerkError("unknown campaign finding binding")
+    return {field: config[field] for field in required}
+
+
 def build_packet(
     config: Mapping[str, Any], subjects: Iterable[Subject]
 ) -> dict[str, Any]:
@@ -124,6 +147,11 @@ def build_packet(
         "constitutional_source": config["constitutional_source"],
         "subjects": [item.packet_view() for item in ordered],
     }
+    binding = config.get("finding_binding")
+    if binding is not None:
+        subject_record["campaign_contract_sha256"] = canonical_digest(
+            core_campaign_contract(config)
+        )
     subject_digest = canonical_digest(subject_record)
     authors = sorted({item.author for item in ordered})
     agent_findings = validate_agent_findings(

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import copy
 import json
 import sys
 import unittest
@@ -71,6 +72,84 @@ class ReviewClerkTests(unittest.TestCase):
             clerk.canonical_digest(value),
             clerk.canonical_digest({"a": "same", "b": [2, 1]}),
         )
+
+    def test_campaign_contract_changes_invalidate_finding_subject(self) -> None:
+        config = json.loads(
+            (
+                ROOT
+                / "governance"
+                / "review-campaigns"
+                / "GCL-STATUS-COHERENCE-001.json"
+            ).read_text(encoding="utf-8")
+        )
+        subjects = [
+            clerk.Subject(
+                repository="grandchallenge/INTELLECT",
+                pull_request=52,
+                url="https://example.test/INTELLECT/52",
+                head_sha="a" * 40,
+                base_sha="b" * 40,
+                author="proposal-author",
+                draft=True,
+                mergeable_state="clean",
+                changed_paths=tuple(config["subjects"][0]["required_changed_paths"]),
+                checks=(("test", "success"),),
+                checks_ready=True,
+                boundary_checks=(("contract", True),),
+            ),
+            clerk.Subject(
+                repository="grandchallenge/gcl-standards",
+                pull_request=36,
+                url="https://example.test/gcl-standards/36",
+                head_sha="c" * 40,
+                base_sha="d" * 40,
+                author="proposal-author",
+                draft=True,
+                mergeable_state="clean",
+                changed_paths=tuple(config["subjects"][1]["required_changed_paths"]),
+                checks=(("test", "success"),),
+                checks_ready=True,
+                boundary_checks=(("contract", True),),
+            ),
+        ]
+        baseline = clerk.build_packet(config, subjects)
+        self.assertRegex(baseline["campaign_contract_sha256"], r"^[0-9a-f]{64}$")
+        mutations = {
+            "human_stewards": ["different-steward"],
+            "staffing_mode": "different-staffing",
+            "receipt": {
+                "repository": "grandchallenge/INTELLECT",
+                "path_prefix": "different/path",
+            },
+        }
+        for field, value in mutations.items():
+            with self.subTest(field=field):
+                changed = copy.deepcopy(config)
+                changed[field] = value
+                packet = clerk.build_packet(changed, subjects)
+                self.assertNotEqual(
+                    packet["campaign_contract_sha256"],
+                    baseline["campaign_contract_sha256"],
+                )
+                self.assertNotEqual(
+                    packet["subject_sha256"], baseline["subject_sha256"]
+                )
+
+        changed = copy.deepcopy(config)
+        changed["subjects"][0]["required_changed_paths"].append("new-contract-path")
+        packet = clerk.build_packet(changed, subjects)
+        self.assertNotEqual(packet["subject_sha256"], baseline["subject_sha256"])
+
+        stale = copy.deepcopy(config)
+        stale["agent_findings"]["adversary"] = finding(
+            "adversary",
+            "independent-adversary",
+            "independent-session",
+            baseline["subject_sha256"],
+        )
+        stale["human_stewards"] = ["different-steward"]
+        with self.assertRaisesRegex(clerk.ClerkError, "adversary finding is stale"):
+            clerk.build_packet(stale, subjects)
 
     def test_gi_amend_campaign_matches_successor_subject_contract(self) -> None:
         config = self.campaign()
