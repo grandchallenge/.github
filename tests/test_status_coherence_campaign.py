@@ -54,6 +54,10 @@ class StatusCoherenceCampaignTests(unittest.TestCase):
             "tests/test_status_coherence.py",
             subjects["grandchallenge/gcl-standards"]["required_changed_paths"],
         )
+        self.assertIn(
+            ".github/workflows/ci.yml",
+            subjects["grandchallenge/gcl-standards"]["required_changed_paths"],
+        )
 
     def test_campaign_starts_without_fabricated_findings_or_authorization(self) -> None:
         self.assertEqual(self.config["agent_findings"], {})

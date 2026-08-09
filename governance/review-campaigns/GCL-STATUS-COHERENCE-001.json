@@ -34,9 +34,13 @@
       "repository": "grandchallenge/gcl-standards",
       "pull_request": 36,
       "required_changed_paths": [
+        ".github/workflows/ci.yml",
         "README.md",
         "ci/ghos_documentary_successor.py",
         "ci/git_content.py",
+        "ci/intellect_profile_reconciliation.py",
+        "ci/math_programme_pilot_adoption.py",
+        "ci/standard_admission.py",
         "ci/status_coherence.py",
         "ci/validate.py",
         "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
@@ -49,6 +53,8 @@
         "standards/history/GCL-GHOS-00-0.1.0.md",
         "tests/test_ghos_documentary_successor.py",
         "tests/test_git_content.py",
+        "tests/test_intellect_profile_reconciliation.py",
+        "tests/test_standard_admission.py",
         "tests/test_status_coherence.py"
       ]
     }
