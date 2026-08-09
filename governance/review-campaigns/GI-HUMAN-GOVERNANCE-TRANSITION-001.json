@@ -34,7 +34,78 @@
   "human_stewards": [
     "fyremael"
   ],
-  "agent_findings": {},
+  "agent_findings": {
+    "adversary": {
+      "office": "adversary",
+      "reviewer_id": "openai-gpt-5.6-sol-gi-human-governance-adversary-r4",
+      "session_id": "c753b693-0408-464f-a8f8-ca060efbb4dd",
+      "subject_sha256": "492cfec63cffc27c88381c53e9a079540e42fb2982d795096a19f17c785a3a3c",
+      "status": "approved",
+      "obligations": [
+        "invalidate this finding if the exact subject head or campaign contract changes",
+        "require a fresh distinct-session non-author Referee finding for this exact subject",
+        "reserve Phase 2 authorization exclusively to fyremael after both agent findings are admitted",
+        "preserve every recovery trigger, evidence, packet, role, and nonclaim restriction through protected integration"
+      ],
+      "findings": [
+        "the R3 ambiguity is resolved and isolated recovery conditions grant no authority",
+        "permanent incapacity has a finite route limited to one protected roster transition",
+        "jimsteeg cannot appoint themself, become the replacement, or exercise ordinary Steward powers",
+        "account restoration is bounded and role or permission changes remain separately Steward-authorized",
+        "destructive actions, receipt and 2FA bindings, one-human-action accounting, and nonclaim boundaries remain exact",
+        "all seven remote checks, compilation, 253 tests, and diff checking pass",
+        "no blocking Adversary finding remains"
+      ],
+      "evidence_refs": [
+        "https://github.com/grandchallenge/INTELLECT/pull/54",
+        "https://github.com/grandchallenge/INTELLECT/commit/4948714275da49bc3c2933f460dedaea4d0ef3a5",
+        "https://github.com/grandchallenge/INTELLECT/actions/runs/31298100192",
+        "https://github.com/grandchallenge/.github/issues/47#issuecomment-5229847460"
+      ],
+      "residual_uncertainty": [
+        "Human Steward authorization, final receipt, protected integration, effective timestamp, and readback do not yet exist",
+        "future recovery operations require their own exact trigger evidence"
+      ],
+      "recorded_at": "2026-08-09T06:13:00Z",
+      "record_url": "https://github.com/grandchallenge/INTELLECT/pull/54#issuecomment-5230104849"
+    },
+    "referee": {
+      "office": "referee",
+      "reviewer_id": "codex-gpt5-gi-human-governance-referee-r4",
+      "session_id": "6a381a18-223e-4f43-b18b-943f3476394a",
+      "subject_sha256": "492cfec63cffc27c88381c53e9a079540e42fb2982d795096a19f17c785a3a3c",
+      "status": "approved",
+      "obligations": [
+        "invalidate this finding if PR 54 head, protected base, subject digest, or campaign contract changes",
+        "admit a non-author Adversary finding with a distinct identity and session",
+        "reserve transition authorization exclusively to fyremael after both exact-subject findings are admitted",
+        "activate GI-STEWARD-0002 only through protected integration binding the receipt, packet, reviewed head, 2FA evidence, and readback",
+        "keep recovery authority dormant unless every exact condition is satisfied"
+      ],
+      "findings": [
+        "the exact packet, subject, campaign contract, PR head, protected base, and seven checks recompute and agree",
+        "the corrected directive coherently makes recovery authority conditional on every exact restriction",
+        "Steward replacement is finite and non-circular and self-promotion remains forbidden",
+        "account recovery remains bounded and routes exhausted recovery to Steward replacement",
+        "schema constants, runtime validation, adversarial tests, receipt binding, and exact 2FA evidence remain intact",
+        "ordinary governance remains one substantive fyremael authorization and every nonclaim boundary remains unexpanded",
+        "all 253 tests, compileall, and exact-range diff checking pass"
+      ],
+      "evidence_refs": [
+        "https://github.com/grandchallenge/INTELLECT/pull/54",
+        "https://github.com/grandchallenge/INTELLECT/commit/4948714275da49bc3c2933f460dedaea4d0ef3a5",
+        "https://github.com/grandchallenge/INTELLECT/actions/runs/31298100192",
+        "https://github.com/grandchallenge/INTELLECT/actions/runs/31298100387",
+        "https://github.com/grandchallenge/.github/issues/47#issuecomment-5229847460"
+      ],
+      "residual_uncertainty": [
+        "the complete receipt, Human Steward authorization, protected integration, schedule selection, and readback do not yet exist",
+        "no recovery protocol has been exercised in production and the 2FA observation remains time-bounded"
+      ],
+      "recorded_at": "2026-08-09T06:12:57Z",
+      "record_url": "https://github.com/grandchallenge/INTELLECT/pull/54#issuecomment-5230104782"
+    }
+  },
   "receipt": {
     "repository": "grandchallenge/INTELLECT",
     "path_prefix": "governance/reviews"
