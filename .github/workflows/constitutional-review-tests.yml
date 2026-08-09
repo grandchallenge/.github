@@ -8,6 +8,7 @@ on:
       - "governance/review-campaigns/**"
       - "scripts/constitutional_review_clerk.py"
       - "tests/test_constitutional_review_clerk.py"
+      - "tests/test_phase2_clerk_acceptance.py"
   push:
     branches: [main]
     paths:
@@ -16,6 +17,7 @@ on:
       - "governance/review-campaigns/**"
       - "scripts/constitutional_review_clerk.py"
       - "tests/test_constitutional_review_clerk.py"
+      - "tests/test_phase2_clerk_acceptance.py"
   workflow_dispatch:
 
 permissions:
