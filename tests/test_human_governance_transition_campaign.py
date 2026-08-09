@@ -31,7 +31,9 @@ class HumanGovernanceTransitionCampaignTests(unittest.TestCase):
         self.assertEqual(
             set(subject["required_changed_paths"]),
             {
+                "governance/evidence/GCL-ORG-2FA-001.json",
                 "governance/steward_directives/GI-STEWARD-0002.md",
+                "requirements-ci.txt",
                 "schemas/constitutional_authority_schedule.schema.json",
                 "src/grand_intellect/constitutional_authority.py",
                 "tests/test_constitutional_authority.py",
