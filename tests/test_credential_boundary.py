@@ -65,6 +65,16 @@ class CredentialBoundaryTests(unittest.TestCase):
                 ):
                     self.assertTrue(item[key])
 
+    def test_recovery_owner_2fa_deviation_is_closed_by_exact_readback(self) -> None:
+        deviations = {item["id"]: item for item in self.inventory["deviations"]}
+        recovery = deviations["GCL-RECOVERY-OWNER-2FA-001"]
+        self.assertEqual(recovery["status"], "closed")
+        self.assertEqual(
+            recovery["closure_evidence"],
+            "https://github.com/grandchallenge/.github/issues/47#issuecomment-5229847460",
+        )
+        self.assertEqual(self.inventory["break_glass"]["recovery_readiness"], "ready")
+
     def test_no_claim_boundary_can_be_enabled(self) -> None:
         broken = copy.deepcopy(self.inventory)
         broken["authority_boundaries"]["organization_wide_conformance"] = True
