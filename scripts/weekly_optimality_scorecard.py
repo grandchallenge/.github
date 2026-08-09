@@ -6,11 +6,12 @@ from datetime import datetime, timedelta, timezone
 import json
 import os
 from pathlib import Path
+import re
 from statistics import median
 from typing import Any, Mapping
 from fnmatch import fnmatchcase
 from urllib.error import HTTPError
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 from urllib.request import Request, urlopen
 
 
@@ -125,6 +126,21 @@ def iso(value: datetime) -> str:
     )
 
 
+def has_linked_controlled_blocker(body: str) -> bool:
+    for candidate in re.findall(r"https?://[^\s)>\]}]+", body):
+        parsed = urlparse(candidate.rstrip(".,;:"))
+        if (
+            parsed.scheme == "https"
+            and parsed.hostname == "github.com"
+            and re.fullmatch(
+                r"/grandchallenge/[A-Za-z0-9_.-]+/issues/[1-9][0-9]*",
+                parsed.path,
+            )
+        ):
+            return True
+    return False
+
+
 def collect_snapshot(client: GitHubClient, run_id: str) -> dict[str, Any]:
     run = client.get(f"/repos/{ORG}/.github/actions/runs/{run_id}")
     end = datetime.fromisoformat(run["created_at"].replace("Z", "+00:00"))
@@ -169,7 +185,7 @@ def collect_snapshot(client: GitHubClient, run_id: str) -> dict[str, Any]:
             continue
         labels = {label["name"] for label in item.get("labels", [])}
         controlled_external = "controlled-external-dependency" in labels
-        linked_blocker = "https://github.com/" in (item.get("body") or "")
+        linked_blocker = has_linked_controlled_blocker(item.get("body") or "")
         if controlled_external and linked_blocker:
             continue
         created = datetime.fromisoformat(item["created_at"].replace("Z", "+00:00"))

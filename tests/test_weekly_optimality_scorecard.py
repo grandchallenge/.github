@@ -97,6 +97,21 @@ class WeeklyOptimalityScorecardTests(unittest.TestCase):
         self.assertEqual(metric["status"], "unknown")
         self.assertNotIn("value", metric)
 
+    def test_controlled_blocker_requires_exact_https_issue_link(self) -> None:
+        self.assertTrue(
+            MODULE.has_linked_controlled_blocker(
+                "Blocked by https://github.com/grandchallenge/AETHER/issues/58"
+            )
+        )
+        for body in (
+            "https://github.com.evil.test/grandchallenge/AETHER/issues/58",
+            "http://github.com/grandchallenge/AETHER/issues/58",
+            "https://github.com/another-org/AETHER/issues/58",
+            "https://github.com/grandchallenge/AETHER/pull/59",
+            "https://github.com/grandchallenge/AETHER/issues/not-a-number",
+        ):
+            self.assertFalse(MODULE.has_linked_controlled_blocker(body))
+
 
 if __name__ == "__main__":
     unittest.main()
