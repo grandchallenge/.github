@@ -106,6 +106,49 @@
       ],
       "recorded_at": "2026-08-09T03:25:01Z",
       "record_url": "https://github.com/grandchallenge/gcl-standards/issues/35#issuecomment-5229564404"
+    },
+    "referee": {
+      "office": "referee",
+      "reviewer_id": "codex-gpt5-gcl-status-coherence-referee-r6",
+      "session_id": "f697f790-3698-4a65-a408-2d6290693be8",
+      "subject_sha256": "2eb93829c45978256075b28d18b19084d48b68a565411e0af05e2c7d8918dd7b",
+      "status": "approved",
+      "obligations": [
+        "invalidate this finding if either frozen subject head or campaign contract changes",
+        "preserve ordered admission A with next_gate not_started followed by distinct adoption B that references immutable admission A",
+        "require the current-status projection to derive the completed adoption gate from exact adoption B rather than rewriting admission A",
+        "reserve exact-packet authorization exclusively to fyremael after this finding is admitted",
+        "retain every fixed constitutional and claim nonauthority boundary through integration and closeout",
+        "replace the pending record_url with the exact immutable publication URL before admitting this finding"
+      ],
+      "findings": [
+        "campaign contract 3614301da3b6cf55286c32e9012e701ec8b28577eaff0b6dd841ad0ee282ff5e, subject 2eb93829c45978256075b28d18b19084d48b68a565411e0af05e2c7d8918dd7b, and one-finding packet b69a5c4f2dcc8637d441a5f1612d365a9ae452ef31288951a3e3da2c0943cc35 independently recompute from canonical JSON",
+        "the packet binds exact clean heads INTELLECT e12716e743fb306e41a80ace0bcfc64f71adf086 and gcl-standards 921027678259ee54547b536277ed538290eed58c with all recorded checks successful and CONSTITUTION.md unchanged",
+        "the effective timestamp now matches the machine-readable activation schedule at 2026-08-03T10:00:00Z and the documentary test cross-validates that equality",
+        "ADR-0001 now time-scopes completed 0.1.0 acceptance and separately defines the prospective 0.1.1 successor sequence without circular acceptance language",
+        "the coherence validator resolves repository, commit, path, Git blob identity, and exact content for constitutional, admission, adoption, and public-profile evidence and rejects self-report substitution, unresolved coordinates, stale prose, and blob drift",
+        "ordered admission A and adoption B are modeled as distinct revisions: immutable admission A remains pending its next gate, adoption B references A, and the current projection derives gate completion from B",
+        "the historical 0.1.0 Git blob remains b93c57f1fb27bf2a017a4b90719290342424f6d5 and the 0.1.1 normative body is byte-equal with SHA-256 c9912acb0aacc186f93655e9e1b7938235954bb9466dcddf923cd601ed7bc2a3",
+        "coherence projection and receipt schemas require explicit false values for constitutional, organization-wide conformance, production, mathematical, certification, novelty, deployment, and commercial claim authority",
+        "independent local verification passed 247 INTELLECT tests, the governed exemplar, gcl-standards validation, 143 gcl-standards tests, and exact-range diff checks",
+        "no blocking Referee finding remains"
+      ],
+      "evidence_refs": [
+        "https://github.com/grandchallenge/INTELLECT/pull/52",
+        "https://github.com/grandchallenge/gcl-standards/pull/36",
+        "https://github.com/grandchallenge/INTELLECT/commit/e12716e743fb306e41a80ace0bcfc64f71adf086",
+        "https://github.com/grandchallenge/gcl-standards/commit/921027678259ee54547b536277ed538290eed58c",
+        "https://github.com/grandchallenge/.github/commit/6d09039a9dd660c8614bdd044bda7c43a5f55b64",
+        "https://github.com/grandchallenge/gcl-standards/actions/runs/31292186638",
+        "https://github.com/grandchallenge/INTELLECT/actions/runs/31290838962"
+      ],
+      "residual_uncertainty": [
+        "Human Steward authorization remains pending and is outside Referee authority",
+        "future protected admission, adoption, INTELLECT projection, public-profile, and coherence-receipt merge identities do not yet exist and require exact downstream validation",
+        "the exact public comment URL for this finding must be supplied during faithful transcription"
+      ],
+      "recorded_at": "2026-08-09T03:32:44Z",
+      "record_url": "https://github.com/grandchallenge/gcl-standards/issues/35#issuecomment-5229588884"
     }
   },
   "receipt": {
