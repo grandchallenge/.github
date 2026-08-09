@@ -67,88 +67,98 @@
   "agent_findings": {
     "adversary": {
       "office": "adversary",
-      "reviewer_id": "openai-gpt-5.6-sol-gcl-status-coherence-adversary-r5",
-      "session_id": "60e4b013-3330-431b-a5be-13d002894438",
-      "subject_sha256": "2eb93829c45978256075b28d18b19084d48b68a565411e0af05e2c7d8918dd7b",
+      "reviewer_id": "openai-gpt-5.6-sol-gcl-status-coherence-adversary-r7",
+      "session_id": "f986381c-eb5c-44ae-b7c9-965f47b409a6",
+      "subject_sha256": "77e353f18513c58182030bd678bd14f214f237d9d44b1fac4955c93c03f0976b",
       "status": "approved",
       "obligations": [
-        "invalidate this finding if either frozen subject head or the campaign contract changes",
-        "require a distinct non-author Referee identity and session for this exact subject digest",
-        "reserve exact-packet authorization to fyremael after both agent findings are admitted",
+        "invalidate this finding if either exact subject head or the campaign contract changes",
+        "admit a fresh distinct-session non-author Referee finding for this exact subject digest; no prior finding may be reused",
+        "reserve exact-packet authorization exclusively to fyremael after both fresh agent findings are admitted",
         "preserve ordered admission A followed by adoption B referencing immutable admission A",
-        "retain every fixed nonclaim boundary through integration and closeout"
+        "retain every fixed constitutional and claim nonauthority boundary through integration and closeout",
+        "replace the pending record URL with the exact immutable publication URL before admitting this finding"
       ],
       "findings": [
-        "the packet binds INTELLECT head e12716e743fb306e41a80ace0bcfc64f71adf086 and gcl-standards head 921027678259ee54547b536277ed538290eed58c; both draft PRs are clean and all recorded checks are successful",
-        "the canonical packet digest recomputes to 671f373d08c1146fb7ffe70cc4d3bc327a10c81879592ac23b0b52ea97aede40 and the subject digest recomputes to 2eb93829c45978256075b28d18b19084d48b68a565411e0af05e2c7d8918dd7b",
-        "the protected campaign contract recomputes to 3614301da3b6cf55286c32e9012e701ec8b28577eaff0b6dd841ad0ee282ff5e",
-        "the prior sequencing blocker is resolved: selected admission records immutable admission_commit_sha A with next_gate not_started, while active adoption commit B independently references A and supplies the completed current gate projection",
-        "the adversarial fixture now constructs distinct pending-admission A and active-adoption B revisions and validates their exact relationship",
-        "README and ADR successor language is time-stable and validators reject the prior pending or preparatory assertions",
-        "canonical Git evidence validation resolves repository, commit, path, and blob identities from Git objects and rejects substitution or unresolved evidence",
-        "GCL-GHOS 0.1.1 retains the exact 0.1.0 normative body and expected normative SHA-256; the historical 0.1.0 Git blob remains fixed",
-        "all constitutional, organization-wide conformance, mathematical, certification, production, novelty, deployment, and commercial claim-authority fields remain false",
-        "local source validation, focused ordered-sequence tests, documentary-successor tests, and diff checks pass; exact-head remote CI and security checks are green",
-        "no blocking Adversary finding remains"
+        "the live null-finding packet recomputes to e0e6c139a49da38ffdf9f227e15a72dcbc8a5f085857bb8715ad7bf8462369d and binds subject digest 77e353f18513c58182030bd678bd14f214f237d9d44b1fac4955c93c03f0976b",
+        "the protected campaign contract independently recomputes to 3614301da3b6cf55286c32e9012e701ec8b28577eaff0b6dd841ad0ee282ff5e",
+        "INTELLECT PR 52 remains at exact head e12716e743fb306e41a80ace0bcfc64f71adf086 over base 70a0a74502e0480d387d740027e48751286e4bfe, clean, with every required check successful and CONSTITUTION.md unchanged",
+        "gcl-standards PR 36 now binds exact merge head 3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac over protected base 251d04bc7fba8bb4a6fb74a8374e408379ddc25f; the merge parents are the previously reviewed source 921027678259ee54547b536277ed538290eed58c and protected main 251d04bc7fba8bb4a6fb74a8374e408379ddc25f",
+        "every reviewed semantic source blob is identical to head 921027 except ci/validate.py and tests/test_validate.py; their differences are additive protected-main AETHER evidence validation and tests, with no status-coherence logic removed or altered",
+        "the merge introduces no conflicting combined diff and the current-base PR diff contains every required campaign path",
+        "the ordered pending-admission A and active-adoption B model, time-stable successor prose, canonical Git evidence validation, contradiction rejection, and campaign-binding behavior remain unchanged",
+        "GCL-GHOS 0.1.1 retains the exact 0.1.0 normative body, expected normative SHA-256 c9912acb0aacc186f93655e9e1b7938235954bb9466dcddf923cd601ed7bc2a3, and historical blob b93c57f1fb27bf2a017a4b90719290342424f6d5",
+        "the merged AETHER evidence validator preserves all claim-authority fields as false and does not promote organization-wide conformance",
+        "local validation and all 147 unit tests pass at exact head 3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac; exact-range diff checking passes",
+        "all live PR checks are successful at the exact frozen heads, and no blocking Adversary finding remains"
       ],
       "evidence_refs": [
         "https://github.com/grandchallenge/INTELLECT/pull/52",
         "https://github.com/grandchallenge/gcl-standards/pull/36",
         "https://github.com/grandchallenge/INTELLECT/commit/e12716e743fb306e41a80ace0bcfc64f71adf086",
+        "https://github.com/grandchallenge/gcl-standards/commit/3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac",
         "https://github.com/grandchallenge/gcl-standards/commit/921027678259ee54547b536277ed538290eed58c",
+        "https://github.com/grandchallenge/gcl-standards/commit/251d04bc7fba8bb4a6fb74a8374e408379ddc25f",
         "https://github.com/grandchallenge/.github/commit/6d09039a9dd660c8614bdd044bda7c43a5f55b64",
-        "https://github.com/grandchallenge/gcl-standards/actions/runs/31292186638",
+        "https://github.com/grandchallenge/gcl-standards/actions/runs/31294433728",
         "https://github.com/grandchallenge/INTELLECT/actions/runs/31290838962"
       ],
       "residual_uncertainty": [
-        "the distinct Referee finding and Human Steward authorization remain pending",
-        "the protected admission, adoption, INTELLECT projection, public-profile, and coherence-receipt merge identities do not yet exist and must be validated at their exact downstream heads"
+        "the fresh distinct Referee finding and fresh Human Steward authorization remain pending",
+        "the protected admission, adoption, INTELLECT projection, public-profile, and coherence-receipt merge identities do not yet exist and require exact downstream validation",
+        "any further protected-base merge or subject-head change invalidates this finding"
       ],
-      "recorded_at": "2026-08-09T03:25:01Z",
-      "record_url": "https://github.com/grandchallenge/gcl-standards/issues/35#issuecomment-5229564404"
+      "recorded_at": "2026-08-09T04:34:58Z",
+      "record_url": "https://github.com/grandchallenge/gcl-standards/issues/35#issuecomment-5229784645"
     },
     "referee": {
       "office": "referee",
-      "reviewer_id": "codex-gpt5-gcl-status-coherence-referee-r6",
-      "session_id": "f697f790-3698-4a65-a408-2d6290693be8",
-      "subject_sha256": "2eb93829c45978256075b28d18b19084d48b68a565411e0af05e2c7d8918dd7b",
+      "reviewer_id": "codex-gpt5-gcl-status-coherence-referee-r7",
+      "session_id": "81596058-8c2c-4f06-b8ee-029939b4cdaf",
+      "subject_sha256": "77e353f18513c58182030bd678bd14f214f237d9d44b1fac4955c93c03f0976b",
       "status": "approved",
       "obligations": [
-        "invalidate this finding if either frozen subject head or campaign contract changes",
-        "preserve ordered admission A with next_gate not_started followed by distinct adoption B that references immutable admission A",
-        "require the current-status projection to derive the completed adoption gate from exact adoption B rather than rewriting admission A",
-        "reserve exact-packet authorization exclusively to fyremael after this finding is admitted",
+        "invalidate this finding if either exact subject head or campaign contract changes",
+        "admit a fresh non-author Adversary finding for subject 77e353f18513c58182030bd678bd14f214f237d9d44b1fac4955c93c03f0976b from an identity and session distinct from this Referee",
+        "treat every prior agent finding and Human Steward reaction bound to an earlier subject digest as invalid",
+        "reserve exact-packet authorization exclusively to fyremael after both fresh agent findings are admitted",
+        "preserve ordered admission A followed by distinct adoption B referencing immutable admission A",
         "retain every fixed constitutional and claim nonauthority boundary through integration and closeout",
         "replace the pending record_url with the exact immutable publication URL before admitting this finding"
       ],
       "findings": [
-        "campaign contract 3614301da3b6cf55286c32e9012e701ec8b28577eaff0b6dd841ad0ee282ff5e, subject 2eb93829c45978256075b28d18b19084d48b68a565411e0af05e2c7d8918dd7b, and one-finding packet b69a5c4f2dcc8637d441a5f1612d365a9ae452ef31288951a3e3da2c0943cc35 independently recompute from canonical JSON",
-        "the packet binds exact clean heads INTELLECT e12716e743fb306e41a80ace0bcfc64f71adf086 and gcl-standards 921027678259ee54547b536277ed538290eed58c with all recorded checks successful and CONSTITUTION.md unchanged",
-        "the effective timestamp now matches the machine-readable activation schedule at 2026-08-03T10:00:00Z and the documentary test cross-validates that equality",
-        "ADR-0001 now time-scopes completed 0.1.0 acceptance and separately defines the prospective 0.1.1 successor sequence without circular acceptance language",
-        "the coherence validator resolves repository, commit, path, Git blob identity, and exact content for constitutional, admission, adoption, and public-profile evidence and rejects self-report substitution, unresolved coordinates, stale prose, and blob drift",
-        "ordered admission A and adoption B are modeled as distinct revisions: immutable admission A remains pending its next gate, adoption B references A, and the current projection derives gate completion from B",
-        "the historical 0.1.0 Git blob remains b93c57f1fb27bf2a017a4b90719290342424f6d5 and the 0.1.1 normative body is byte-equal with SHA-256 c9912acb0aacc186f93655e9e1b7938235954bb9466dcddf923cd601ed7bc2a3",
-        "coherence projection and receipt schemas require explicit false values for constitutional, organization-wide conformance, production, mathematical, certification, novelty, deployment, and commercial claim authority",
-        "independent local verification passed 247 INTELLECT tests, the governed exemplar, gcl-standards validation, 143 gcl-standards tests, and exact-range diff checks",
+        "the campaign contract independently recomputes to 3614301da3b6cf55286c32e9012e701ec8b28577eaff0b6dd841ad0ee282ff5e and live exact PR metadata independently recomputes the new subject digest to 77e353f18513c58182030bd678bd14f214f237d9d44b1fac4955c93c03f0976b",
+        "the subject binds INTELLECT e12716e743fb306e41a80ace0bcfc64f71adf086 over base 70a0a74502e0480d387d740027e48751286e4bfe and gcl-standards 3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac over protected base 251d04bc7fba8bb4a6fb74a8374e408379ddc25f; both pull requests are clean and every current check is successful",
+        "gcl-standards head 3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac is an exact two-parent merge of previously reviewed source 921027678259ee54547b536277ed538290eed58c and protected AETHER-evidence main 251d04bc7fba8bb4a6fb74a8374e408379ddc25f; its merge-base with current main is exactly 251d04bc7fba8bb4a6fb74a8374e408379ddc25f",
+        "Git remerge inspection is empty and no conflict markers exist, establishing that the head contains the automatic conflict-free union without an unreviewed manual resolution",
+        "every campaign-required gcl-standards source blob from 921027678259ee54547b536277ed538290eed58c remains byte-identical at the new head except ci/validate.py and tests/test_validate.py, which automatically combine the previously reviewed coherence changes with the protected AETHER evidence validator and tests",
+        "the protected-base delta is limited to AETHER readback evidence, its closed schema, validator integration, and adversarial tests; its authority-boundary fields explicitly keep organization-wide conformance, constitutional, production, mathematical, certification, novelty, deployment, and commercial authority false",
+        "the historical GCL-GHOS 0.1.0 blob remains b93c57f1fb27bf2a017a4b90719290342424f6d5 and the 0.1.1 normative body remains byte-equal with SHA-256 c9912acb0aacc186f93655e9e1b7938235954bb9466dcddf923cd601ed7bc2a3",
+        "the ordered admission A and adoption B model, exact Git-coordinate evidence checks, time-stable status prose, and fixed coherence-receipt nonclaim boundaries are unchanged from reviewed source 921027678259ee54547b536277ed538290eed58c",
+        "fresh detached-head verification of 3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac passed gcl-standards validation, all 147 tests, and exact-base diff checking; INTELLECT remains at its previously reviewed exact head with unchanged green checks",
         "no blocking Referee finding remains"
       ],
       "evidence_refs": [
         "https://github.com/grandchallenge/INTELLECT/pull/52",
         "https://github.com/grandchallenge/gcl-standards/pull/36",
         "https://github.com/grandchallenge/INTELLECT/commit/e12716e743fb306e41a80ace0bcfc64f71adf086",
+        "https://github.com/grandchallenge/gcl-standards/commit/3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac",
         "https://github.com/grandchallenge/gcl-standards/commit/921027678259ee54547b536277ed538290eed58c",
+        "https://github.com/grandchallenge/gcl-standards/commit/251d04bc7fba8bb4a6fb74a8374e408379ddc25f",
+        "https://github.com/grandchallenge/gcl-standards/pull/37",
         "https://github.com/grandchallenge/.github/commit/6d09039a9dd660c8614bdd044bda7c43a5f55b64",
-        "https://github.com/grandchallenge/gcl-standards/actions/runs/31292186638",
+        "https://github.com/grandchallenge/gcl-standards/actions/runs/31294433728",
+        "https://github.com/grandchallenge/gcl-standards/actions/runs/31294433965",
+        "https://github.com/grandchallenge/gcl-standards/actions/runs/31294432650",
         "https://github.com/grandchallenge/INTELLECT/actions/runs/31290838962"
       ],
       "residual_uncertainty": [
-        "Human Steward authorization remains pending and is outside Referee authority",
+        "a fresh same-subject Adversary finding and subsequent exact-packet Human Steward authorization remain pending and are outside Referee authority",
         "future protected admission, adoption, INTELLECT projection, public-profile, and coherence-receipt merge identities do not yet exist and require exact downstream validation",
         "the exact public comment URL for this finding must be supplied during faithful transcription"
       ],
-      "recorded_at": "2026-08-09T03:32:44Z",
-      "record_url": "https://github.com/grandchallenge/gcl-standards/issues/35#issuecomment-5229588884"
+      "recorded_at": "2026-08-09T04:36:58Z",
+      "record_url": "https://github.com/grandchallenge/gcl-standards/issues/35#issuecomment-5229791794"
     }
   },
   "receipt": {

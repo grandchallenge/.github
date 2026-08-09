@@ -74,18 +74,18 @@ class StatusCoherenceCampaignTests(unittest.TestCase):
         self.assertEqual(referee["status"], "approved")
         self.assertEqual(
             adversary["subject_sha256"],
-            "2eb93829c45978256075b28d18b19084d48b68a565411e0af05e2c7d8918dd7b",
+            "77e353f18513c58182030bd678bd14f214f237d9d44b1fac4955c93c03f0976b",
         )
         self.assertEqual(referee["subject_sha256"], adversary["subject_sha256"])
         self.assertEqual(
             adversary["record_url"],
             "https://github.com/grandchallenge/gcl-standards/issues/35"
-            "#issuecomment-5229564404",
+            "#issuecomment-5229784645",
         )
         self.assertEqual(
             referee["record_url"],
             "https://github.com/grandchallenge/gcl-standards/issues/35"
-            "#issuecomment-5229588884",
+            "#issuecomment-5229791794",
         )
         self.assertNotEqual(adversary["reviewer_id"], referee["reviewer_id"])
         self.assertNotEqual(adversary["session_id"], referee["session_id"])
