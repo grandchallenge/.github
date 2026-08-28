@@ -17,11 +17,11 @@ mechanical, manufacturing, or commercial claim is promoted by this presentation.
 
 - `GI-AMEND-0001` is effective under the protected
   [INTELLECT authority schedule](https://github.com/grandchallenge/INTELLECT/blob/main/governance/constitutional_authority_schedule.json).
-- `GCL-GHOS-00` `0.1.1` is the admitted documentary-only successor selected by
-  [protected admission `5c4e73e55d362a5198b9076ead694909a5e0ebf3`](https://github.com/grandchallenge/gcl-standards/commit/5c4e73e55d362a5198b9076ead694909a5e0ebf3).
+- `GCL-GHOS-00` `0.2.0` is the admitted normative successor selected by
+  [protected admission `87307a0c1fe5ff19b34bb08451e7d6281a7d5dea`](https://github.com/grandchallenge/gcl-standards/commit/87307a0c1fe5ff19b34bb08451e7d6281a7d5dea).
 - MATH-PROGRAMME actively adopts that exact admission through
-  [protected adoption `c39aab2bfbb2725accd18d69a0daea7fe96a0eee`](https://github.com/grandchallenge/gcl-standards/commit/c39aab2bfbb2725accd18d69a0daea7fe96a0eee),
-  while retaining the `0.1.0` adoption lineage.
+  [protected adoption `1a5e9cb24257be578b091ecd2c99d4119ff73b2c`](https://github.com/grandchallenge/gcl-standards/commit/1a5e9cb24257be578b091ecd2c99d4119ff73b2c),
+  while retaining the `0.1.1` adoption lineage.
 
 Machine-readable activation, admission, and adoption records take precedence
 over descriptive documents. Descriptive status is generated from or validated
@@ -46,7 +46,7 @@ or commercial authority.
   subordinate, versioned registry and publication surface for cross-programme
   standards. A candidate standard remains nonbinding until admitted by its
   superior authority and adopted through the applicable programme decision;
-  `GCL-GHOS-00` `0.1.1` has completed that sequence for MATH-PROGRAMME.
+  `GCL-GHOS-00` `0.2.0` has completed that sequence for MATH-PROGRAMME.
 
 The mathematics authority split is specified in the
 [three-pillar architecture](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/ARCHITECTURE_OVERVIEW.md).
