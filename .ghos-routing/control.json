@@ -10,35 +10,61 @@
     "protected_origin_commit": "355e029735961c29bf194985f885b0bda08579be",
     "blob_sha": "b8a62a7f0ca8cb552e212f6ec9c36a5a48a33608",
     "sha256": "1c4f9d82b1817d69187f3d87efbe0f6e60dd617d51a8aa330b119d48d3c95a43",
-    "ordinary_candidate_self_modification": false
+    "ordinary_candidate_self_modification": false,
+    "successor_candidate": {
+      "blob_sha": "f9f85937713046eacdc79c532046c676cbb4550c",
+      "sha256": "fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17",
+      "classifier_delta": "gh project item-add => WRITE_CAPABLE",
+      "topology_change": false,
+      "protected_admission_pending": true
+    }
   },
   "local_enforcement": {
     "path": ".github/workflows/ghos-routing-enforcement.yml",
     "required_context": "routing-enforcement",
     "candidate_independent_event": "pull_request_target",
     "candidate_execution": false,
-    "bootstrap_state": "CANDIDATE_PENDING_PROTECTED_ADMISSION_AND_RULESET_ACTIVATION"
+    "bootstrap_state": "ACTIVE_PROTECTED_RULESET_REQUIRED_HOSTILE_PROVEN"
   },
   "protected_main_ruleset": {
     "ruleset_id": 17137624,
     "name": "Community profile - main",
     "strict_required_status_checks": true,
     "bypass_actors": [],
-    "opening_required_contexts": ["policy / policy", "security / action-policy"],
-    "required_successor_context": "routing-enforcement"
+    "required_contexts": ["policy / policy", "security / action-policy", "routing-enforcement"]
   },
   "current_consumers": [
     {
       "repository": "grandchallenge/gcl-standards",
-      "gate_checkout": "grandchallenge/.github@main",
+      "protected_head": "9a0519356604e35382712475b7511b880ed14248",
+      "gate_checkout": "grandchallenge/.github@355e029735961c29bf194985f885b0bda08579be",
       "gate_sha256": "1c4f9d82b1817d69187f3d87efbe0f6e60dd617d51a8aa330b119d48d3c95a43",
-      "migration_needed": "PIN_GATE_CHECKOUT_TO_EXACT_COMMIT_BEFORE_SHARED_GATE_BYTE_ROTATION"
+      "immutable_pin_admitted": true,
+      "hostile_proof": {
+        "pull_request": 72,
+        "head": "9158fdb4801c683b1dd8b4f99a44c9b61d9f0631",
+        "routing_run": 33494942261,
+        "routing_job": 99814830493,
+        "result": "FAIL_CLOSED_WORKFLOW_ROUTING_COVERAGE_MISMATCH",
+        "merged": false
+      },
+      "migration_needed": "ROTATE_TO_SUCCESSOR_AFTER_SHARED_GATE_PROTECTED_ADMISSION"
     },
     {
       "repository": "grandchallenge/MATH-PROGRAMME",
-      "gate_checkout": "grandchallenge/.github@main",
+      "protected_head": "e9e95401b3e38de580c4b3e3a2c6d90dbb24a6e5",
+      "gate_checkout": "grandchallenge/.github@355e029735961c29bf194985f885b0bda08579be",
       "gate_sha256": "1c4f9d82b1817d69187f3d87efbe0f6e60dd617d51a8aa330b119d48d3c95a43",
-      "migration_needed": "PIN_GATE_CHECKOUT_TO_EXACT_COMMIT_BEFORE_SHARED_GATE_BYTE_ROTATION"
+      "immutable_pin_admitted": true,
+      "hostile_proof": {
+        "pull_request": 740,
+        "head": "3103c0612c9477085bdad03460ea28e72ec1c2c6",
+        "routing_run": 33494960472,
+        "routing_job": 99814890899,
+        "result": "FAIL_CLOSED_WORKFLOW_ROUTING_COVERAGE_MISMATCH",
+        "merged": false
+      },
+      "migration_needed": "ROTATE_TO_SUCCESSOR_AFTER_SHARED_GATE_PROTECTED_ADMISSION"
     }
   ],
   "known_classifier_deviations": [
@@ -48,7 +74,10 @@
       "operation": "gh project item-add",
       "missing_feature": "WRITE_CAPABLE",
       "current_topology_effect": "NONE__WORKFLOW_ALREADY_PERSISTENT_CONTROLLER_REQUIRED",
-      "closure_route": "CONTROLLED_SHARED_GATE_DIGEST_ROTATION_AFTER_EXACT_CONSUMER_PINNING"
+      "closure_route": "CONTROLLED_SHARED_GATE_DIGEST_ROTATION_AFTER_EXACT_CONSUMER_PINNING",
+      "state": "CLOSURE_CANDIDATE_PENDING_PROTECTED_GATE_ADMISSION",
+      "successor_gate_blob": "f9f85937713046eacdc79c532046c676cbb4550c",
+      "successor_gate_sha256": "fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17"
     }
   ],
   "terminal_requirements": [
@@ -60,6 +89,15 @@
     "PROTECTED_READBACK",
     "TRACKER_TERMINAL_DISPOSITION_GHOS_ROUTING_ENFORCED"
   ],
+  "terminal_progress": {
+    "PROTECTED_BOOTSTRAP_MERGE": true,
+    "RULESET_REQUIRES_ROUTING_ENFORCEMENT": true,
+    "HOSTILE_CANDIDATE_BLOCKED": true,
+    "CONSUMERS_PIN_SHARED_GATE_TO_EXACT_COMMIT": true,
+    "PROJECT_MUTATION_CLASSIFIER_DEVIATION_CLOSED": false,
+    "PROTECTED_READBACK": false,
+    "TRACKER_TERMINAL_DISPOSITION_GHOS_ROUTING_ENFORCED": false
+  },
   "claim_boundaries": {
     "constitutional": false,
     "merge": false,
