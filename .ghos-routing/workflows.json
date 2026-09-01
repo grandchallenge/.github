@@ -55,7 +55,7 @@
     },
     {
       "path": ".github/workflows/gcl-project-sync.yml",
-      "observed_features": ["AUTONOMOUS_WAKE", "OPAQUE_EXECUTION", "SCHEDULED", "SECRET_CREDENTIAL"],
+      "observed_features": ["AUTONOMOUS_WAKE", "OPAQUE_EXECUTION", "SCHEDULED", "SECRET_CREDENTIAL", "WRITE_CAPABLE"],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",
       "controller_id": "GITHUB_ACTIONS"
     },
