@@ -39,5 +39,15 @@ class ExternalRoutingGateTests(unittest.TestCase):
         self.registry(root, [{"path": ".github/workflows/ci.yml", "observed_features": observed, "topology": "PERSISTENT_CONTROLLER_REQUIRED", "controller_id": "GITHUB_ACTIONS"}])
         MODULE.validate(root, "grandchallenge/gcl-standards")
 
+    def test_external_gate_rejects_cross_repository_registry_reuse(self):
+        root = self.fixture()
+        (root / ".github/workflows/ci.yml").write_text("on: push\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps: []\n", encoding="utf-8")
+        self.registry(root, [{"path": ".github/workflows/ci.yml", "observed_features": [], "topology": "BOUNDED_ATOMIC", "controller_id": None}])
+        with self.assertRaisesRegex(MODULE.RoutingGateError, "repository identity mismatch"):
+            MODULE.validate(root, "grandchallenge/.github")
+
+    def test_proposed_repository_registry_matches_all_workflow_bytes(self):
+        MODULE.validate(ROOT, "grandchallenge/.github")
+
 
 if __name__ == "__main__": unittest.main()
