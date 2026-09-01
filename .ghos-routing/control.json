@@ -137,7 +137,13 @@
     "CONSUMERS_PIN_SHARED_GATE_TO_EXACT_COMMIT": true,
     "PROJECT_MUTATION_CLASSIFIER_DEVIATION_CLOSED": true,
     "PROTECTED_READBACK": true,
-    "TRACKER_TERMINAL_DISPOSITION_GHOS_ROUTING_ENFORCED": false
+    "TRACKER_TERMINAL_DISPOSITION_GHOS_ROUTING_ENFORCED": true
+  },
+  "tracker_terminal_disposition": {
+    "value": "GHOS_ROUTING_ENFORCED",
+    "issue": "grandchallenge/.github#67",
+    "comment_id": 5493437493,
+    "protected_reconciliation_commit": "21140042b0884ab4ae3f882698b0011f4b2ddbdd"
   },
   "claim_boundaries": {
     "constitutional": false,
