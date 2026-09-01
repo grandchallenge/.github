@@ -1,0 +1,103 @@
+{
+  "record_type": "GHOS_EXECUTION_ROUTING_REGISTRY",
+  "schema_version": "1.0.0",
+  "repository": "grandchallenge/.github",
+  "controllers": [
+    {
+      "controller_id": "GITHUB_ACTIONS",
+      "executor_class": "PERSISTENT_CONTROLLER",
+      "provider": "github",
+      "durable_wake_mechanism": "repository-bound GitHub Actions event queue",
+      "state_store": "GitHub Actions workflow run and job records bound to repository and commit SHA",
+      "supported_features": [
+        "AUTONOMOUS_WAKE",
+        "EXTERNAL_REUSABLE_JOB",
+        "EXTERNAL_WAIT",
+        "NON_RECONCILABLE_MUTATION",
+        "OPAQUE_EXECUTION",
+        "SCHEDULED",
+        "SECRET_CREDENTIAL",
+        "UNATTENDED_DISPATCH",
+        "WRITE_CAPABLE"
+      ]
+    }
+  ],
+  "workflows": [
+    {
+      "path": ".github/workflows/constitutional-review-clerk.yml",
+      "observed_features": ["AUTONOMOUS_WAKE", "OPAQUE_EXECUTION", "SCHEDULED", "SECRET_CREDENTIAL"],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/constitutional-review-tests.yml",
+      "observed_features": ["OPAQUE_EXECUTION"],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/gcl-conformance.yml",
+      "observed_features": ["AUTONOMOUS_WAKE", "EXTERNAL_REUSABLE_JOB", "OPAQUE_EXECUTION", "SCHEDULED"],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/gcl-ghos-owner-export-tests.yml",
+      "observed_features": ["OPAQUE_EXECUTION"],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/gcl-policy.yml",
+      "observed_features": ["OPAQUE_EXECUTION"],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/gcl-project-sync.yml",
+      "observed_features": ["AUTONOMOUS_WAKE", "OPAQUE_EXECUTION", "SCHEDULED", "SECRET_CREDENTIAL"],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/gcl-release.yml",
+      "observed_features": ["OPAQUE_EXECUTION", "WRITE_CAPABLE"],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/gcl-security.yml",
+      "observed_features": ["OPAQUE_EXECUTION"],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/ghos-routing-enforcement.yml",
+      "observed_features": ["OPAQUE_EXECUTION"],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/qtr-incubator.yml",
+      "observed_features": ["OPAQUE_EXECUTION"],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
+      "path": ".github/workflows/weekly-optimality-scorecard.yml",
+      "observed_features": ["AUTONOMOUS_WAKE", "OPAQUE_EXECUTION", "SCHEDULED", "SECRET_CREDENTIAL", "WRITE_CAPABLE"],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    }
+  ],
+  "claim_boundaries": {
+    "constitutional": false,
+    "merge": false,
+    "certification": false,
+    "production": false,
+    "publication": false,
+    "mathematical_claim": false,
+    "claim_promotion": false,
+    "commercial": false
+  }
+}
