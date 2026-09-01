@@ -1,0 +1,73 @@
+{
+  "record_type": "GHOS_SHARED_ROUTING_CONTROL",
+  "schema_version": "1.0.0",
+  "repository": "grandchallenge/.github",
+  "campaign": "GHOS-ESTATE-ROLLOUT-001",
+  "tracker": "grandchallenge/.github#67",
+  "opening_protected_head": "355e029735961c29bf194985f885b0bda08579be",
+  "shared_gate": {
+    "path": "scripts/ghos_execution_routing_gate.py",
+    "protected_origin_commit": "355e029735961c29bf194985f885b0bda08579be",
+    "blob_sha": "b8a62a7f0ca8cb552e212f6ec9c36a5a48a33608",
+    "sha256": "1c4f9d82b1817d69187f3d87efbe0f6e60dd617d51a8aa330b119d48d3c95a43",
+    "ordinary_candidate_self_modification": false
+  },
+  "local_enforcement": {
+    "path": ".github/workflows/ghos-routing-enforcement.yml",
+    "required_context": "routing-enforcement",
+    "candidate_independent_event": "pull_request_target",
+    "candidate_execution": false,
+    "bootstrap_state": "CANDIDATE_PENDING_PROTECTED_ADMISSION_AND_RULESET_ACTIVATION"
+  },
+  "protected_main_ruleset": {
+    "ruleset_id": 17137624,
+    "name": "Community profile - main",
+    "strict_required_status_checks": true,
+    "bypass_actors": [],
+    "opening_required_contexts": ["policy / policy", "security / action-policy"],
+    "required_successor_context": "routing-enforcement"
+  },
+  "current_consumers": [
+    {
+      "repository": "grandchallenge/gcl-standards",
+      "gate_checkout": "grandchallenge/.github@main",
+      "gate_sha256": "1c4f9d82b1817d69187f3d87efbe0f6e60dd617d51a8aa330b119d48d3c95a43",
+      "migration_needed": "PIN_GATE_CHECKOUT_TO_EXACT_COMMIT_BEFORE_SHARED_GATE_BYTE_ROTATION"
+    },
+    {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "gate_checkout": "grandchallenge/.github@main",
+      "gate_sha256": "1c4f9d82b1817d69187f3d87efbe0f6e60dd617d51a8aa330b119d48d3c95a43",
+      "migration_needed": "PIN_GATE_CHECKOUT_TO_EXACT_COMMIT_BEFORE_SHARED_GATE_BYTE_ROTATION"
+    }
+  ],
+  "known_classifier_deviations": [
+    {
+      "id": "GHOS-CLASSIFIER-PROJECT-MUTATION-001",
+      "workflow": ".github/workflows/gcl-project-sync.yml",
+      "operation": "gh project item-add",
+      "missing_feature": "WRITE_CAPABLE",
+      "current_topology_effect": "NONE__WORKFLOW_ALREADY_PERSISTENT_CONTROLLER_REQUIRED",
+      "closure_route": "CONTROLLED_SHARED_GATE_DIGEST_ROTATION_AFTER_EXACT_CONSUMER_PINNING"
+    }
+  ],
+  "terminal_requirements": [
+    "PROTECTED_BOOTSTRAP_MERGE",
+    "RULESET_REQUIRES_ROUTING_ENFORCEMENT",
+    "HOSTILE_CANDIDATE_BLOCKED",
+    "CONSUMERS_PIN_SHARED_GATE_TO_EXACT_COMMIT",
+    "PROJECT_MUTATION_CLASSIFIER_DEVIATION_CLOSED",
+    "PROTECTED_READBACK",
+    "TRACKER_TERMINAL_DISPOSITION_GHOS_ROUTING_ENFORCED"
+  ],
+  "claim_boundaries": {
+    "constitutional": false,
+    "merge": false,
+    "certification": false,
+    "production": false,
+    "publication": false,
+    "mathematical_claim": false,
+    "claim_promotion": false,
+    "commercial": false
+  }
+}
