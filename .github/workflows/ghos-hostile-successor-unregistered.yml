@@ -1,0 +1,17 @@
+name: GH-OS successor hostile fixture
+
+on:
+  schedule:
+    - cron: "17 4 * * 6"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  inert-hostile-fixture:
+    if: ${{ false }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Controlled inert hostile fixture
+        run: echo "GH-OS hostile proof fixture; this job must never execute"
