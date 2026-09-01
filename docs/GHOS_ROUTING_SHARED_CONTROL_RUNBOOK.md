@@ -33,9 +33,10 @@ The implementation introduces:
 - `.ghos-routing/workflows.json`: exhaustive execution-routing registry;
 - `.ghos-routing/control.json`: shared-gate identity, activation state, consumer pinning state, and named deviations;
 - `.github/workflows/ghos-routing-enforcement.yml`: protected-base candidate-independent enforcement;
+- `.github/workflows/ghos-routing-tests.yml`: pull-request and protected-main routing regression execution;
 - `tests/test_ghos_execution_routing_gate.py`: synthetic hostile tests plus exact repository-registry validation.
 
-The routing registry contains all ten pre-existing direct workflows plus the enforcement workflow itself. The gate derives features and topology from actual workflow bytes. Registry declarations cannot downgrade those derived values.
+The routing registry contains all ten pre-existing direct workflows plus both GH-OS control workflows. The gate derives features and topology from actual workflow bytes. Registry declarations cannot downgrade those derived values.
 
 ## Bootstrap admission
 
@@ -43,10 +44,10 @@ The enforcement workflow does not exist on the protected base before the bootstr
 
 The bootstrap sequence is:
 
-1. validate the exact candidate with the existing protected policy and security checks;
+1. validate the exact candidate with the existing protected policy and security checks plus the candidate routing-test workflow;
 2. obtain the required independent exact-head review and authorized disposition;
 3. merge the exact reviewed bootstrap candidate through the existing protected pull-request route;
-4. read back protected `main` and verify the registry, control record, tests, gate bytes, and enforcement workflow;
+4. read back protected `main` and verify the registry, control record, tests, gate bytes, and both GH-OS control workflows;
 5. modify ruleset `17137624` through the authorized settings/bootstrap route so `routing-enforcement` is a strict required context while preserving all existing required contexts and zero bypass actors;
 6. verify the complete ruleset readback;
 7. execute a hostile candidate proving the required routing decision is outside candidate control;
