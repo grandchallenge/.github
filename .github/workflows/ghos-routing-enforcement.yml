@@ -50,7 +50,7 @@ jobs:
       - name: Verify protected gate identity
         shell: bash
         run: |
-          echo "1c4f9d82b1817d69187f3d87efbe0f6e60dd617d51a8aa330b119d48d3c95a43  protected-base/scripts/ghos_execution_routing_gate.py" | sha256sum --check --strict
+          echo "fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17  protected-base/scripts/ghos_execution_routing_gate.py" | sha256sum --check --strict
       - name: Install routing gate dependency
         run: python -m pip install PyYAML==6.0.3
       - name: Enforce candidate routing from protected bytes
