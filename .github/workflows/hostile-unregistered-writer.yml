@@ -1,0 +1,15 @@
+name: GH-OS hostile unregistered writer fixture
+
+on:
+  schedule:
+    - cron: '17 3 * * *'
+
+permissions:
+  issues: write
+
+jobs:
+  hostile-fixture:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Demonstrate unregistered write-capable surface without mutating state
+        run: echo "GH-OS hostile fixture; must never reach protected main"
