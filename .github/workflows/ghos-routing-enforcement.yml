@@ -1,0 +1,61 @@
+name: GH-OS routing enforcement
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ghos-routing-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  routing-enforcement:
+    name: routing-enforcement
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out protected base
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: protected-base
+          persist-credentials: false
+      - name: Check out candidate read-only
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: candidate
+          persist-credentials: false
+      - name: Reject ordinary enforcement self-modification
+        shell: bash
+        run: |
+          cmp --silent \
+            protected-base/.github/workflows/ghos-routing-enforcement.yml \
+            candidate/.github/workflows/ghos-routing-enforcement.yml || {
+              echo "GH-OS routing enforcement workflow may not be changed through an ordinary candidate PR"
+              exit 1
+            }
+      - name: Reject ordinary shared-gate self-modification
+        shell: bash
+        run: |
+          cmp --silent \
+            protected-base/scripts/ghos_execution_routing_gate.py \
+            candidate/scripts/ghos_execution_routing_gate.py || {
+              echo "shared GH-OS routing gate may only change through the governed digest-rotation route"
+              exit 1
+            }
+      - name: Verify protected gate identity
+        shell: bash
+        run: |
+          echo "1c4f9d82b1817d69187f3d87efbe0f6e60dd617d51a8aa330b119d48d3c95a43  protected-base/scripts/ghos_execution_routing_gate.py" | sha256sum --check --strict
+      - name: Install routing gate dependency
+        run: python -m pip install PyYAML==6.0.3
+      - name: Enforce candidate routing from protected bytes
+        shell: bash
+        run: |
+          python protected-base/scripts/ghos_execution_routing_gate.py \
+            --root candidate \
+            --repository "$GITHUB_REPOSITORY"

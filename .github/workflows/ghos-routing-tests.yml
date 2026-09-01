@@ -1,0 +1,41 @@
+name: GH-OS routing tests
+
+on:
+  pull_request:
+    paths:
+      - ".ghos-routing/**"
+      - ".github/workflows/ghos-routing-enforcement.yml"
+      - ".github/workflows/ghos-routing-tests.yml"
+      - "scripts/ghos_execution_routing_gate.py"
+      - "tests/test_ghos_execution_routing_gate.py"
+      - "docs/GHOS_ROUTING_SHARED_CONTROL_RUNBOOK.md"
+  push:
+    branches: [main]
+    paths:
+      - ".ghos-routing/**"
+      - ".github/workflows/ghos-routing-enforcement.yml"
+      - ".github/workflows/ghos-routing-tests.yml"
+      - "scripts/ghos_execution_routing_gate.py"
+      - "tests/test_ghos_execution_routing_gate.py"
+      - "docs/GHOS_ROUTING_SHARED_CONTROL_RUNBOOK.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: routing-tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12.13"
+      - name: Install routing dependency
+        run: python -m pip install PyYAML==6.0.3
+      - name: Run routing gate tests
+        run: python -m unittest tests.test_ghos_execution_routing_gate -v
