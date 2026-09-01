@@ -42,7 +42,7 @@ def features(workflow: Mapping[str, Any]) -> list[str]:
         if "${{ secrets." in text or "secrets[" in text or "github.token" in text: result.add("SECRET_CREDENTIAL")
         if any(token in text for token in ("gh run watch", "sleep ", "poll", "wait-for", "wait_for")): result.add("EXTERNAL_WAIT")
         if "ghos-non-reconcilable-mutation" in text: result.add("NON_RECONCILABLE_MUTATION")
-        if any(token in text for token in ("gh pr merge", "git push", "git.exe push", "gh release create", "gh api", "-x post", "-x patch", "-x put", "-x delete")): result.add("WRITE_CAPABLE")
+        if any(token in text for token in ("gh pr merge", "git push", "git.exe push", "gh release create", "gh project item-add", "gh api", "-x post", "-x patch", "-x put", "-x delete")): result.add("WRITE_CAPABLE")
     return sorted(result)
 
 
