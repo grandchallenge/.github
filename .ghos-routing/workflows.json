@@ -78,6 +78,12 @@
       "controller_id": "GITHUB_ACTIONS"
     },
     {
+      "path": ".github/workflows/ghos-routing-tests.yml",
+      "observed_features": ["OPAQUE_EXECUTION"],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
       "path": ".github/workflows/qtr-incubator.yml",
       "observed_features": ["OPAQUE_EXECUTION"],
       "topology": "PERSISTENT_CONTROLLER_REQUIRED",
