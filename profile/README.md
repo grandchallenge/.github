@@ -1,8 +1,8 @@
 # Grand Challenge Labs
 
-## Frontier Engineering
+[![Grand Challenge Labs — Frontier Engineering. Question → Discovery → Experiment → Proof → Knowledge.](assets/gcl-frontier-engineering-hero-2026-09-02.svg)](https://grandchallenge.ai)
 
-Grand Challenge Labs turns difficult scientific, mathematical, and engineering questions into reproducible programmes of theory, experiment, computation, and verification.
+**Frontier Engineering.** Grand Challenge Labs turns difficult scientific, mathematical, and engineering questions into reproducible programmes of theory, experiment, computation, and verification.
 
 [Explore the work](https://github.com/orgs/grandchallenge/repositories) · [Mathematics Programme](https://grandchallenge.github.io/MATH-PROGRAMME/) · [Programme Atlas](https://grandchallenge.github.io/MATH-PROGRAMME/PROGRAMME_ATLAS/) · [Discussions](https://github.com/orgs/grandchallenge/discussions)
 
