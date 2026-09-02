@@ -9,8 +9,25 @@ permissions:
   contents: write
 
 jobs:
-  diagnostic:
+  materialize:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
-      - name: Runner diagnostic
-        run: echo runner-started-with-write-token
+      - name: Materialize verified asset
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --branch frontpage/full-resolution-github-surface-2026-09-01 https://github.com/grandchallenge/.github.git repo
+          cd repo
+          cat .tmp/gcl-full/*.b64 | tr -d '\n\r' | base64 --decode > profile/assets/gcl-github-surface-2026-09-01.webp
+          test "$(stat -c%s profile/assets/gcl-github-surface-2026-09-01.webp)" = "73434"
+          echo "d63ba53aa60ac1573b3373e4faf5daf1759b2f930ef3d422946bf34e9340ab25  profile/assets/gcl-github-surface-2026-09-01.webp" | sha256sum -c -
+          rm -rf .tmp/gcl-full .tmp/gcl-image
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "fix: restore full-resolution GCL surface asset"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/grandchallenge/.github.git"
+          git push origin HEAD:frontpage/full-resolution-github-surface-2026-09-01
