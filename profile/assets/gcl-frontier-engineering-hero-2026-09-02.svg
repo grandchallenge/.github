@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="472" viewBox="0 0 1536 472" role="img" aria-labelledby="title desc">
+  <title id="title">Grand Challenge Labs — Frontier Engineering</title>
+  <desc id="desc">A light-mode GCL hero showing the research progression Question, Discovery, Experiment, Proof, Knowledge.</desc>
+  <defs>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.72" stop-color="#fbfcfe"/>
+      <stop offset="1" stop-color="#f7f9fc"/>
+    </linearGradient>
+    <style>
+      .navy{fill:#0b2447}.gold{fill:#c78a19}.ink{fill:#132238}.muted{fill:#48566a}
+      .serif{font-family:Georgia,'Times New Roman',serif}.sans{font-family:Arial,Helvetica,sans-serif}
+      .hair{stroke:#cdd7e5;stroke-width:1;fill:none}.goldline{stroke:#c78a19;stroke-width:1.4;fill:none}.navyline{stroke:#173b6c;stroke-width:2;fill:none}
+    </style>
+  </defs>
+  <rect width="1536" height="472" fill="url(#fade)"/>
+
+  <!-- subtle scientific field -->
+  <g opacity="0.18" class="hair">
+    <path d="M600 80 C760 15 930 145 1080 66 S1340 46 1510 160"/>
+    <path d="M650 120 C820 65 945 180 1125 116 S1360 105 1510 240"/>
+    <circle cx="830" cy="66" r="26"/><circle cx="1015" cy="90" r="36"/><circle cx="1245" cy="68" r="30"/>
+    <path d="M803 66h54M830 39v54M979 90h72M1015 54v72M1215 68h60M1245 38v60"/>
+    <path d="M1160 180c70-52 161-42 221 5 57 44 91 121 69 184"/>
+    <path d="M1178 196c58-40 130-31 179 5 49 37 77 97 61 151"/>
+    <path d="M1198 212c45-28 100-22 139 7 38 29 58 74 47 115"/>
+  </g>
+
+  <!-- mark -->
+  <g transform="translate(48 34)">
+    <circle cx="42" cy="42" r="39" fill="none" stroke="#c78a19" stroke-width="2"/>
+    <circle cx="42" cy="42" r="4" fill="#c78a19"/>
+    <path d="M42 4L49 34L80 42L49 49L42 80L35 49L4 42L35 34Z" fill="none" stroke="#c78a19" stroke-width="1.7"/>
+    <path d="M15 15L34 34M69 15L50 34M15 69L34 50M69 69L50 50" stroke="#c78a19" stroke-width="1"/>
+  </g>
+  <text x="145" y="98" class="serif navy" font-size="74" font-weight="700">GCL</text>
+  <line x1="352" y1="43" x2="352" y2="113" stroke="#d8dee8"/>
+  <text x="374" y="76" class="sans ink" font-size="27">Grand</text>
+  <text x="374" y="108" class="sans ink" font-size="27">Challenge Labs</text>
+
+  <text x="49" y="238" class="serif navy" font-size="61">Frontier Engineering</text>
+  <text x="51" y="287" class="sans ink" font-size="22">Grand Challenge Labs turns ambitious scientific, mathematical, and engineering questions</text>
+  <text x="51" y="320" class="sans ink" font-size="22">into reproducible programmes of theory, experiment, computation, and verification.</text>
+
+  <!-- CTA pills rendered as visual labels -->
+  <g transform="translate(50 358)">
+    <rect width="198" height="50" rx="7" fill="#0b2447"/>
+    <text x="22" y="32" class="sans" font-size="18" fill="#fff" font-weight="700">Explore the Work  →</text>
+    <rect x="214" width="266" height="50" rx="7" fill="#fff" stroke="#aebbd0"/>
+    <text x="237" y="32" class="sans navy" font-size="18" font-weight="700">Mathematics Programme  →</text>
+    <rect x="496" width="190" height="50" rx="7" fill="#fff" stroke="#aebbd0"/>
+    <text x="519" y="32" class="sans navy" font-size="18" font-weight="700">How GCL Works  →</text>
+  </g>
+
+  <!-- motto -->
+  <text x="1484" y="47" text-anchor="end" class="serif ink" font-size="17" font-style="italic">The noblest questions.</text>
+  <text x="1484" y="73" text-anchor="end" class="serif ink" font-size="17" font-style="italic">The best minds.</text>
+  <text x="1484" y="99" text-anchor="end" class="serif ink" font-size="17" font-style="italic">The evidence will decide.</text>
+  <text x="1484" y="126" text-anchor="end" class="serif ink" font-size="17" font-style="italic">— GCL</text>
+
+  <!-- research progression -->
+  <g transform="translate(710 188)">
+    <path d="M72 52H225M285 52H438M498 52H651M711 52H864" class="navyline"/>
+    <path d="M218 46l12 6-12 6M431 46l12 6-12 6M644 46l12 6-12 6M857 46l12 6-12 6" fill="#173b6c"/>
+
+    <g transform="translate(0 0)"><circle cx="45" cy="52" r="43" fill="#fff" stroke="#c78a19"/><text x="45" y="67" text-anchor="middle" class="serif ink" font-size="58">?</text></g>
+    <g transform="translate(213 0)"><circle cx="45" cy="52" r="43" fill="#fff" stroke="#c78a19"/><path d="M22 59l44-18M29 61l31 12M31 61l-9 22M60 43l9 34" stroke="#182433" stroke-width="3" fill="none"/><rect x="55" y="34" width="20" height="8" rx="2" transform="rotate(-22 65 38)" fill="none" stroke="#182433" stroke-width="2"/></g>
+    <g transform="translate(426 0)"><circle cx="45" cy="52" r="43" fill="#fff" stroke="#c78a19"/><path d="M37 26h16M40 26v18L26 73c-3 7 2 11 9 11h20c7 0 12-4 9-11L50 44V26" fill="none" stroke="#182433" stroke-width="3"/><path d="M31 70h28" stroke="#c78a19" stroke-width="3"/></g>
+    <g transform="translate(639 0)"><circle cx="45" cy="52" r="43" fill="#fff" stroke="#c78a19"/><path d="M20 37c12-7 21-7 25-3v37c-6-4-15-4-25 2zM70 37c-12-7-21-7-25-3v37c6-4 15-4 25 2z" fill="none" stroke="#182433" stroke-width="2.5"/><path d="M45 34v37" stroke="#182433" stroke-width="2"/></g>
+    <g transform="translate(852 0)"><circle cx="45" cy="52" r="43" fill="#fff" stroke="#c78a19"/><path d="M45 16l6 26 26 10-26 7-6 29-7-29-26-7 26-10z" fill="none" stroke="#182433" stroke-width="2"/><circle cx="45" cy="52" r="4" fill="#c78a19"/></g>
+
+    <g class="sans navy" font-size="16" font-weight="700" text-anchor="middle">
+      <text x="45" y="126">QUESTION</text><text x="258" y="126">DISCOVERY</text><text x="471" y="126">EXPERIMENT</text><text x="684" y="126">PROOF</text><text x="897" y="126">KNOWLEDGE</text>
+    </g>
+    <g class="sans muted" font-size="14" text-anchor="middle">
+      <text x="45" y="151"><tspan x="45">Frame the question</tspan><tspan x="45" dy="19">precisely</tspan></text>
+      <text x="258" y="151"><tspan x="258">Develop theory</tspan><tspan x="258" dy="19">and insight</tspan></text>
+      <text x="471" y="151"><tspan x="471">Design experiments</tspan><tspan x="471" dy="19">and gather data</tspan></text>
+      <text x="684" y="151"><tspan x="684">Verify and stress</tspan><tspan x="684" dy="19">the result</tspan></text>
+      <text x="897" y="151"><tspan x="897">Admit what survives</tspan><tspan x="897" dy="19">with provenance</tspan></text>
+    </g>
+  </g>
+</svg>
