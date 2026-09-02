@@ -4,11 +4,11 @@ Grand Challenge Labs develops auditable, reproducible programmes. GitHub is our
 operational and evidentiary substrate; it is not an independent mathematical
 authority.
 
-## MATH-PROGRAMME umbrella — accelerated maintenance pilot
+## GCL GitHub surface
 
-[![MATH-PROGRAMME umbrella progress illustration showing the five-repository governance, certification and integration framework; accelerated nine-day maintenance cadence; eight-campaign portfolio; ten Core Clarity invariants; complete required-workflow coverage; and INTELLECT integration.](assets/math-programme-progress-2026-07-31.jpg)](https://github.com/grandchallenge/MATH-PROGRAMME)
+![Grand Challenge Labs GitHub surface: organization capabilities, core programme repositories, research and engineering repositories, governance and workflow, infrastructure and automation, knowledge and documentation, observability, external integrations, and the Polity vision.](assets/gcl-github-surface-2026-09-01.webp)
 
-*Status snapshot: August 8, 2026 at 22:12 PT. The illustration is a navigational
+*Organization-surface illustration, September 2026. This is a navigational
 summary; protected, content-addressed records in the governed repositories remain
 authoritative. No mathematical, certification, novelty, priority, patentability,
 mechanical, manufacturing, or commercial claim is promoted by this presentation.*
