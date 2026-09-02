@@ -5,9 +5,12 @@ on:
     branches:
       - frontpage/full-resolution-github-surface-2026-09-01
 
+permissions:
+  contents: write
+
 jobs:
   diagnostic:
     runs-on: ubuntu-latest
     steps:
       - name: Runner diagnostic
-        run: echo runner-started
+        run: echo runner-started-with-write-token
