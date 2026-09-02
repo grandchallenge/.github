@@ -1,0 +1,33 @@
+name: Materialize GCL surface asset
+
+on:
+  push:
+    branches:
+      - frontpage/full-resolution-github-surface-2026-09-01
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out staging branch
+        uses: actions/checkout@v4
+        with:
+          ref: frontpage/full-resolution-github-surface-2026-09-01
+
+      - name: Materialize verified asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .tmp/gcl-full/*.b64 | tr -d '\n\r' | base64 --decode > profile/assets/gcl-github-surface-2026-09-01.webp
+          test "$(stat -c%s profile/assets/gcl-github-surface-2026-09-01.webp)" = "73434"
+          echo "d63ba53aa60ac1573b3373e4faf5daf1759b2f930ef3d422946bf34e9340ab25  profile/assets/gcl-github-surface-2026-09-01.webp" | sha256sum -c -
+          rm -rf .tmp/gcl-full .tmp/gcl-image
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "fix: restore full-resolution GCL surface asset"
+          git push
