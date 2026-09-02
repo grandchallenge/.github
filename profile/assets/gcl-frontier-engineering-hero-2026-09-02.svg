@@ -37,34 +37,35 @@
   <text x="374" y="108" class="sans ink" font-size="27">Challenge Labs</text>
 
   <text x="49" y="238" class="serif navy" font-size="61">Frontier Engineering</text>
-  <text x="51" y="287" class="sans ink" font-size="22">Grand Challenge Labs turns ambitious scientific, mathematical, and engineering questions</text>
-  <text x="51" y="320" class="sans ink" font-size="22">into reproducible programmes of theory, experiment, computation, and verification.</text>
-  <text x="51" y="382" class="sans navy" font-size="18" font-weight="700">REPRODUCIBLE  ·  TRACEABLE  ·  GOVERNED  ·  OPEN BY DEFAULT</text>
+  <text x="51" y="284" class="sans ink" font-size="20">Ambitious scientific, mathematical, and engineering questions become</text>
+  <text x="51" y="314" class="sans ink" font-size="20">reproducible programmes of theory, experiment, computation,</text>
+  <text x="51" y="344" class="sans ink" font-size="20">and verification.</text>
+  <text x="51" y="405" class="sans navy" font-size="18" font-weight="700">REPRODUCIBLE  ·  TRACEABLE  ·  GOVERNED  ·  OPEN BY DEFAULT</text>
 
   <text x="1484" y="47" text-anchor="end" class="serif ink" font-size="17" font-style="italic">The noblest questions.</text>
   <text x="1484" y="73" text-anchor="end" class="serif ink" font-size="17" font-style="italic">The best minds.</text>
   <text x="1484" y="99" text-anchor="end" class="serif ink" font-size="17" font-style="italic">The evidence will decide.</text>
   <text x="1484" y="126" text-anchor="end" class="serif ink" font-size="17" font-style="italic">— GCL</text>
 
-  <g transform="translate(710 188)">
-    <path d="M72 52H225M285 52H438M498 52H651M711 52H864" class="navyline"/>
-    <path d="M218 46l12 6-12 6M431 46l12 6-12 6M644 46l12 6-12 6M857 46l12 6-12 6" fill="#173b6c"/>
+  <g transform="translate(760 188)">
+    <path d="M87 52H151M237 52H301M387 52H451M537 52H601" class="navyline"/>
+    <path d="M144 46l12 6-12 6M294 46l12 6-12 6M444 46l12 6-12 6M594 46l12 6-12 6" fill="#173b6c"/>
 
-    <g transform="translate(0 0)"><circle cx="45" cy="52" r="43" fill="#fff" stroke="#c78a19"/><text x="45" y="67" text-anchor="middle" class="serif ink" font-size="58">?</text></g>
-    <g transform="translate(213 0)"><circle cx="45" cy="52" r="43" fill="#fff" stroke="#c78a19"/><path d="M22 59l44-18M29 61l31 12M31 61l-9 22M60 43l9 34" stroke="#182433" stroke-width="3" fill="none"/><rect x="55" y="34" width="20" height="8" rx="2" transform="rotate(-22 65 38)" fill="none" stroke="#182433" stroke-width="2"/></g>
-    <g transform="translate(426 0)"><circle cx="45" cy="52" r="43" fill="#fff" stroke="#c78a19"/><path d="M37 26h16M40 26v18L26 73c-3 7 2 11 9 11h20c7 0 12-4 9-11L50 44V26" fill="none" stroke="#182433" stroke-width="3"/><path d="M31 70h28" stroke="#c78a19" stroke-width="3"/></g>
-    <g transform="translate(639 0)"><circle cx="45" cy="52" r="43" fill="#fff" stroke="#c78a19"/><path d="M20 37c12-7 21-7 25-3v37c-6-4-15-4-25 2zM70 37c-12-7-21-7-25-3v37c6-4 15-4 25 2z" fill="none" stroke="#182433" stroke-width="2.5"/><path d="M45 34v37" stroke="#182433" stroke-width="2"/></g>
-    <g transform="translate(852 0)"><circle cx="45" cy="52" r="43" fill="#fff" stroke="#c78a19"/><path d="M45 16l6 26 26 10-26 7-6 29-7-29-26-7 26-10z" fill="none" stroke="#182433" stroke-width="2"/><circle cx="45" cy="52" r="4" fill="#c78a19"/></g>
+    <g transform="translate(0 0)"><circle cx="44" cy="52" r="43" fill="#fff" stroke="#c78a19"/><text x="44" y="67" text-anchor="middle" class="serif ink" font-size="58">?</text></g>
+    <g transform="translate(150 0)"><circle cx="44" cy="52" r="43" fill="#fff" stroke="#c78a19"/><path d="M21 59l44-18M28 61l31 12M30 61l-9 22M59 43l9 34" stroke="#182433" stroke-width="3" fill="none"/><rect x="54" y="34" width="20" height="8" rx="2" transform="rotate(-22 64 38)" fill="none" stroke="#182433" stroke-width="2"/></g>
+    <g transform="translate(300 0)"><circle cx="44" cy="52" r="43" fill="#fff" stroke="#c78a19"/><path d="M36 26h16M39 26v18L25 73c-3 7 2 11 9 11h20c7 0 12-4 9-11L49 44V26" fill="none" stroke="#182433" stroke-width="3"/><path d="M30 70h28" stroke="#c78a19" stroke-width="3"/></g>
+    <g transform="translate(450 0)"><circle cx="44" cy="52" r="43" fill="#fff" stroke="#c78a19"/><path d="M19 37c12-7 21-7 25-3v37c-6-4-15-4-25 2zM69 37c-12-7-21-7-25-3v37c6-4 15-4 25 2z" fill="none" stroke="#182433" stroke-width="2.5"/><path d="M44 34v37" stroke="#182433" stroke-width="2"/></g>
+    <g transform="translate(600 0)"><circle cx="44" cy="52" r="43" fill="#fff" stroke="#c78a19"/><path d="M44 16l6 26 26 10-26 7-6 29-7-29-26-7 26-10z" fill="none" stroke="#182433" stroke-width="2"/><circle cx="44" cy="52" r="4" fill="#c78a19"/></g>
 
-    <g class="sans navy" font-size="16" font-weight="700" text-anchor="middle">
-      <text x="45" y="126">QUESTION</text><text x="258" y="126">DISCOVERY</text><text x="471" y="126">EXPERIMENT</text><text x="684" y="126">PROOF</text><text x="897" y="126">KNOWLEDGE</text>
+    <g class="sans navy" font-size="15" font-weight="700" text-anchor="middle">
+      <text x="44" y="126">QUESTION</text><text x="194" y="126">DISCOVERY</text><text x="344" y="126">EXPERIMENT</text><text x="494" y="126">PROOF</text><text x="644" y="126">KNOWLEDGE</text>
     </g>
-    <g class="sans muted" font-size="14" text-anchor="middle">
-      <text x="45" y="151"><tspan x="45">Frame the question</tspan><tspan x="45" dy="19">precisely</tspan></text>
-      <text x="258" y="151"><tspan x="258">Develop theory</tspan><tspan x="258" dy="19">and insight</tspan></text>
-      <text x="471" y="151"><tspan x="471">Design experiments</tspan><tspan x="471" dy="19">and gather data</tspan></text>
-      <text x="684" y="151"><tspan x="684">Verify and stress</tspan><tspan x="684" dy="19">the result</tspan></text>
-      <text x="897" y="151"><tspan x="897">Admit what survives</tspan><tspan x="897" dy="19">with provenance</tspan></text>
+    <g class="sans muted" font-size="13" text-anchor="middle">
+      <text x="44" y="151"><tspan x="44">Frame the question</tspan><tspan x="44" dy="18">precisely</tspan></text>
+      <text x="194" y="151"><tspan x="194">Develop theory</tspan><tspan x="194" dy="18">and insight</tspan></text>
+      <text x="344" y="151"><tspan x="344">Design experiments</tspan><tspan x="344" dy="18">and gather data</tspan></text>
+      <text x="494" y="151"><tspan x="494">Verify and stress</tspan><tspan x="494" dy="18">the result</tspan></text>
+      <text x="644" y="151"><tspan x="644">Admit what survives</tspan><tspan x="644" dy="18">with provenance</tspan></text>
     </g>
   </g>
 </svg>
