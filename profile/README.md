@@ -68,9 +68,9 @@ GitHub supplies the operational and evidentiary substrate; it does not itself co
 | [**INTELLECT**](https://github.com/grandchallenge/INTELLECT) | Reasoning, coordination, institutional cognition and constitutional records |
 | [**gcl-standards**](https://github.com/grandchallenge/gcl-standards) | Versioned cross-programme standards and controlled vocabulary |
 
-### Selected laboratories
+### Selected research repositories
 
-[AETHER](https://github.com/fyremael/AETHER) · [MODULUS](https://github.com/grandchallenge/MODULUS) · [SPINDLE](https://github.com/grandchallenge/SPINDLE) · [SPECTRALMEM](https://github.com/grandchallenge/SPECTRALMEM) · [MUONSPHERE](https://github.com/grandchallenge/MUONSPHERE) · [TENSORGRAPH](https://github.com/grandchallenge/TENSORGRAPH) · [SEMANTIC_SURGERY](https://github.com/grandchallenge/SEMANTIC_SURGERY) · [QUANTUM-TECHNOLOGIES](https://github.com/grandchallenge/QUANTUM-TECHNOLOGIES) · [ITERANT](https://github.com/fyremael/ITERANT) · [PATH-JEPA](https://github.com/grandchallenge/PATH-JEPA)
+[AETHER](https://github.com/grandchallenge/AETHER) · [MODULUS](https://github.com/grandchallenge/MODULUS) · [QUANTUM-TECHNOLOGIES](https://github.com/grandchallenge/QUANTUM-TECHNOLOGIES) · [GLOSS](https://github.com/grandchallenge/GLOSS) · [TROVE-CURATA](https://github.com/grandchallenge/TROVE-CURATA) · [CPS](https://github.com/fyremael/CPS) · [MUONSPHERE](https://github.com/fyremael/MUONSPHERE) · [SPECTRALMEM](https://github.com/fyremael/SPECTRALMEM) · [TENSORGRAPH](https://github.com/fyremael/TENSORGRAPH) · [SEMANTIC_SURGERY](https://github.com/fyremael/SEMANTIC_SURGERY) · [ITERANT](https://github.com/fyremael/ITERANT) · [RUNT](https://github.com/fyremael/RUNT) · [LEANSITE](https://github.com/fyremael/LEANSITE) · [SEEDNET](https://github.com/fyremael/SEEDNET)
 
 ---
 
