@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "projection": "GCT_PUBLIC_INTEGRATION_STATUS",
+  "as_of": "2026-09-03",
+  "corporate_principal": {
+    "legal_name": "Jamie Steeg",
+    "github_identity": "jimsteeg",
+    "role": "Founder and CEO, Grand Challenge Technologies Ltd",
+    "ultimate_responsibility": true
+  },
+  "institutional_topology": {
+    "parent": "Grand Challenge Technologies Ltd",
+    "subsidiary": "Grand Challenge Labs",
+    "gcl_github_organization": "grandchallenge"
+  },
+  "canonical_custody": {
+    "gct_executive_repository": "grandchallenge/GCT-EXECUTIVE",
+    "visibility": "private",
+    "status": "CANONICAL_PRIVATE_SOURCE",
+    "bootstrap_standard": "GCT-AEOS-00",
+    "bootstrap_version": "0.1.0-bootstrap"
+  },
+  "bootstrap_provenance": {
+    "public_source_repository": "grandchallenge/.github",
+    "public_source_issue": 83,
+    "public_source_pull_request": 84,
+    "public_source_exact_head": "a96854043b57b93538d3ced3d4bb40cb9a3d9932",
+    "private_canonicalization_pull_request": 2,
+    "private_canonicalization_exact_head": "d952b0f331a461b8e4bf0ee291fadc1083cf8c9e",
+    "private_merge_commit": "df5fcc7770ebc77cf836cb89e4a5e101792145fc",
+    "post_merge_readback_commit": "7a21681629c47876902547734e20a0c7be481263"
+  },
+  "public_projection": {
+    "repository": "grandchallenge/.github",
+    "path": "governance/gct",
+    "role": "PUBLIC_INTEGRATION_AND_STATUS_ONLY",
+    "private_executive_content_authoritative_here": false
+  },
+  "open_control_obligations": [
+    "private_repository_main_hardening",
+    "private_independent_agent_reviewer_access",
+    "private_repository_profile_and_live_settings_readback"
+  ],
+  "authority_boundaries": {
+    "gct_portfolio_decisions_create_gcl_claim_authority": false,
+    "gcl_results_create_gct_corporate_commitment": false,
+    "github_state_creates_corporate_authority": false,
+    "executive_sponsorship_counts_as_independent_review": false
+  },
+  "public_claims": {
+    "scientific_claim_promoted_by_this_projection": false,
+    "mathematical_claim_promoted_by_this_projection": false,
+    "certification_claim_promoted_by_this_projection": false,
+    "production_claim_promoted_by_this_projection": false,
+    "commercial_claim_promoted_by_this_projection": false,
+    "legal_claim_promoted_by_this_projection": false
+  }
+}
