@@ -1,0 +1,87 @@
+{
+  "record_type": "GCL_ORGANIZATION_PROFILE_ADMISSION_PROPOSAL",
+  "schema_version": "1.0.0",
+  "proposal_id": "GCT-CORPORATE-PROFILE-ADMISSION-001",
+  "tracker": "grandchallenge/.github#87",
+  "target_repository": "grandchallenge/GCT-EXECUTIVE",
+  "target_repository_id": 1355707445,
+  "state": "PROPOSED_PENDING_INDEPENDENT_REVIEW",
+  "protected_source_baselines": {
+    "organization_repository": "0c05effda89dec830c6b9c0fa3aa7d1eb72f3f6d",
+    "gct_executive": "92910e6feea7dc5dbb51ab28d04bf9906d031f28"
+  },
+  "live_schema_disposition_comment_id": 5524394232,
+  "schema_extension": {
+    "property_name": "authority_scope",
+    "value_type": "single_select",
+    "existing_allowed_values": [
+      "cross-programme",
+      "mathematics-programme",
+      "candidate-discovery",
+      "work-execution",
+      "certification",
+      "provider",
+      "community",
+      "constitutional"
+    ],
+    "proposed_additive_value": "corporate-executive",
+    "change_mode": "ADD_ONE_ALLOWED_VALUE_ONLY",
+    "must_not_change": [
+      "existing allowed values",
+      "required flag",
+      "default value",
+      "description except if separately reviewed",
+      "values_editable_by except if separately reviewed"
+    ]
+  },
+  "post_extension_repository_binding": {
+    "separate_transaction_required": true,
+    "values": {
+      "authority_scope": "corporate-executive",
+      "claim_promotion_role": "none",
+      "public_programme": "false",
+      "risk_tier": "critical",
+      "workflow_profile": "governance"
+    },
+    "must_remain_unset": [
+      "constitutional_profile"
+    ]
+  },
+  "rationale": {
+    "existing_profiles_rejected": [
+      "Provider",
+      "Community",
+      "Programme",
+      "Standards",
+      "Forge",
+      "Solve",
+      "Cert"
+    ],
+    "reason": "Existing organization profile vocabulary would import false GCL, programme, constitutional, certification, or provider semantics into a private GCT corporate-executive repository.",
+    "semantic_intent": "Identify a private GCT corporate-executive operating surface with no GCL claim-promotion or constitutional authority."
+  },
+  "acceptance_conditions": [
+    "all prior authority_scope values remain present",
+    "corporate-executive is the only added authority_scope value",
+    "no default value is introduced",
+    "authority_scope is not made required",
+    "no repository custom-property value is bound by the schema-extension transaction",
+    "GCT and GCL authority boundaries remain unchanged"
+  ],
+  "follow_on_after_accepted_schema_readback": [
+    "bind only the listed GCT-EXECUTIVE repository custom-property values",
+    "read back exact repository values",
+    "add routing-enforcement to GCT ruleset 22185688 while preserving strict=true and zero bypass actors",
+    "execute benign and hostile routing proof/readback",
+    "close MATH-PROGRAMME#791 only after terminal GHOS evidence is complete"
+  ],
+  "authority_boundaries": {
+    "this_record_mutates_hosted_schema": false,
+    "this_record_binds_repository_values": false,
+    "gcl_constitutional_authority_created": false,
+    "gct_corporate_authority_transferred": false,
+    "claim_promotion_authority_created": false,
+    "certification_authority_created": false,
+    "reviewer_access_changed": false
+  }
+}
