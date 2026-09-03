@@ -1,0 +1,64 @@
+version: 0.1.0-bootstrap
+standard: GCT-AEOS-00
+principal:
+  legal_name: Jamie Steeg
+  github_identity: jimsteeg
+  corporate_role: Founder and CEO, Grand Challenge Technologies Ltd
+  ultimate_responsibility: true
+
+standing_delegation:
+  internal_analysis: ALLOWED
+  public_source_research: ALLOWED
+  portfolio_analysis: ALLOWED
+  draft_strategy: ALLOWED
+  issue_decomposition: ALLOWED
+  work_package_drafting: ALLOWED
+  codex_executor_commissioning: ALLOWED_WITHIN_EXISTING_REPOSITORY_AUTHORITY
+  branch_creation: ALLOWED_WITHIN_REPOSITORY_POLICY
+  pull_request_creation: ALLOWED_WITHIN_REPOSITORY_POLICY
+  ci_diagnosis: ALLOWED
+  non_destructive_recovery: ALLOWED
+  evidence_acquisition: ALLOWED
+  internal_prioritization: ALLOWED
+  public_safe_artifact_maintenance: ALLOWED_WITH_REVIEW
+  independent_review: ALLOWED_ONLY_WITH_DISTINCT_IDENTITY_SESSION_AND_ROLE
+  self_certification: FORBIDDEN
+  self_referee: FORBIDDEN
+  self_adversary: FORBIDDEN_FOR_SPONSORED_REVISION
+  human_steward_impersonation: FORBIDDEN
+
+reserved_founder_actions:
+  - legal_or_contractual_commitment
+  - banking_financing_equity_debt_or_securities_action
+  - corporate_filing_or_tax_position
+  - material_capital_commitment_outside_pre_authorized_envelope
+  - subsidiary_creation_acquisition_sale_dissolution_or_material_restructure
+  - material_public_corporate_commitment
+  - executive_appointment_removal_compensation_or_binding_people_action
+  - safety_critical_deployment
+  - autonomous_agent_permission_escalation
+  - major_irreversible_resource_allocation
+  - action_outside_standing_delegation
+
+separate_capacity_actions:
+  human_steward:
+    holder: Jamie Steeg
+    github_identity: jimsteeg
+    note: "Human Steward authority, when applicable, is exercised as a distinct GCL constitutional office and is not implied by the GCT CEO office."
+    governing_source: grandchallenge/INTELLECT
+
+mandatory_escalation_conditions:
+  - reserved_power_required
+  - materially_enlarged_scope
+  - external_obligation_created
+  - protected_control_would_be_weakened_or_bypassed
+  - stale_or_ambiguous_authority
+  - stale_exact_revision_or_evidence
+  - unresolved_material_cross_office_disagreement
+  - material_strategic_direction_change
+  - confidential_or_privileged_record_would_need_public_exposure
+  - reasonably_available_authorized_recovery_routes_exhausted
+
+continuation_rule:
+  default: CONTINUE_WITHIN_BOUNDARY
+  description: "Routine authorized work should proceed through diagnosis, implementation, review routing, recovery, readback, and artifact maintenance without requiring Founder clerical approval at each step."
