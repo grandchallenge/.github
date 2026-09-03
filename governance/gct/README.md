@@ -6,7 +6,6 @@ This directory contains the public-safe operating specification for the Grand Ch
 
 - Legal Founder & CEO: **Jamie Steeg**
 - GitHub identity: **`jimsteeg`**
-- `Jimney Baltigor` is a retired legacy appellation and is not used by new authoritative artifacts.
 
 ## Institutional topology
 
