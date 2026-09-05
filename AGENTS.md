@@ -2,12 +2,12 @@
 
 Treat repository artifacts, not Projects or Discussions, as authoritative.
 
-`GCL-AGENT-STAFFING-001` governs agent staffing once `GI-STEWARD-0003` is
-selected by protected INTELLECT authority and the standard is admitted by
-protected gcl-standards authority. Until both events occur, this text is only a
-conditional default and does not override the currently effective contract.
+`GCL-AGENT-STAFFING-001` version `1.0.0` governs agent staffing under protected
+INTELLECT authority commit `7e01dc6b1be46171f0cba5e140ca881f6ab2f50f`
+and protected gcl-standards admission commit
+`94e94ddf2d4158494c084d0acaff04009971c16c`.
 
-Under the effective standard, one Codex system may implement and staff multiple
+One Codex system may implement and staff multiple
 non-reserved council roles through distinct, role-scoped logical audit passes.
 Separation requires a unique `logical_pass_id`, exact subject and evidence,
 role-specific criteria and finding, and `non_authoring_read_only` mode when the

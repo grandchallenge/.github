@@ -12,8 +12,8 @@ upstream commit SHA, a stable identifier, and an explicit promotion condition.
 
 # Agent staffing and review
 
-After canonical activation, classify work as `routine_bounded`, `substantive`,
-or `reserved` under `GCL-AGENT-STAFFING-001`. A single Codex system may perform
+Classify work as `routine_bounded`, `substantive`, or `reserved` under
+`GCL-AGENT-STAFFING-001` version `1.0.0`. A single Codex system may perform
 several non-reserved roles when each is a distinct logical pass with an exact
 subject, role-specific criteria, evidence, and finding. Adversary and Referee
 passes performed by an authoring system are read-only.
