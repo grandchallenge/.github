@@ -36,10 +36,13 @@
     "role": "PUBLIC_INTEGRATION_AND_STATUS_ONLY",
     "private_executive_content_authoritative_here": false
   },
+  "hosted_control_status": {
+    "private_main_ruleset": "ACTIVE_STRICT_ZERO_BYPASS",
+    "organization_profile": "CORPORATE_EXECUTIVE_ADMITTED_AND_BOUND",
+    "ghos_successor_admission": "GHOS_ROUTING_ENFORCED"
+  },
   "open_control_obligations": [
-    "private_repository_main_hardening",
-    "private_independent_agent_reviewer_access",
-    "private_repository_profile_and_live_settings_readback"
+    "private_independent_agent_reviewer_access"
   ],
   "authority_boundaries": {
     "gct_portfolio_decisions_create_gcl_claim_authority": false,
