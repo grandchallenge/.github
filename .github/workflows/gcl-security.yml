@@ -24,14 +24,31 @@ jobs:
       - name: Review dependency changes
         if: github.event_name == 'pull_request'
         uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294
-      - uses: ossf/scorecard-action@2d1146689b8cda280b9bc96326124645441f03bc
+      - name: Run OpenSSF Scorecard
+        if: github.event_name != 'merge_group'
+        uses: ossf/scorecard-action@2d1146689b8cda280b9bc96326124645441f03bc
         with:
           results_file: results.sarif
           results_format: sarif
           publish_results: false
       - name: Preserve Scorecard evidence
+        if: github.event_name != 'merge_group'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: gcl-scorecard-evidence
           path: results.sarif
           if-no-files-found: error
+      - name: Preserve merge-group security boundary
+        if: github.event_name == 'merge_group'
+        shell: bash
+        run: |
+          case "${GITHUB_REF}" in
+            refs/heads/gh-readonly-queue/*) ;;
+            *)
+              echo "merge_group security evaluation requires a GitHub queue-owned ref; got ${GITHUB_REF}" >&2
+              exit 1
+              ;;
+          esac
+          echo "OpenSSF Scorecard is repository-posture evidence and does not support GitHub merge_group refs."
+          echo "The exact queue candidate has still passed the immutable-action-reference scan above."
+          echo "Candidate Scorecard evidence remains required on supported pre-queue/push/scheduled events."
