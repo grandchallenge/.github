@@ -1,4 +1,4 @@
-[![Grand Challenge Labs — Frontier Engineering. Question → Discovery → Experiment → Proof → Knowledge.](assets/gcl-frontier-engineering-hero-2026-09-02.svg)](https://grandchallenge.ai)
+[![Grand Challenge Labs — Structure enables discovery.](assets/gcl-parametric-discovery-hero-2026-09-06.webp)](https://grandchallenge.ai)
 
 [Explore the work](https://github.com/orgs/grandchallenge/repositories) · [Mathematics Programme](https://grandchallenge.github.io/MATH-PROGRAMME/) · [Programme Atlas](https://grandchallenge.github.io/MATH-PROGRAMME/PROGRAMME_ATLAS/) · [Discussions](https://github.com/orgs/grandchallenge/discussions)
 
