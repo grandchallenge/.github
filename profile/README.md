@@ -1,5 +1,3 @@
-[![Grand Challenge Labs — Structure enables discovery.](assets/gcl-parametric-discovery-hero-2026-09-06.webp)](https://grandchallenge.ai)
-
 [Explore the work](https://github.com/orgs/grandchallenge/repositories) · [Mathematics Programme](https://grandchallenge.github.io/MATH-PROGRAMME/) · [Programme Atlas](https://grandchallenge.github.io/MATH-PROGRAMME/PROGRAMME_ATLAS/) · [Discussions](https://github.com/orgs/grandchallenge/discussions)
 
 > **Questions become programmes. Programmes produce evidence. What survives scrutiny becomes knowledge.**
