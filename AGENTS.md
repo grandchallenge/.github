@@ -16,6 +16,21 @@ require a different agent, invocation, task, model, account, human, or generic
 approval click. Routine and non-reserved substantive work may proceed through
 protected merge and readback when the applicable evidence gates pass.
 
+For authorized GitHub operations, follow the canonical GCL GitHub execution
+transport invariant in protected `grandchallenge/INTELLECT` at
+`governance/handoffs/README.md`. Use the connected GitHub action when it exposes
+the required capability. A missing connector endpoint is not, by itself, an
+authority boundary: use authenticated `gh`/GitHub API execution directly when
+available. If direct CLI/API execution is unavailable in the current
+environment, provide one complete self-contained `gh`/bash script that validates
+prerequisites and live state, performs the authorized mutation, and reads back
+the result. Do not send the operator to the GitHub UI solely because the
+connector lacks an endpoint when `gh` or the GitHub API can express the
+operation. Fallback scripts must preserve the caller's interactive shell and
+must not use parent-shell `set -e`, `exit`, `kill`, `exec`, or terminating traps
+as control flow. Transport fallback never weakens protection, evidence, or
+authority boundaries.
+
 Automation must not manufacture a Human Steward decision, certify mathematics
 from its own sole construction or verification evidence, exercise a reserved
 power, bypass protection, or write directly to a protected branch.
