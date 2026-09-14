@@ -23,6 +23,28 @@ These are active research questions, not promoted claims. Evidence and claim sta
 
 ---
 
+## Recently verified · OpenAI Ten Proofs
+
+MATHCERT has independently rebuilt and Lean-kernel-checked the exact supplied
+formalizations for all ten results advertised by
+[`openai/ten-proofs`](https://github.com/openai/ten-proofs) at pinned commit
+`94bc0feb6a9ff12c7d31d6de640a725c9d43d2b6`.
+
+| Checked surface | Result |
+|---|---|
+| Exact Lean source modules | **10 / 10 passed** |
+| Advertised headline declarations | **12 / 12 kernel accepted** |
+| Unexpected axioms | **0** |
+| Independent review and protected replay | **Complete** |
+
+[Read the public verification note →](https://grandchallenge.github.io/MATH-PROGRAMME/OPENAI_TEN_PROOFS_VERIFICATION/) · [Inspect the protected MATHCERT record →](https://github.com/grandchallenge/MATHCERT/blob/main/governance/corpus_verifications/OPENAI-TEN-PROOFS-001.json) · [Replay evidence →](https://github.com/grandchallenge/MATHCERT/actions/runs/34838818609)
+
+The result is exact: it verifies the supplied Lean proofs and their formal
+dependency graphs under the retained statement qualifications. It does not
+claim line-by-line identity with the PDF exposition, novelty, or priority.
+
+---
+
 ## How GCL works
 
 | Stage | Discipline |
