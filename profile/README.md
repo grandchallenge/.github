@@ -76,7 +76,7 @@ The repositories are parts of one research system. They do not all occupy the sa
 ```text
 GRAND CHALLENGE LABS
 │
-├── Research institution
+├── Institutional stack
 │   ├── INTELLECT ........ institutional reasoning, authority, and review
 │   ├── AETHER ........... semantic coordination, provenance, and replay
 │   └── gcl-standards .... shared technical and operating standards
@@ -94,8 +94,8 @@ GRAND CHALLENGE LABS
 │   └── other active scientific and engineering programmes
 │
 └── Research infrastructure
-    ├── GLOSS ............ semantics-preserving formal-to-natural rendering
-    ├── TROVE-CURATA ..... governed data curation and evidence supply
+    ├── GLOSS ............ formal-to-natural semantics and loss accounting
+    ├── TROVE-CURATA ..... governed data-curation programme; pre-activation
     └── tooling, CI, publication, and supporting automation
 ```
 
