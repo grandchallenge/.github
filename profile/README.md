@@ -4,6 +4,8 @@ Open research in mathematics, machine intelligence, scientific computing, and au
 
 > **Questions become programmes. Programmes produce evidence. What survives scrutiny becomes knowledge.**
 
+Grand Challenge Labs builds executable research systems for turning difficult questions into evidence that can survive independent scrutiny.
+
 [Research](https://github.com/orgs/grandchallenge/repositories) · [Mathematics Programme](https://grandchallenge.github.io/MATH-PROGRAMME/) · [Programme Atlas](https://grandchallenge.github.io/MATH-PROGRAMME/PROGRAMME_ATLAS/) · [Discussions](https://github.com/orgs/grandchallenge/discussions)
 
 ---
@@ -67,24 +69,55 @@ GitHub supplies the operational and evidentiary substrate; it does not itself co
 
 ---
 
-## Programme architecture
+## Research architecture
 
-| System | Function |
-|---|---|
-| [**MATH-PROGRAMME**](https://github.com/grandchallenge/MATH-PROGRAMME) | Governs the mathematics programme, programme map, admissions, and adopted standards. |
-| [**MATHFORGE**](https://github.com/grandchallenge/MATHFORGE) | Mathematical discovery, reconstruction, and formalization. |
-| [**MATHSOLVE**](https://github.com/grandchallenge/MATHSOLVE) | Disciplined solving campaigns and work packages. |
-| [**MATHCERT**](https://github.com/grandchallenge/MATHCERT) | Independent certification, checked evidence, and claim disposition. |
-| [**INTELLECT**](https://github.com/grandchallenge/INTELLECT) | Institutional reasoning, coordination, and constitutional records. |
-| [**AETHER**](https://github.com/grandchallenge/AETHER) | Governed agentic coordination and execution substrate. |
+The repositories are parts of one research system. They do not all occupy the same layer.
 
-### Featured research systems
+```text
+GRAND CHALLENGE LABS
+│
+├── Institutional stack
+│   ├── INTELLECT ........ institutional reasoning, authority, and review
+│   ├── AETHER ........... semantic coordination, provenance, and replay
+│   └── gcl-standards .... shared technical and operating standards
+│
+├── Mathematics Programme
+│   ├── MATH-PROGRAMME ... programme governance and map
+│   ├── MATHFORGE ........ discover and reconstruct
+│   ├── MATHSOLVE ........ organize and solve
+│   └── MATHCERT ......... independently certify
+│
+├── Research programmes
+│   ├── MODULUS .......... geometry-aware optimization and operator control
+│   ├── RUNT ............. reversible normalized neural architectures
+│   ├── CPS .............. collective neural computation and phase dynamics
+│   └── other active scientific and engineering programmes
+│
+└── Research infrastructure
+    ├── GLOSS ............ formal-to-natural semantics and loss accounting
+    ├── TROVE-CURATA ..... governed data-curation programme; pre-activation
+    └── tooling, CI, publication, and supporting automation
+```
 
-| System | Research focus |
-|---|---|
-| [**MODULUS**](https://github.com/grandchallenge/MODULUS) | Geometry-aware optimization and operator control. |
-| [**RUNT**](https://github.com/fyremael/RUNT) | Reversible normalized neural architectures. |
-| [**CPS**](https://github.com/fyremael/CPS) | Collective neural computation and phase dynamics. |
+The conceptual stack is:
+
+| Layer | Question | Representative systems |
+|---|---|---|
+| **Institution** | Why and under what epistemic rules does research happen? | Grand Challenge Labs |
+| **Constitution** | Who may judge, authorize, review, and preserve decisions? | [INTELLECT](https://github.com/grandchallenge/INTELLECT) |
+| **Semantic substrate** | What does the system know, from what evidence, and at what point in history? | [AETHER](https://github.com/grandchallenge/AETHER) |
+| **Research machinery** | How is inquiry turned into a repeatable discovery, solving, and certification process? | [MATH-PROGRAMME](https://github.com/grandchallenge/MATH-PROGRAMME), [MATHFORGE](https://github.com/grandchallenge/MATHFORGE), [MATHSOLVE](https://github.com/grandchallenge/MATHSOLVE), [MATHCERT](https://github.com/grandchallenge/MATHCERT) |
+| **Research programmes** | Which scientific and engineering questions are being attacked? | [MODULUS](https://github.com/grandchallenge/MODULUS), [RUNT](https://github.com/fyremael/RUNT), [CPS](https://github.com/fyremael/CPS), and other active programmes |
+| **Research infrastructure** | Which specialist systems make the research process more reliable or legible? | [GLOSS](https://github.com/grandchallenge/GLOSS), [TROVE-CURATA](https://github.com/grandchallenge/TROVE-CURATA), [gcl-standards](https://github.com/grandchallenge/gcl-standards), CI and publication tooling |
+
+In the mathematics programme, the epistemic pipeline is deliberately explicit:
+
+```text
+MATHFORGE  →  MATHSOLVE  →  MATHCERT
+ discover      organize       certify
+```
+
+A source can motivate a claim. A computation can suggest a claim. A solving campaign can develop a claim. Certification is a separate act.
 
 [Browse all repositories →](https://github.com/orgs/grandchallenge/repositories)
 
