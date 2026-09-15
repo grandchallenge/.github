@@ -12,14 +12,15 @@ Grand Challenge Labs builds executable research systems for turning difficult qu
 
 ## Research frontiers
 
+This table tracks material work currently in motion. It is a current-work surface, not a permanent taxonomy or a ranking of evidentiary strength.
+
 | Frontier | Programme |
 |---|---|
-| **Can neural systems phase-lock useful computational modes while suppressing error modes?** | Coupling-Phase Spectroscopy; collective neural computation; spectral dynamics |
-| **When does sparse expert routing undergo genuine oscillatory instability rather than ordinary expert collapse?** | MoE flutter boundaries; bifurcation analysis; continuation experiments |
-| **Can mathematical discovery become an auditable computational process?** | MATHFORGE → MATHSOLVE → MATHCERT |
-| **How should learning systems remain capable under stress rather than merely stable at nominal conditions?** | Antifragile training; recovery dynamics; reserve and robustness |
+| **Can mathematical discovery become an auditable computational process?** | [Mathematics Programme](https://github.com/grandchallenge/MATH-PROGRAMME) — BSD literal-`p=2` theorem work; VGSE adjudication; odd-zeta certificate construction |
+| **Can agentic operations coordinate through authoritative, replayable semantics at pilot scale?** | [AETHER](https://github.com/grandchallenge/AETHER) — semantic kernel; QA hardening; capacity planning |
+| **Can exact tensor-contraction decoding be validated and compared at larger quantum-code scale?** | [QUANTUM-TECHNOLOGIES](https://github.com/grandchallenge/QUANTUM-TECHNOLOGIES) — C90 exact decoder; 347-case matched comparison |
 
-These are active research questions, not promoted claims. Evidence and claim status remain with the governed programme records that support them.
+Rows appear here only while they represent material active work. Evidence and claim status remain with the governed programme records that support them.
 
 [Explore all research →](https://github.com/orgs/grandchallenge/repositories)
 
