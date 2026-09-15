@@ -12,11 +12,14 @@ Grand Challenge Labs builds executable research systems for turning difficult qu
 
 ## Research frontiers
 
+The order below reflects current active programme priority; it is not a ranking of evidentiary strength or claim status.
+
 | Frontier | Programme |
 |---|---|
+| **Can mathematical discovery become an auditable computational process?** | MATHFORGE → MATHSOLVE → MATHCERT |
+| **Can autonomous research systems coordinate through authoritative, replayable shared semantics rather than ad hoc orchestration?** | AETHER; semantic coordination; provenance; replay |
 | **Can neural systems phase-lock useful computational modes while suppressing error modes?** | Coupling-Phase Spectroscopy; collective neural computation; spectral dynamics |
 | **When does sparse expert routing undergo genuine oscillatory instability rather than ordinary expert collapse?** | MoE flutter boundaries; bifurcation analysis; continuation experiments |
-| **Can mathematical discovery become an auditable computational process?** | MATHFORGE → MATHSOLVE → MATHCERT |
 | **How should learning systems remain capable under stress rather than merely stable at nominal conditions?** | Antifragile training; recovery dynamics; reserve and robustness |
 
 These are active research questions, not promoted claims. Evidence and claim status remain with the governed programme records that support them.
