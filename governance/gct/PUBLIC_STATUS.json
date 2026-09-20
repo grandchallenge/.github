@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "projection": "GCT_PUBLIC_INTEGRATION_STATUS",
-  "as_of": "2026-09-03",
+  "as_of": "2026-09-04",
   "corporate_principal": {
     "legal_name": "Jamie Steeg",
     "github_identity": "jimsteeg",
@@ -36,11 +36,13 @@
     "role": "PUBLIC_INTEGRATION_AND_STATUS_ONLY",
     "private_executive_content_authoritative_here": false
   },
-  "open_control_obligations": [
-    "private_repository_main_hardening",
-    "private_independent_agent_reviewer_access",
-    "private_repository_profile_and_live_settings_readback"
-  ],
+  "hosted_control_status": {
+    "private_main_ruleset": "ACTIVE_STRICT_ZERO_BYPASS",
+    "organization_profile": "CORPORATE_EXECUTIVE_ADMITTED_AND_BOUND",
+    "ghos_successor_admission": "GHOS_ROUTING_ENFORCED",
+    "private_independent_reviewer_access": "AMANUENSIS_READ_ONLY_APPLIED_AND_READ_BACK"
+  },
+  "open_control_obligations": [],
   "authority_boundaries": {
     "gct_portfolio_decisions_create_gcl_claim_authority": false,
     "gcl_results_create_gct_corporate_commitment": false,
