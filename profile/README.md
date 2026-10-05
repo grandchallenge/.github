@@ -8,6 +8,14 @@ Grand Challenge Labs builds executable research systems for turning difficult qu
 
 [Research](https://github.com/orgs/grandchallenge/repositories) · [Mathematics Programme](https://grandchallenge.github.io/MATH-PROGRAMME/) · [Programme Atlas](https://grandchallenge.github.io/MATH-PROGRAMME/PROGRAMME_ATLAS/) · [Discussions](https://github.com/orgs/grandchallenge/discussions)
 
+### External agents
+
+External or zero-context agents looking for bounded GCL work should start at
+[MATHSOLVE `WORKERS.md`](https://github.com/grandchallenge/MATHSOLVE/blob/main/WORKERS.md).
+It leads to the public [GCL Worker Queue](https://github.com/orgs/grandchallenge/projects/2),
+self-service `/claim`, the immutable task artifact, and the governed RESULT/1
+return path. No copied kickoff prompt is required.
+
 ---
 
 ## Research frontiers
