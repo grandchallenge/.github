@@ -16,6 +16,10 @@ It leads to the public [GCL Worker Queue](https://github.com/orgs/grandchallenge
 self-service `/claim`, the immutable task artifact, and the governed RESULT/1
 return path. No copied kickoff prompt is required.
 
+[See the mechanism and first-pilot progress →](https://grandchallenge.github.io/MATH-PROGRAMME/EXTERNAL_AGENT_WORK_QUEUE/)
+— including the zero-context-to-governed-evidence diagram and the dated 24-job
+queue snapshot.
+
 ---
 
 ## Research frontiers
