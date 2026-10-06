@@ -20,26 +20,30 @@ def load_programme_controller(programme_root: Path):
     from ci.ns_ci_intake_pr_controller import Github  # type: ignore
     from ci.erdos_open_postprotect_controller import (  # type: ignore
         BRANCH_RE,
+        CANARY_CLOSURE_BRANCH,
+        CANARY_ADVANCE_BRANCH,
         branch_name,
         validate_candidate,
+        validate_canary_candidate,
     )
-    return Github, BRANCH_RE, branch_name, validate_candidate
+    return Github, BRANCH_RE, CANARY_CLOSURE_BRANCH, CANARY_ADVANCE_BRANCH, branch_name, validate_candidate, validate_canary_candidate
 
 
 def list_candidate_branches(gh: Any) -> list[str]:
-    prefix = urllib.parse.quote("heads/lifecycle/erdos-", safe="/")
-    refs = gh.get_optional(f"/repos/{OWNER}/{REPO}/git/matching-refs/{prefix}")
-    if refs is None:
-        return []
-    if not isinstance(refs, list):
-        raise RuntimeError("ERDOS closure ref listing malformed")
     out = []
-    for ref in refs:
-        if not isinstance(ref, dict):
+    for raw_prefix in ("heads/lifecycle/erdos-", "heads/lifecycle/gcl-e2e-canary-"):
+        prefix = urllib.parse.quote(raw_prefix, safe="/")
+        refs = gh.get_optional(f"/repos/{OWNER}/{REPO}/git/matching-refs/{prefix}")
+        if refs is None:
             continue
-        name = str(ref.get("ref", ""))
-        if name.startswith("refs/heads/"):
-            out.append(name[len("refs/heads/"):])
+        if not isinstance(refs, list):
+            raise RuntimeError("closure/canary ref listing malformed")
+        for ref in refs:
+            if not isinstance(ref, dict):
+                continue
+            name = str(ref.get("ref", ""))
+            if name.startswith("refs/heads/"):
+                out.append(name[len("refs/heads/"):])
     return sorted(set(out))
 
 
@@ -109,30 +113,37 @@ def approve_exact_head(
     head_sha: str,
     problem: str,
 ) -> dict[str, Any]:
-    body = (
-        f"Bounded Council Clerk documentary review for ERDOS-{problem} blind-cohort "
-        f"closure at exact head {head_sha}. Protected Programme validation re-established "
-        "that the branch contains exactly one cohort-closure receipt generated from "
-        "durably protected R1+A1 schema-valid evidence and that the closure has no "
-        "mathematical, literature, certification, publication, prize, or parent-problem "
-        "effect. APPROVE applies only to mechanical closure through existing MATHSOLVE "
-        "repository protection."
-    )
+    if problem == "GCL-E2E-CANARY-001":
+        body = (
+            f"Bounded Council Clerk documentary review for GCL-E2E-CANARY-001 at exact head "
+            f"{head_sha}. Protected Programme validation re-established the exact bounded "
+            "canary lifecycle candidate and its no-authority boundary. APPROVE applies only "
+            "to mechanical protection of the pre-registered canary state; it does not approve "
+            "mathematical, certification, publication, or external claim authority."
+        )
+    else:
+        body = (
+            f"Bounded Council Clerk documentary review for ERDOS-{problem} blind-cohort "
+            f"closure at exact head {head_sha}. Protected Programme validation re-established "
+            "that the branch contains exactly one cohort-closure receipt generated from "
+            "durably protected R1+A1 schema-valid evidence and that the closure has no "
+            "mathematical, literature, certification, publication, prize, or parent-problem "
+            "effect. APPROVE applies only to mechanical closure through existing MATHSOLVE "
+            "repository protection."
+        )
     out = gh.request(
         "POST",
         f"/repos/{OWNER}/{REPO}/pulls/{pr_number}/reviews",
         {"commit_id": head_sha, "event": "APPROVE", "body": body},
     )
     if not isinstance(out, dict) or out.get("state") != "APPROVED":
-        raise RuntimeError(f"ERDOS-{problem}: closure review submission malformed")
+        raise RuntimeError(f"{problem}: lifecycle review submission malformed")
     return out
-
-
 def run(programme_root: Path, solve_root: Path, apply: bool) -> dict[str, Any]:
     token = os.environ.get("MATHSOLVE_COUNCIL_CLERK_TOKEN", "")
     if not token:
         raise RuntimeError("MATHSOLVE_COUNCIL_CLERK_TOKEN is empty")
-    Github, BRANCH_RE, _, validate_candidate = load_programme_controller(programme_root)
+    Github, BRANCH_RE, CANARY_CLOSURE_BRANCH, CANARY_ADVANCE_BRANCH, _, validate_candidate, validate_canary_candidate = load_programme_controller(programme_root)
     gh = Github(token)
     report: dict[str, Any] = {
         "schema_version": "1.0.0",
@@ -156,14 +167,15 @@ def run(programme_root: Path, solve_root: Path, apply: bool) -> dict[str, Any]:
 
     for branch in list_candidate_branches(gh):
         match = BRANCH_RE.fullmatch(branch)
-        if not match:
+        is_canary = branch in {CANARY_CLOSURE_BRANCH, CANARY_ADVANCE_BRANCH}
+        if not match and not is_canary:
             continue
-        problem = match.group(1)
+        problem = match.group(1) if match else "GCL-E2E-CANARY-001"
         pr = find_open_pr(gh, branch)
         if pr is None:
             continue
         try:
-            candidate = validate_candidate(gh, solve_root, branch)
+            candidate = validate_candidate(gh, solve_root, branch) if match else validate_canary_candidate(gh, solve_root, branch)
             live = gh.request("GET", f"/repos/{OWNER}/{REPO}/pulls/{pr['number']}")
             if not isinstance(live, dict):
                 raise RuntimeError(f"{branch}: closure PR response malformed")
