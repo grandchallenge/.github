@@ -1,0 +1,83 @@
+name: ERDOS cohort closure review clerk
+
+on:
+  schedule:
+    - cron: "8,28,48 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: erdos-cohort-closure-review-clerk
+  cancel-in-progress: false
+
+jobs:
+  review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Mint bounded MATHSOLVE Council Clerk token
+        id: solve-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATHSOLVE
+          permission-contents: read
+          permission-pull-requests: write
+
+      - name: Mint read-only Programme validator token
+        id: programme-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-contents: read
+
+      - name: Checkout protected Programme validators
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: grandchallenge/MATH-PROGRAMME
+          ref: main
+          path: programme
+          token: ${{ steps.programme-token.outputs.token }}
+          persist-credentials: false
+
+      - name: Checkout protected MATHSOLVE closure substrate
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: grandchallenge/MATHSOLVE
+          ref: main
+          path: solve
+          token: ${{ steps.solve-token.outputs.token }}
+          persist-credentials: false
+
+      - name: Review exact validated ERDOS closure PRs
+        env:
+          MATHSOLVE_COUNCIL_CLERK_TOKEN: ${{ steps.solve-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          python scripts/erdos_cohort_closure_review_clerk.py \
+            --programme-root programme \
+            --solve-root solve \
+            --apply \
+            --report erdos-cohort-closure-review-clerk-report.json
+
+      - name: Preserve review evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: erdos-cohort-closure-review-clerk-report
+          path: erdos-cohort-closure-review-clerk-report.json
+          if-no-files-found: error
+          retention-days: 90
