@@ -4,6 +4,10 @@ on:
   pull_request:
     paths:
       - ".github/workflows/constitutional-review-clerk.yml"
+      - ".github/workflows/cei-evidence-review-clerk.yml"
+      - "governance/credentials/GCL-CEI-EVIDENCE-REVIEW-CLERK-001.json"
+      - "scripts/cei_evidence_review_clerk.py"
+      - "tests/test_cei_evidence_review_clerk.py"
       - ".github/workflows/constitutional-review-tests.yml"
       - "governance/review-campaigns/**"
       - "scripts/constitutional_review_clerk.py"
@@ -13,6 +17,10 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/constitutional-review-clerk.yml"
+      - ".github/workflows/cei-evidence-review-clerk.yml"
+      - "governance/credentials/GCL-CEI-EVIDENCE-REVIEW-CLERK-001.json"
+      - "scripts/cei_evidence_review_clerk.py"
+      - "tests/test_cei_evidence_review_clerk.py"
       - ".github/workflows/constitutional-review-tests.yml"
       - "governance/review-campaigns/**"
       - "scripts/constitutional_review_clerk.py"
