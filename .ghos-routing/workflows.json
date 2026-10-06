@@ -54,6 +54,17 @@
       "controller_id": "GITHUB_ACTIONS"
     },
     {
+      "path": ".github/workflows/erdos-cohort-closure-review-clerk.yml",
+      "observed_features": [
+        "AUTONOMOUS_WAKE",
+        "OPAQUE_EXECUTION",
+        "SCHEDULED",
+        "SECRET_CREDENTIAL"
+      ],
+      "topology": "PERSISTENT_CONTROLLER_REQUIRED",
+      "controller_id": "GITHUB_ACTIONS"
+    },
+    {
       "path": ".github/workflows/gcl-conformance.yml",
       "observed_features": [
         "AUTONOMOUS_WAKE",
