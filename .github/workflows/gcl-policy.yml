@@ -29,7 +29,7 @@ jobs:
             { echo "standards_ref must be a full commit SHA"; exit 1; }
       - name: Check out externally governed routing gate
         if: inputs.profile == 'Standards'
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: grandchallenge/.github
           ref: ef1cce6029233a68cf46063cea2384772fcae613
