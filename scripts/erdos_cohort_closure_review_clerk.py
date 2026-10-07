@@ -22,11 +22,14 @@ def load_programme_controller(programme_root: Path):
         BRANCH_RE,
         CANARY_CLOSURE_BRANCH,
         CANARY_ADVANCE_BRANCH,
+        CANARY2_CLOSURE_BRANCH,
+        CANARY2_ADVANCE_BRANCH,
         branch_name,
         validate_candidate,
         validate_canary_candidate,
+        validate_canary2_candidate,
     )
-    return Github, BRANCH_RE, CANARY_CLOSURE_BRANCH, CANARY_ADVANCE_BRANCH, branch_name, validate_candidate, validate_canary_candidate
+    return Github, BRANCH_RE, CANARY_CLOSURE_BRANCH, CANARY_ADVANCE_BRANCH, CANARY2_CLOSURE_BRANCH, CANARY2_ADVANCE_BRANCH, branch_name, validate_candidate, validate_canary_candidate, validate_canary2_candidate
 
 
 def list_candidate_branches(gh: Any) -> list[str]:
@@ -113,9 +116,9 @@ def approve_exact_head(
     head_sha: str,
     problem: str,
 ) -> dict[str, Any]:
-    if problem == "GCL-E2E-CANARY-001":
+    if problem.startswith("GCL-E2E-CANARY-"):
         body = (
-            f"Bounded Council Clerk documentary review for GCL-E2E-CANARY-001 at exact head "
+            f"Bounded Council Clerk documentary review for {problem} at exact head "
             f"{head_sha}. Protected Programme validation re-established the exact bounded "
             "canary lifecycle candidate and its no-authority boundary. APPROVE applies only "
             "to mechanical protection of the pre-registered canary state; it does not approve "
@@ -143,7 +146,7 @@ def run(programme_root: Path, solve_root: Path, apply: bool) -> dict[str, Any]:
     token = os.environ.get("MATHSOLVE_COUNCIL_CLERK_TOKEN", "")
     if not token:
         raise RuntimeError("MATHSOLVE_COUNCIL_CLERK_TOKEN is empty")
-    Github, BRANCH_RE, CANARY_CLOSURE_BRANCH, CANARY_ADVANCE_BRANCH, _, validate_candidate, validate_canary_candidate = load_programme_controller(programme_root)
+    Github, BRANCH_RE, CANARY_CLOSURE_BRANCH, CANARY_ADVANCE_BRANCH, CANARY2_CLOSURE_BRANCH, CANARY2_ADVANCE_BRANCH, _, validate_candidate, validate_canary_candidate, validate_canary2_candidate = load_programme_controller(programme_root)
     gh = Github(token)
     report: dict[str, Any] = {
         "schema_version": "1.0.0",
@@ -167,15 +170,16 @@ def run(programme_root: Path, solve_root: Path, apply: bool) -> dict[str, Any]:
 
     for branch in list_candidate_branches(gh):
         match = BRANCH_RE.fullmatch(branch)
-        is_canary = branch in {CANARY_CLOSURE_BRANCH, CANARY_ADVANCE_BRANCH}
-        if not match and not is_canary:
+        is_canary1 = branch in {CANARY_CLOSURE_BRANCH, CANARY_ADVANCE_BRANCH}
+        is_canary2 = branch in {CANARY2_CLOSURE_BRANCH, CANARY2_ADVANCE_BRANCH}
+        if not match and not is_canary1 and not is_canary2:
             continue
-        problem = match.group(1) if match else "GCL-E2E-CANARY-001"
+        problem = match.group(1) if match else ("GCL-E2E-CANARY-001" if is_canary1 else "GCL-E2E-CANARY-002")
         pr = find_open_pr(gh, branch)
         if pr is None:
             continue
         try:
-            candidate = validate_candidate(gh, solve_root, branch) if match else validate_canary_candidate(gh, solve_root, branch)
+            candidate = validate_candidate(gh, solve_root, branch) if match else (validate_canary_candidate(gh, solve_root, branch) if is_canary1 else validate_canary2_candidate(gh, solve_root, branch))
             live = gh.request("GET", f"/repos/{OWNER}/{REPO}/pulls/{pr['number']}")
             if not isinstance(live, dict):
                 raise RuntimeError(f"{branch}: closure PR response malformed")
