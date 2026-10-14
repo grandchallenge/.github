@@ -64,7 +64,7 @@ jobs:
               missing_before:$missing,dry_run:($dry_run == "true"),
               authority_boundary:"metadata-only; never changes claim status"}' \
             > project-sync-evidence.json
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: project-sync-evidence
           path: project-sync-evidence.json

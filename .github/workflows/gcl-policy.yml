@@ -29,7 +29,7 @@ jobs:
             { echo "standards_ref must be a full commit SHA"; exit 1; }
       - name: Check out externally governed routing gate
         if: inputs.profile == 'Standards'
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: grandchallenge/.github
           ref: ef1cce6029233a68cf46063cea2384772fcae613
@@ -58,7 +58,7 @@ jobs:
           printf '{"profile":"%s","repository":"%s","commit":"%s","run_id":"%s"}\n' \
             "$PROFILE" "$GITHUB_REPOSITORY" "$GITHUB_SHA" "$GITHUB_RUN_ID" \
             > gcl-evidence-manifest.json
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: gcl-policy-evidence
           path: gcl-evidence-manifest.json
