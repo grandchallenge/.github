@@ -1,0 +1,47 @@
+name: Programme intake hardening review clerk
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: MATH-PROGRAMME PR number
+        required: true
+        type: number
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Mint bounded Programme Council Clerk token
+        id: clerk
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-contents: read
+          permission-pull-requests: write
+      - name: Validate and review exact hardening head
+        env:
+          PROGRAMME_COUNCIL_CLERK_TOKEN: ${{ steps.clerk.outputs.token }}
+        run: |
+          python scripts/programme_intake_hardening_review_clerk.py \
+            --pr-number "${{ inputs.pr_number }}" \
+            --apply \
+            --report programme-intake-hardening-review.json
+      - name: Preserve review evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: programme-intake-hardening-review
+          path: programme-intake-hardening-review.json
+          if-no-files-found: error
+          retention-days: 90
