@@ -18,7 +18,23 @@ REPO = "MATHSOLVE"
 def load_programme_controller(programme_root: Path):
     sys.path.insert(0, str(programme_root))
     from ci.ns_ci_intake_pr_controller import Github  # type: ignore
-    from ci.erdos_open_postprotect_controller import (  # type: ignore
+    import ci.erdos_open_postprotect_controller as postprotect  # type: ignore
+
+    BRANCH_RE = getattr(postprotect, "BRANCH_RE")
+    CANARY_CLOSURE_BRANCH = getattr(postprotect, "CANARY_CLOSURE_BRANCH")
+    CANARY_ADVANCE_BRANCH = getattr(postprotect, "CANARY_ADVANCE_BRANCH")
+    CANARY2_CLOSURE_BRANCH = getattr(postprotect, "CANARY2_CLOSURE_BRANCH")
+    CANARY2_ADVANCE_BRANCH = getattr(postprotect, "CANARY2_ADVANCE_BRANCH")
+    CANARY3_CLOSURE_BRANCH = getattr(postprotect, "CANARY3_CLOSURE_BRANCH", None)
+    CANARY3_ADVANCE_BRANCH = getattr(postprotect, "CANARY3_ADVANCE_BRANCH", None)
+    branch_name = getattr(postprotect, "branch_name")
+    validate_candidate = getattr(postprotect, "validate_candidate")
+    validate_canary_candidate = getattr(postprotect, "validate_canary_candidate")
+    validate_canary2_candidate = getattr(postprotect, "validate_canary2_candidate")
+    validate_canary3_candidate = getattr(postprotect, "validate_canary3_candidate", None)
+
+    return (
+        Github,
         BRANCH_RE,
         CANARY_CLOSURE_BRANCH,
         CANARY_ADVANCE_BRANCH,
@@ -32,7 +48,6 @@ def load_programme_controller(programme_root: Path):
         validate_canary2_candidate,
         validate_canary3_candidate,
     )
-    return Github, BRANCH_RE, CANARY_CLOSURE_BRANCH, CANARY_ADVANCE_BRANCH, CANARY2_CLOSURE_BRANCH, CANARY2_ADVANCE_BRANCH, CANARY3_CLOSURE_BRANCH, CANARY3_ADVANCE_BRANCH, branch_name, validate_candidate, validate_canary_candidate, validate_canary2_candidate, validate_canary3_candidate
 
 
 def list_candidate_branches(gh: Any) -> list[str]:
@@ -175,7 +190,10 @@ def run(programme_root: Path, solve_root: Path, apply: bool) -> dict[str, Any]:
         match = BRANCH_RE.fullmatch(branch)
         is_canary1 = branch in {CANARY_CLOSURE_BRANCH, CANARY_ADVANCE_BRANCH}
         is_canary2 = branch in {CANARY2_CLOSURE_BRANCH, CANARY2_ADVANCE_BRANCH}
-        is_canary3 = branch in {CANARY3_CLOSURE_BRANCH, CANARY3_ADVANCE_BRANCH}
+        canary3_branches = {
+            b for b in (CANARY3_CLOSURE_BRANCH, CANARY3_ADVANCE_BRANCH) if b is not None
+        }
+        is_canary3 = branch in canary3_branches
         if not match and not is_canary1 and not is_canary2 and not is_canary3:
             continue
         problem = match.group(1) if match else (
@@ -187,15 +205,18 @@ def run(programme_root: Path, solve_root: Path, apply: bool) -> dict[str, Any]:
         if pr is None:
             continue
         try:
-            candidate = validate_candidate(gh, solve_root, branch) if match else (
-                validate_canary_candidate(gh, solve_root, branch)
-                if is_canary1
-                else (
-                    validate_canary2_candidate(gh, solve_root, branch)
-                    if is_canary2
-                    else validate_canary3_candidate(gh, solve_root, branch)
-                )
-            )
+            if match:
+                candidate = validate_candidate(gh, solve_root, branch)
+            elif is_canary1:
+                candidate = validate_canary_candidate(gh, solve_root, branch)
+            elif is_canary2:
+                candidate = validate_canary2_candidate(gh, solve_root, branch)
+            elif is_canary3:
+                if validate_canary3_candidate is None:
+                    raise RuntimeError("CANARY3 validator interface not exported by Programme")
+                candidate = validate_canary3_candidate(gh, solve_root, branch)
+            else:
+                continue
             live = gh.request("GET", f"/repos/{OWNER}/{REPO}/pulls/{pr['number']}")
             if not isinstance(live, dict):
                 raise RuntimeError(f"{branch}: closure PR response malformed")
