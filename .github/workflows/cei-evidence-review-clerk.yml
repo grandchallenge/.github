@@ -25,7 +25,7 @@ jobs:
 
       - name: Mint bounded MATHSOLVE Council Clerk token
         id: solve-token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
         with:
           app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
           private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
@@ -36,7 +36,7 @@ jobs:
 
       - name: Mint read-only Programme validator token
         id: programme-token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
         with:
           app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
           private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
