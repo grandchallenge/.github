@@ -1,0 +1,27 @@
+{
+  "contract_id": "GCL-CIR-001",
+  "version": "1.0.0",
+  "repository": "grandchallenge/.github",
+  "mode": "ENFORCE_DISCOVERY_PRESERVE_EXISTING_CI",
+  "checks": [
+    {
+      "id": "constitutional-review-tests",
+      "test_globs": [
+        "tests/test_*.py"
+      ]
+    }
+  ],
+  "legacy_test_paths": [
+    "tests/test_cei_evidence_review_clerk.py",
+    "tests/test_constitutional_review_clerk.py",
+    "tests/test_credential_boundary.py",
+    "tests/test_erdos_cohort_closure_review_clerk.py",
+    "tests/test_gcl_ghos_owner_export.py",
+    "tests/test_gcl_ghos_owner_export_evidence.py",
+    "tests/test_ghos_execution_routing_gate.py",
+    "tests/test_human_governance_transition_campaign.py",
+    "tests/test_phase2_clerk_acceptance.py",
+    "tests/test_status_coherence_campaign.py",
+    "tests/test_weekly_optimality_scorecard.py"
+  ]
+}
