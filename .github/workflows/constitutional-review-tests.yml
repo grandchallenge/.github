@@ -17,6 +17,10 @@ on:
       - "scripts/constitutional_review_clerk.py"
       - "tests/test_constitutional_review_clerk.py"
       - "tests/test_phase2_clerk_acceptance.py"
+      - "tests/test_gcl_component_routing.py"
+      - "scripts/gcl_component_routing.py"
+      - "governance/ci_components/**"
+      - "governance/ci_routing_baseline.json"
   push:
     branches: [main]
     paths:
@@ -30,6 +34,10 @@ on:
       - "scripts/constitutional_review_clerk.py"
       - "tests/test_constitutional_review_clerk.py"
       - "tests/test_phase2_clerk_acceptance.py"
+      - "tests/test_gcl_component_routing.py"
+      - "scripts/gcl_component_routing.py"
+      - "governance/ci_components/**"
+      - "governance/ci_routing_baseline.json"
   workflow_dispatch:
 
 permissions:
