@@ -54,3 +54,34 @@ Apply the Human Steward's 2026-11-24 placement instruction in [MATH-PROGRAMME AG
 For the Steward's authorized public research, use ordinary authenticated CONTROL Bash with the first-line public research designation described in [MATH-PROGRAMME's protected worker instructions](https://github.com/grandchallenge/MATH-PROGRAMME/blob/a7441fcc66ccd140bea0abe02a774142a3315bc5/AGENTS.md#public-research-execution-existing-control-lane) and [CONTROL's admitted native research contract](https://github.com/grandchallenge/CONTROL/blob/233013a2c2afeb9768320181b1ca5ea06bb041af/docs/PUBLIC_CONTROL_DISCLOSURE.md#native-public-research-ordinary-bash). Use the actual owning public repository and exact public commit, within the four admitted repositories. Execute once in the governed environment. No special runner or separate release submission is required. The caller declares its own command and output public; do not designate administration, credentials, third-party private records or unknown inputs/output. Preserve task custody, compute placement, dependency and certification requirements. No new authentication requirement for external workers. Verify actual correlated disclosure when practical, preserve durable full evidence and continue authorized work if publication fails.
 
 For publishable research, annotate the existing native research command with the [live research thread convention](https://github.com/grandchallenge/grandchallenge.github.io/blob/1139be5a66a1e5111adcbe5c871cd5d4db7ece1b/README.md#live-research-console): contiguous `# GCL_THREAD:`, `# GCL_TITLE:`, `# GCL_OBJECTIVE:`, `# GCL_RESEARCH:` and `# GCL_EXECUTE:` comments immediately after the public designation. Reuse the stable thread ID for the investigation. Where supported by the actual result, emit `GCL_FINDING:`, `GCL_NEXT:` or `GCL_BLOCKER:` statements as captured output of the existing operation. These are public researcher statements, not certification or hidden reasoning. Never fabricate findings, add separate shell invocations solely for narration, or weaken the existing disclosure boundary. Continue the research if the public feed is unavailable.
+
+
+## Binding open research doctrine (Human Steward, 2026-11-27)
+
+Grand Challenge Labs is an open research institution. Openness is the default;
+withholding is the exception and requires a concrete justification. Publish
+the actual research question, mathematical argument, source, experimental or
+compiler result, negative result, and unresolved obligation in the ordinary
+course of authorized work. Scientific review or certification is not a
+prerequisite for public scrutiny; distinguish candidates, observations and
+conjectures from established or certified results. Do not require a separate
+human release approval, repeat research for the console, or manufacture
+narration or findings.
+
+Use the existing CONTROL research publication and public repository evidence
+lanes. Automatic release of independently verified public source and committed
+research candidates needs no worker opt-in. For ordinary computational work
+whose output cannot be independently obtained from public sources, exercise the
+existing public research designation as the default for known publishable
+work, with the actual owning repository and exact public revision. Preserve
+complete evidence in the ordinary durable research return. A failed check is
+research, not a reason to conceal it.
+
+Withhold only material subject to a specific security/privacy, third-party
+rights, unverified source/capture, or actual delivery boundary. Protect concrete
+credentials, private records and sensitive administration; do not suppress
+mathematical terms, failed approaches or provisional findings merely as a
+precaution. A privileged shell is not automatically a public research scope.
+No blanket disclosure of private journals, credentials or unknown data is
+authorized. Preserve the exact assignment, custody, compute and scientific
+certification gates; publication must not become a new research gate.
